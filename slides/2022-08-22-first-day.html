@@ -498,6 +498,11 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intrinsic-motivation">
+   Intrinsic motivation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#i-won-t-grade-and-i-won-t-waste-your-time">
    I won’t grade and I won’t waste your time
   </a>
@@ -570,6 +575,33 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#a-note-about-illnesses">
    A note about illnesses
   </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choices-in-scoping-the-class">
+   Choices in scoping the class
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#theory">
+     Theory
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applied">
+     Applied
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-from-scratch">
+     Build from scratch
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-using-libraries">
+     Build using libraries
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -726,6 +758,11 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intrinsic-motivation">
+   Intrinsic motivation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#i-won-t-grade-and-i-won-t-waste-your-time">
    I won’t grade and I won’t waste your time
   </a>
@@ -799,6 +836,33 @@ title="Print to PDF"
    A note about illnesses
   </a>
  </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choices-in-scoping-the-class">
+   Choices in scoping the class
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#theory">
+     Theory
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applied">
+     Applied
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-from-scratch">
+     Build from scratch
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-using-libraries">
+     Build using libraries
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
                         </nav>
@@ -852,8 +916,8 @@ title="Print to PDF"
 <li><p>population dynamics</p></li>
 </ul>
 <p>Find <span class="math notranslate nohighlight">\(u\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-77505f66-b673-437a-99f0-71eb060df938">
-<span class="eqno">(1)<a class="headerlink" href="#equation-77505f66-b673-437a-99f0-71eb060df938" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-78f63df6-4c3d-48bc-992f-ba7d843483a9">
+<span class="eqno">(1)<a class="headerlink" href="#equation-78f63df6-4c3d-48bc-992f-ba7d843483a9" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\nabla\cdot\big(\kappa(\mathbf x) \nabla u(\mathbf x)\big) &amp;= f(\mathbf x) &amp; \mathbf x &amp;\in \Omega \\
 u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \partial\Omega \\
 \kappa(\mathbf x) \nabla u(\mathbf x) \cdot \mathbf{\hat n}(\mathbf x) &amp;= h(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_N \subset\partial\Omega
@@ -866,8 +930,8 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <section class="tex2jax_ignore mathjax_ignore" id="what-does-it-mean-to-discretize-a-pde">
 <h1>What does it mean to discretize a PDE?<a class="headerlink" href="#what-does-it-mean-to-discretize-a-pde" title="Permalink to this headline">#</a></h1>
 <p>Find <span class="math notranslate nohighlight">\(u\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0177e455-5f8f-4c6b-96c1-eb084b7c65ef">
-<span class="eqno">(2)<a class="headerlink" href="#equation-0177e455-5f8f-4c6b-96c1-eb084b7c65ef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-41f0cbbb-f60d-4ee0-bfb1-f504f66b8251">
+<span class="eqno">(2)<a class="headerlink" href="#equation-41f0cbbb-f60d-4ee0-bfb1-f504f66b8251" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\nabla\cdot\big(\kappa(\mathbf x) \nabla u(\mathbf x)\big) &amp;= f(\mathbf x) &amp; \mathbf x &amp;\in \Omega \\
 u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \partial\Omega \\
 \nabla u(\mathbf x) \cdot \mathbf{\hat n}(\mathbf x) &amp;= h(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_N \subset\partial\Omega
@@ -885,7 +949,7 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <li><p>Finite Volume</p></li>
 </ul>
 </li>
-<li><p>A weak form over with solution and “test functions” in the same space</p>
+<li><p>A weak form over elements with solution and “test functions” in the same space</p>
 <ul>
 <li><p>Finite Element / Galerkin</p></li>
 </ul>
@@ -1072,8 +1136,11 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <h2>Rust<a class="headerlink" href="#rust" title="Permalink to this headline">#</a></h2>
 <p>New compiled language. Good performance, encapsulation, safety, static analysis. Poor libraries (so far).</p>
 <p>You don’t need to know any of these well and you can choose the language for your project.</p>
-<img src="/files/img/Butler1988-Table1.png" width="80%" /></section>
 </section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="intrinsic-motivation">
+<h1>Intrinsic motivation<a class="headerlink" href="#intrinsic-motivation" title="Permalink to this headline">#</a></h1>
+<img src="/files/img/Butler1988-Table1.png" width="80%" /></section>
 <section class="tex2jax_ignore mathjax_ignore" id="i-won-t-grade-and-i-won-t-waste-your-time">
 <h1>I won’t grade and I won’t waste your time<a class="headerlink" href="#i-won-t-grade-and-i-won-t-waste-your-time" title="Permalink to this headline">#</a></h1>
 <div class="floatleft70"
@@ -1103,7 +1170,7 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 </ul>
 </li>
 </ul>
-<p><em>I can nudge upward when students are too modest – pretty common. In rare cases, I may adjust down.</em></p>
+<img src="https://dpuk71x9wlmkf.cloudfront.net/assets/2020/02/10170035/02_V4-01.jpg" /><p><em>I can nudge upward when students are too modest – pretty common. In rare cases, I may adjust down.</em></p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="what-i-need-from-you-growth-mindset">
 <h1>What I need from you: Growth Mindset<a class="headerlink" href="#what-i-need-from-you-growth-mindset" title="Permalink to this headline">#</a></h1>
@@ -1158,7 +1225,7 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <li><p>GitHub CLassroom to manage repositories</p></li>
 <li><p>Write using notebooks and markdown</p></li>
 <li><p>Review using GitHub tools and nbgrader</p></li>
-<li><p>Discussions</p></li>
+<li><p><a class="reference external" href="https://github.com/cu-numpde/fall22/discussions/">Discussions</a></p></li>
 </ul>
 </section>
 <section id="jupyter">
@@ -1184,7 +1251,7 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <li><p>It’s likely that there will be a new variant sometime this fall.</p></li>
 <li><p>Bivalent vaccines are coming, but we don’t know how effective they will be against the next variant.</p></li>
 <li><p>High-quality masks are effective.</p></li>
-<li><p>You’re welcome to attend virtually (and please do if you have symptoms)</p></li>
+<li><p>You’re welcome to attend virtually (and please do if you have symptoms or likely infected).</p></li>
 </ul>
 <ul class="simple">
 <li><p>I have a 2yo in childcare and 5yo in elementary school</p></li>
@@ -1192,6 +1259,27 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <li><p>I’ll likely need to teach remotely at some times, or otherwise make it up to you</p></li>
 </ul>
 <p><img alt="" src="../_images/neve-testing-timeline.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="choices-in-scoping-the-class">
+<h1>Choices in scoping the class<a class="headerlink" href="#choices-in-scoping-the-class" title="Permalink to this headline">#</a></h1>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">#</a></h2>
+<p>Analysis first, confirm using numerics.
+Limited to simpler models.</p>
+</section>
+<section id="applied">
+<h2>Applied<a class="headerlink" href="#applied" title="Permalink to this headline">#</a></h2>
+<p>Numerics first, pointers to useful theory.</p>
+</section>
+<hr class="docutils" />
+<section id="build-from-scratch">
+<h2>Build from scratch<a class="headerlink" href="#build-from-scratch" title="Permalink to this headline">#</a></h2>
+<p>Limited to simpler models, but you’ll understand everything under the hood.</p>
+</section>
+<section id="build-using-libraries">
+<h2>Build using libraries<a class="headerlink" href="#build-using-libraries" title="Permalink to this headline">#</a></h2>
+<p>More installation and software layers, but can solve more interesting problems.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
