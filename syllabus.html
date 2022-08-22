@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Syllabus &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Slides" href="slides.html" />
+    <link rel="prev" title="Welcome" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="slides.html">
+   Slides
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="slides/2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fsyllabus.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/syllabus.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistics">
+   Logistics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#remote-access-via-zoom">
+     Remote access via Zoom
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recordings">
+     Recordings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#instructor-jed-brown-jed-brown-colorado-edu-ecot-824">
+     Instructor: Jed Brown,
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jed.brown@colorado.edu
+      </span>
+     </code>
+     , ECOT 824
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#organization">
+   Organization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outcomes">
+   Outcomes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ungrading">
+   Ungrading
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#github">
+   GitHub
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#programming-languages-and-environment">
+   Programming languages and environment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-audience">
+   Target audience
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources-updated-continuously">
+   Resources (updated continuously)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#classroom-behavior">
+   Classroom Behavior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements-for-covid-19">
+   Requirements for COVID-19
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accommodation-for-disabilities">
+   Accommodation for Disabilities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preferred-student-names-and-pronouns">
+   Preferred Student Names and Pronouns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#honor-code">
+   Honor Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sexual-misconduct-discrimination-harassment-and-or-related-retaliation">
+   Sexual Misconduct, Discrimination, Harassment and/or Related Retaliation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#religious-holidays">
+   Religious Holidays
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Syllabus</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistics">
+   Logistics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#remote-access-via-zoom">
+     Remote access via Zoom
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#recordings">
+     Recordings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#instructor-jed-brown-jed-brown-colorado-edu-ecot-824">
+     Instructor: Jed Brown,
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       jed.brown@colorado.edu
+      </span>
+     </code>
+     , ECOT 824
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#organization">
+   Organization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outcomes">
+   Outcomes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ungrading">
+   Ungrading
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#github">
+   GitHub
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#programming-languages-and-environment">
+   Programming languages and environment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-audience">
+   Target audience
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources-updated-continuously">
+   Resources (updated continuously)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#classroom-behavior">
+   Classroom Behavior
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements-for-covid-19">
+   Requirements for COVID-19
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accommodation-for-disabilities">
+   Accommodation for Disabilities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preferred-student-names-and-pronouns">
+   Preferred Student Names and Pronouns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#honor-code">
+   Honor Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sexual-misconduct-discrimination-harassment-and-or-related-retaliation">
+   Sexual Misconduct, Discrimination, Harassment and/or Related Retaliation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#religious-holidays">
+   Religious Holidays
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="syllabus">
+<h1>Syllabus<a class="headerlink" href="#syllabus" title="Permalink to this headline">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this headline">#</a></h2>
+<p>CU Boulder: CSCI 5636-001(B) (Fall 2022)</p>
+<p>Meeting Time: MWF 11:15-12:05 in ECCS 1B14</p>
+<section id="remote-access-via-zoom">
+<h3>Remote access via Zoom<a class="headerlink" href="#remote-access-via-zoom" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Join via web browser: <a class="reference external" href="https://cuboulder.zoom.us/j/99670441691">https://cuboulder.zoom.us/j/99670441691</a></p></li>
+<li><p>Join via Zoom app (using meeting 996 7044 1691)</p></li>
+</ul>
+</section>
+<section id="recordings">
+<h3>Recordings<a class="headerlink" href="#recordings" title="Permalink to this headline">#</a></h3>
+<p>Recordings will be available in Canvas Mediasite.</p>
+</section>
+<section id="instructor-jed-brown-jed-brown-colorado-edu-ecot-824">
+<h3>Instructor: <a class="reference external" href="https://jedbrown.org">Jed Brown</a>, <a class="reference external" href="mailto:jed&#46;brown&#37;&#52;&#48;colorado&#46;edu"><code class="docutils literal notranslate"><span class="pre">jed.brown&#64;colorado.edu</span></code></a>, ECOT 824<a class="headerlink" href="#instructor-jed-brown-jed-brown-colorado-edu-ecot-824" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Office hours: <a class="reference external" href="https://app.simplymeet.me/jed-simplymeet/numpde">Choose a time</a></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Chat sessions are important for asking questions, solving problems, discussion of broader academic and career strategy, and to provide feedback so I can make the class serve your needs and those of people with similar experiences and interests.</p>
+</div>
+</section>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>Partial differential equations (PDE) describe the behavior of fluids, structures, heat transfer, wave propagation, and other physical phenomena of scientific and engineering interest.
+This course covers discretization of PDE using finite difference and collocation methods, finite volume methods, and finite element methods for elliptic, parabolic, and hyperbolic equations.
+For each method, we will discuss boundary conditions, generalization to high order, robustness, and geometric complexity.
+We will discuss foundational principles like will posedness, verification, and validation, as well as efficient methods for solution of the discretized equations and implementation in extensible software.</p>
+</section>
+<section id="organization">
+<h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">#</a></h2>
+<p>We will start with a brief refresher on numerical integration, approximation of functions, and numerical differentiation.  We will extend this to finite difference methods for elliptic problems (like heat and pressure equilibrium) and time integration, producing methods that converge with arbitrarily high orders of accuracy.  We will discover challenges when applying these methods to hyperbolic equations (which describe wave propagation and transport phenomena), especially nonlinear hyperbolic equations, and thus develop finite volume methods which rely on weaker assumptions.  We will learn about shocks, rarefactions, and Riemann solvers.  Finite volume methods are easy to use in complicated geometries and/or unstructured meshes, but achieving high order accuracy in such settings is unnatural and the methods can be awkward for elliptic and parabolic equations.  Finite element methods offer a flexible and robust analysis framework as well as modular implementation that allows arbitrary order of accuracy even in complicated domains.  We will introduce relevant concepts in continuum mechanics as we go.</p>
+<p>In the second half of the semester, we will transition to more project-based learning.
+You will choose an open source software package with an active community and give a presentation to the class about the choice of methods, stakeholders and community functioning, and identify opportunities for contribution.
+You’ll then form small teams of like interest and work on a contribution to be shared with the community.
+(Such contributions can take many different shapes, and need not involve code.)</p>
+</section>
+<section id="outcomes">
+<h2>Outcomes<a class="headerlink" href="#outcomes" title="Permalink to this headline">#</a></h2>
+<p>Partial differential equations underly a broad range of high-fidelity models in science and engineering from atomic to cosmological scales.
+Upon completing this course, students possess an ability to</p>
+<ul class="simple">
+<li><p>formulate problems in science and engineering in terms of partial differential equations</p></li>
+<li><p>understand the merits and limitations of the leading numerical methods used to solve PDE</p></li>
+<li><p>recognize and exploit structure to apply algorithms that improve performance and scalability</p></li>
+<li><p>select and use robust software libraries</p></li>
+<li><p>develop effective numerical software, taking into account stability, accuracy, and cost</p></li>
+<li><p>predict scaling challenges and computational costs when solving increasingly complex problems or attempting to meet real-time requirements</p></li>
+<li><p>interpret research papers and begin research in the field</p></li>
+</ul>
+</section>
+<section id="ungrading">
+<h2>Ungrading<a class="headerlink" href="#ungrading" title="Permalink to this headline">#</a></h2>
+<p>I’m here to be your partner, not your adversary, and I promise not to waste your time.
+So I won’t grade (score) your work, though I will write feedback and meet with you to reflect and discuss strategy for growth.
+Why? TL;DR: <a class="reference download internal" download="" href="_downloads/90fd21a77254b465ecf26af8b7d81a34/Butler-EnhancingAndUnderminingIntrinsicMotivation-1988.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Evidence</span></code></a> shows that scoring undermines the value of writing comments.</p>
+<p><img alt="Butler (1988) Table 1" src="_images/Butler1988-Table1.png" /></p>
+</section>
+<section id="github">
+<h2>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">#</a></h2>
+<p>We’ll use Git with GitHub Classroom for managing activities and feedback. During the project-based learning later in the semester, you’ll likely interact with open source communities using these tools.</p>
+<p>You are encouraged to work together on assignments, but must give credit to peer contributions via the commit messages or Git history. For example, you would add</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Suggested-by: Friendly Neighbor &lt;friendly.neighbor@colorado.edu&gt;
+</pre></div>
+</div>
+<p>to the commit message if that code incorporates an approach suggested by your neighbor. You should ensure that each assignment (pull request) contains some of your own meaningful intellectual contributions.</p>
+</section>
+<section id="programming-languages-and-environment">
+<h2>Programming languages and environment<a class="headerlink" href="#programming-languages-and-environment" title="Permalink to this headline">#</a></h2>
+<p>I will primarily use Julia and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a> for slides and activities in class.  This environment is convenient to work with, general purpose, and has extensive library support.  It is possible to write fast code in Julia, though performance implications can by mysterious. C, C++, and Fortran are popular languages for writing production numerical software, sometimes called from a higher level programming language like Python.  MATLAB is also popular for numerical computing, though it is a proprietary environment and lacks general-purpose libraries. Rust is an exciting young language, albeit with limited numerical library support at this time.</p>
+<p>We will make use of libraries written in several languages, and I’ll focus on the abstraction rather than minutia of the language. You don’t need prior experience in any particular language, but please bring a growth mindset and ask for help as needed (from myself and peers – GitHub discussions are a good place for this).</p>
+<p>Most HPC facilities use a Linux operating system and many open source software packages and libraries will have the best documentation and testing on Linux systems. You can use any environment for your local development environment, or use the CS Department’s JupyterHub <a class="reference external" href="https://coding.csel.io/">coding.csel.io</a> to experiment and develop without a local install.</p>
+</section>
+<section id="target-audience">
+<h2>Target audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">#</a></h2>
+<p>Graduate students in computer science or simulation-based science or engineering.  Suggested prereq: at least one of</p>
+<ul class="simple">
+<li><p>CSCI-2820 Linear Algebra</p></li>
+<li><p>CSCI-3656 Numerical Computation</p></li>
+<li><p>CSCI-4576 High-Performance Scientific Computing</p></li>
+</ul>
+</section>
+<section id="resources-updated-continuously">
+<h2>Resources (updated continuously)<a class="headerlink" href="#resources-updated-continuously" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.siam.org/students/memberships.php">SIAM Membership</a> is free for CU students, 30% discount on SIAM books</p></li>
+<li><p><a class="reference external" href="https://faculty.washington.edu/rjl/fdmbook/">LeVeque, <em>Finite Difference Methods for Ordinary and Partial Differential Equations</em></a> (CU students can <a class="reference external" href="http://epubs.siam.org/doi/book/10.1137/1.9780898717839">download free from SIAM</a>)</p></li>
+<li><p><a class="reference external" href="https://depts.washington.edu/clawpack/book.html">LeVeque, <em>Finite Volume Methods for Hyperbolic Problems</em></a> and the <a class="reference external" href="http://www.clawpack.org/">Clawpack software</a>.</p></li>
+<li><p><a class="reference external" href="https://link.springer.com/book/10.1007%2Fb79761#toc">Toro, <em>Riemann Solvers and Numerical Methods for Fluid Dynamics</em></a>. (CU students can download free)</p></li>
+<li><p><a class="reference external" href="https://link.springer.com/book/10.1007%2F978-3-642-23099-8">Logg, Mardal, Wells, <em>Automated Solution of Differential Equations by the Finite Element Method (The FEniCS Book)</em></a>. (free download)</p></li>
+<li><p><a class="reference external" href="https://people.maths.ox.ac.uk/trefethen/spectral.html">Trefethen, <em>Spectral Methods in MATLAB</em></a>. (CU students can <a class="reference external" href="http://epubs.siam.org/doi/book/10.1137/1.9780898719598">download free from SIAM</a>)</p></li>
+<li><p>Elman, Silvester, Wathen, <em>Finite Elements and Fast Iterative Solvers with Applications in Incompressible Fluid Dynamics</em></p></li>
+</ul>
+</section>
+<section id="classroom-behavior">
+<h2>Classroom Behavior<a class="headerlink" href="#classroom-behavior" title="Permalink to this headline">#</a></h2>
+<p>Both students and faculty are responsible for maintaining an appropriate learning environment in all instructional settings, whether in person, remote or online. Those who fail to adhere to such behavioral standards may be subject to discipline. Professional courtesy and sensitivity are especially important with respect to individuals and topics dealing with race, color, national origin, sex, pregnancy, age, disability, creed, religion, sexual orientation, gender identity, gender expression, veteran status, political affiliation or political philosophy.  For more information, see the policies on classroom behavior and the Student Conduct &amp; Conflict Resolution policies.</p>
+</section>
+<section id="requirements-for-covid-19">
+<h2>Requirements for COVID-19<a class="headerlink" href="#requirements-for-covid-19" title="Permalink to this headline">#</a></h2>
+<p>As a matter of public health and safety due to the pandemic, all members of the CU Boulder community and all visitors to campus must follow university, department and building requirements and all public health orders in place to reduce the risk of spreading infectious disease. Students who fail to adhere to these requirements will be asked to leave class, and students who do not leave class when asked or who refuse to comply with these requirements will be referred to Student Conduct and Conflict Resolution. For more information, see the policy on classroom behavior and the Student Code of Conduct. If you require accommodation because a disability prevents you from fulfilling these safety measures, please follow the steps in the “Accommodation for Disabilities” statement on this syllabus.</p>
+<p>As of Aug. 13, 2021, CU Boulder has returned to requiring masks in classrooms and laboratories regardless of vaccination status. This requirement is a temporary precaution during the delta surge to supplement CU Boulder’s COVID-19 vaccine requirement. Exemptions include individuals who cannot medically tolerate a face covering, as well as those who are hearing-impaired or otherwise disabled or who are communicating with someone who is hearing-impaired or otherwise disabled and where the ability to see the mouth is essential to communication. If you qualify for a mask-related accommodation, please follow the steps in the “Accommodation for Disabilities” statement on this syllabus. In addition, vaccinated instructional faculty who are engaged in an indoor instructional activity and are separated by at least 6 feet from the nearest person are exempt from wearing masks if they so choose.</p>
+<p>Students who have tested positive for COVID-19, have symptoms of COVID-19, or have had close contact with someone who has tested positive for or had symptoms of COVID-19 must stay home. In this class, if you are sick or quarantined, please attend virtually or asynchronously and let me know. If you’ll be out for an extended time and unable to attend virtually/asynchronously, please let me know so we can make a plan.</p>
+</section>
+<section id="accommodation-for-disabilities">
+<h2>Accommodation for Disabilities<a class="headerlink" href="#accommodation-for-disabilities" title="Permalink to this headline">#</a></h2>
+<p>If you qualify for accommodations because of a disability, please submit your accommodation letter from Disability Services to your faculty member in a timely manner so that your needs can be addressed.  Disability Services determines accommodations based on documented disabilities in the academic environment.  Information on requesting accommodations is located on the Disability Services website. Contact Disability Services at 303-492-8671 or <a class="reference external" href="mailto:dsinfo&#37;&#52;&#48;colorado&#46;edu">dsinfo<span>&#64;</span>colorado<span>&#46;</span>edu</a> for further assistance.  If you have a temporary medical condition, see Temporary Medical Conditions on the Disability Services website.</p>
+</section>
+<section id="preferred-student-names-and-pronouns">
+<h2>Preferred Student Names and Pronouns<a class="headerlink" href="#preferred-student-names-and-pronouns" title="Permalink to this headline">#</a></h2>
+<p>CU Boulder recognizes that students’ legal information doesn’t always align with how they identify. Students may update their preferred names and pronouns via the student portal; those preferred names and pronouns are listed on instructors’ class rosters. In the absence of such updates, the name that appears on the class roster is the student’s legal name.</p>
+</section>
+<section id="honor-code">
+<h2>Honor Code<a class="headerlink" href="#honor-code" title="Permalink to this headline">#</a></h2>
+<p>All students enrolled in a University of Colorado Boulder course are responsible for knowing and adhering to the Honor Code academic integrity policy. Violations of the Honor Code may include, but are not limited to: plagiarism, cheating, fabrication, lying, bribery, threat, unauthorized access to academic materials, clicker fraud, submitting the same or similar work in more than one course without permission from all course instructors involved, and aiding academic dishonesty. All incidents of academic misconduct will be reported to the Honor Code (<a class="reference external" href="mailto:honor&#37;&#52;&#48;colorado&#46;edu">honor<span>&#64;</span>colorado<span>&#46;</span>edu</a>); 303-492-5550). Students found responsible for violating the academic integrity policy will be subject to nonacademic sanctions from the Honor Code as well as academic sanctions from the faculty member. Additional information regarding the Honor Code academic integrity policy can be found on the Honor Code website.</p>
+</section>
+<section id="sexual-misconduct-discrimination-harassment-and-or-related-retaliation">
+<h2>Sexual Misconduct, Discrimination, Harassment and/or Related Retaliation<a class="headerlink" href="#sexual-misconduct-discrimination-harassment-and-or-related-retaliation" title="Permalink to this headline">#</a></h2>
+<p>The University of Colorado Boulder (CU Boulder) is committed to fostering an inclusive and welcoming learning, working, and living environment. CU Boulder will not tolerate acts of sexual misconduct (harassment, exploitation, and assault), intimate partner violence (dating or domestic violence), stalking, or protected-class discrimination or harassment by or against members of our community. Individuals who believe they have been subject to misconduct or retaliatory actions for reporting a concern should contact the Office of Institutional Equity and Compliance (OIEC) at 303-492-2127 or email <a class="reference external" href="mailto:cureport&#37;&#52;&#48;colorado&#46;edu">cureport<span>&#64;</span>colorado<span>&#46;</span>edu</a>. Information about OIEC, university policies, reporting options, and the campus resources can be found on the OIEC website.</p>
+<p>Please know that faculty and graduate instructors have a responsibility to inform OIEC when made aware of incidents of sexual misconduct, dating and domestic violence, stalking, discrimination, harassment and/or related retaliation, to ensure that individuals impacted receive information about their rights, support resources, and reporting options.</p>
+</section>
+<section id="religious-holidays">
+<h2>Religious Holidays<a class="headerlink" href="#religious-holidays" title="Permalink to this headline">#</a></h2>
+<p>Campus policy regarding religious observances requires that faculty make every effort to deal reasonably and fairly with all students who, because of religious obligations, have conflicts with scheduled exams, assignments or required attendance.  This class is flexible in many ways, but I would appreciate if you let me know of any conflicts.</p>
+<p>See the campus policy regarding religious observances for full details.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Welcome</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="slides.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Slides</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
