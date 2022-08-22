@@ -1,0 +1,10 @@
+jupyter-book
+matplotlib
+numpy
+#altair
+jupyter-contrib-nbextensions
+jupyter-latex-envs
+jupyter_contrib_nbextensions
+nbclassic
+pandas
+rise

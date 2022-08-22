@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+chapters:
+- file: syllabus
+- file: slides
+  sections:
+  - file: slides/2022-08-22-first-day.ipynb
