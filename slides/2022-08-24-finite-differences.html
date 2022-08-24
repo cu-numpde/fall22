@@ -1,0 +1,919 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-08-24 Finite Differences &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-08-22 First Day" href="2022-08-22-first-day.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-08-24-finite-differences.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-08-24-finite-differences.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-08-24-finite-differences.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-08-24 Finite Differences
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choices-in-scoping-the-class">
+   Choices in scoping the class
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#theory">
+     Theory
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applied">
+     Applied
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-from-scratch">
+     Build from scratch
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-using-libraries">
+     Build using libraries
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#consider-the-boundary-value-problem-find-u">
+   Consider the boundary value problem: find
+   <span class="math notranslate nohighlight">
+    \(u\)
+   </span>
+   :
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-difference-collocation-approach-to-solve-u">
+   Finite Difference/collocation approach to solve
+   <span class="math notranslate nohighlight">
+    \(u\)
+   </span>
+   :
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-a-derivative">
+   Computing a derivative
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-accurate-is-it">
+   How accurate is it?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activity-on-stability-and-accuracy-computing-derivatives">
+   Activity on stability and accuracy computing derivatives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-note-on-stable-computation">
+   A note on stable computation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-methods-on-grids">
+   A few methods on grids
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-error-on-grids">
+   Measuring error on grids
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability">
+   Stability
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-08-24 Finite Differences</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-08-24 Finite Differences
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choices-in-scoping-the-class">
+   Choices in scoping the class
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#theory">
+     Theory
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applied">
+     Applied
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-from-scratch">
+     Build from scratch
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-using-libraries">
+     Build using libraries
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#consider-the-boundary-value-problem-find-u">
+   Consider the boundary value problem: find
+   <span class="math notranslate nohighlight">
+    \(u\)
+   </span>
+   :
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-difference-collocation-approach-to-solve-u">
+   Finite Difference/collocation approach to solve
+   <span class="math notranslate nohighlight">
+    \(u\)
+   </span>
+   :
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-a-derivative">
+   Computing a derivative
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-accurate-is-it">
+   How accurate is it?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activity-on-stability-and-accuracy-computing-derivatives">
+   Activity on stability and accuracy computing derivatives
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-note-on-stable-computation">
+   A note on stable computation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-few-methods-on-grids">
+   A few methods on grids
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-error-on-grids">
+   Measuring error on grids
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability">
+   Stability
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="finite-differences">
+<h1>2022-08-24 Finite Differences<a class="headerlink" href="#finite-differences" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>General shape of PDE solvers and stakeholders</p></li>
+<li><p>Comparing/plotting cost and accuracy</p></li>
+<li><p>Learning strategy</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Discussion and scoping</p></li>
+<li><p>Evaluating derivatives</p></li>
+<li><p>Taylor series and truncation error</p></li>
+<li><p>Stability</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="choices-in-scoping-the-class">
+<h1>Choices in scoping the class<a class="headerlink" href="#choices-in-scoping-the-class" title="Permalink to this headline">#</a></h1>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">#</a></h2>
+<p>Analysis first, confirm using numerics.
+Limited to simpler models.</p>
+</section>
+<section id="applied">
+<h2>Applied<a class="headerlink" href="#applied" title="Permalink to this headline">#</a></h2>
+<p>Numerics first, pointers to useful theory.</p>
+</section>
+<hr class="docutils" />
+<section id="build-from-scratch">
+<h2>Build from scratch<a class="headerlink" href="#build-from-scratch" title="Permalink to this headline">#</a></h2>
+<p>Limited to simpler models, but you’ll understand everything under the hood.</p>
+</section>
+<section id="build-using-libraries">
+<h2>Build using libraries<a class="headerlink" href="#build-using-libraries" title="Permalink to this headline">#</a></h2>
+<p>More installation and software layers, but can solve more interesting problems.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="consider-the-boundary-value-problem-find-u">
+<h1>Consider the boundary value problem: find <span class="math notranslate nohighlight">\(u\)</span>:<a class="headerlink" href="#consider-the-boundary-value-problem-find-u" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight" id="equation-2acca696-e9d8-4c5f-86ab-f49b62f2b6b0">
+<span class="eqno">(3)<a class="headerlink" href="#equation-2acca696-e9d8-4c5f-86ab-f49b62f2b6b0" title="Permalink to this equation">#</a></span>\[\begin{gather} -\frac{d^2 u}{dx^2} = f(x) \quad x \in \Omega = (-1,1) \\
+u(-1) = a \quad \frac{du}{dx}(1) = b .
+\end{gather}\]</div>
+<p>We say</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is the “forcing”</p></li>
+<li><p>the left boundary condition is Dirichlet</p></li>
+<li><p>the right boundary condition is Neumann</p></li>
+</ul>
+<p>We need to choose</p>
+<ul class="simple">
+<li><p>how to represent <span class="math notranslate nohighlight">\(u(x)\)</span>, including evaluating it on the boundary,</p></li>
+<li><p>how to compute derivatives of <span class="math notranslate nohighlight">\(u\)</span>,</p></li>
+<li><p>in what sense to ask for the differential equation to be satisfied,</p></li>
+<li><p>where to evaluate <span class="math notranslate nohighlight">\(f(x)\)</span> or integrals thereof,</p></li>
+<li><p>how to enforce boundary conditions.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="finite-difference-collocation-approach-to-solve-u">
+<h1>Finite Difference/collocation approach to solve <span class="math notranslate nohighlight">\(u\)</span>:<a class="headerlink" href="#finite-difference-collocation-approach-to-solve-u" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight" id="equation-1edb1465-35d9-43eb-b203-4fa0a77f58e1">
+<span class="eqno">(4)<a class="headerlink" href="#equation-1edb1465-35d9-43eb-b203-4fa0a77f58e1" title="Permalink to this equation">#</a></span>\[\begin{gather} -\frac{d^2 u}{dx^2} = f(x) \quad x \in \Omega = (-1,1) \\
+u(-1) = a \quad \frac{du}{dx}(1) = b .
+\end{gather}\]</div>
+<ul class="simple">
+<li><p>Represent the function <span class="math notranslate nohighlight">\(u(x)\)</span> by its values <span class="math notranslate nohighlight">\(u_i = u(x_i)\)</span> at a discrete set of points <div class="math notranslate nohighlight">
+\[ -1 = x_1 &lt; x_2 &lt; \dotsb &lt; x_n = 1 . \]</div>
+</p>
+<ul>
+<li><p>The FD framework does not uniquely specify the solution values at other points</p></li>
+</ul>
+</li>
+<li><p>Compute derivatives at <span class="math notranslate nohighlight">\(x_i\)</span> via differencing formulas involving a finite number of neighbor points (independent of the total number of points <span class="math notranslate nohighlight">\(n\)</span>).</p></li>
+<li><p>FD methods ask for the differential equation to be satisfied pointwise at each <span class="math notranslate nohighlight">\(x_i\)</span> in the interior of the domain.</p></li>
+<li><p>Evaluate the forcing term <span class="math notranslate nohighlight">\(f\)</span> pointwise at <span class="math notranslate nohighlight">\(x_i\)</span>.</p></li>
+<li><p>Approximate derivatives at discrete boundary points (<span class="math notranslate nohighlight">\(x_n = 1\)</span> above), typically using one-sided differencing formulas.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="computing-a-derivative">
+<h1>Computing a derivative<a class="headerlink" href="#computing-a-derivative" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_13_0.svg" src="../_images/2022-08-24-finite-differences_13_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">u_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">fd_u_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u_x</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">fd_u_x</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_14_0.svg" src="../_images/2022-08-24-finite-differences_14_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="how-accurate-is-it">
+<h1>How accurate is it?<a class="headerlink" href="#how-accurate-is-it" title="Permalink to this headline">#</a></h1>
+<p>Without loss of generality, we’ll approximate <span class="math notranslate nohighlight">\(u'(x_i = 0)\)</span>, taking <span class="math notranslate nohighlight">\(h = x_{i+1} - x_i\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ u(x) = u(0) + u'(0)x + u''(0)x^2/2! + O(x^3)\]</div>
+<p>and substitute into the differencing formula
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{split} u'(0) \approx \frac{u(h) - u(0)}{h} = h^{-1} \Big( u(0) + u'(0) h + u''(0)h^2/2 + O(h^3) - u(0) \Big) \\
+= u'(0) + u''(0)h/2 + O(h^2) . \end{split}\end{split}\]</div>
+
+Evidently the error in this approximation is <span class="math notranslate nohighlight">\(u''(0)h/2 + O(h^2)\)</span>. We say this method is <em>first order accurate</em>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-on-stability-and-accuracy-computing-derivatives">
+<h1>Activity on stability and accuracy computing derivatives<a class="headerlink" href="#activity-on-stability-and-accuracy-computing-derivatives" title="Permalink to this headline">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="a-note-on-stable-computation">
+<h1>A note on stable computation<a class="headerlink" href="#a-note-on-stable-computation" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-15</span><span class="w"></span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x = 1.0e-15
+log(1 + x) = 1.110223024625156e-15
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.110223024625156e-15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">log1p</span><span class="p">],</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-15</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-15</span><span class="p">))</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_19_0.svg" src="../_images/2022-08-24-finite-differences_19_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="a-few-methods-on-grids">
+<h1>A few methods on grids<a class="headerlink" href="#a-few-methods-on-grids" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">diff1l</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">],</span><span class="w">   </span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
+<span class="n">diff1r</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
+<span class="n">diff1c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="w"></span>
+<span class="n">difflist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">diff1l</span><span class="p">,</span><span class="w"> </span><span class="n">diff1r</span><span class="p">,</span><span class="w"> </span><span class="n">diff1c</span><span class="p">]</span><span class="w"></span>
+
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">difflist</span><span class="w"></span>
+<span class="w">    </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">d</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_22_0.svg" src="../_images/2022-08-24-finite-differences_22_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="measuring-error-on-grids">
+<h1>Measuring error on grids<a class="headerlink" href="#measuring-error-on-grids" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+
+<span class="n">grids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">:</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">grids</span><span class="w"></span>
+<span class="k">function</span><span class="w"> </span><span class="n">refinement_error</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">fprime</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">grids</span><span class="w"></span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">yy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fprime</span><span class="o">.</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">error</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>refinement_error (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">difflist</span><span class="w"></span>
+<span class="w">    </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">refinement_error</span><span class="p">(</span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">d</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_25_0.svg" src="../_images/2022-08-24-finite-differences_25_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stability">
+<h1>Stability<a class="headerlink" href="#stability" title="Permalink to this headline">#</a></h1>
+<p>Are there “rough” functions for which these formulas estimate <span class="math notranslate nohighlight">\(u'(x_i) = 0\)</span>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w"></span>
+<span class="n">f_rough</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="mf">.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">fp_rough</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="nb">π</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mf">.1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f_rough</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">f_rough</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_27_0.svg" src="../_images/2022-08-24-finite-differences_27_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">fp_rough</span><span class="p">,</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">difflist</span><span class="w"></span>
+<span class="w">    </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f_rough</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">fig</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-08-24-finite-differences_28_0.svg" src="../_images/2022-08-24-finite-differences_28_0.svg" /></div>
+</div>
+<p>If we have a solution <span class="math notranslate nohighlight">\(u(x)\)</span>, then <span class="math notranslate nohighlight">\(u(x) + f_{\text{rough}}(x)\)</span> is indistinguishable to our FD method.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-08-22-first-day.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-08-22 First Day</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

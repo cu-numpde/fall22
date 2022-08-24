@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-08-24 Finite Differences" href="2022-08-24-finite-differences.html" />
     <link rel="prev" title="Slides" href="../slides.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -134,6 +135,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
     </a>
    </li>
   </ul>
@@ -916,8 +922,8 @@ title="Print to PDF"
 <li><p>population dynamics</p></li>
 </ul>
 <p>Find <span class="math notranslate nohighlight">\(u\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78f63df6-4c3d-48bc-992f-ba7d843483a9">
-<span class="eqno">(1)<a class="headerlink" href="#equation-78f63df6-4c3d-48bc-992f-ba7d843483a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3b95198f-f3bf-4ec0-80d3-007d3d39eafe">
+<span class="eqno">(1)<a class="headerlink" href="#equation-3b95198f-f3bf-4ec0-80d3-007d3d39eafe" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\nabla\cdot\big(\kappa(\mathbf x) \nabla u(\mathbf x)\big) &amp;= f(\mathbf x) &amp; \mathbf x &amp;\in \Omega \\
 u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \partial\Omega \\
 \kappa(\mathbf x) \nabla u(\mathbf x) \cdot \mathbf{\hat n}(\mathbf x) &amp;= h(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_N \subset\partial\Omega
@@ -930,8 +936,8 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 <section class="tex2jax_ignore mathjax_ignore" id="what-does-it-mean-to-discretize-a-pde">
 <h1>What does it mean to discretize a PDE?<a class="headerlink" href="#what-does-it-mean-to-discretize-a-pde" title="Permalink to this headline">#</a></h1>
 <p>Find <span class="math notranslate nohighlight">\(u\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41f0cbbb-f60d-4ee0-bfb1-f504f66b8251">
-<span class="eqno">(2)<a class="headerlink" href="#equation-41f0cbbb-f60d-4ee0-bfb1-f504f66b8251" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-80f830d4-faef-4fd1-a704-cebf0bbc0764">
+<span class="eqno">(2)<a class="headerlink" href="#equation-80f830d4-faef-4fd1-a704-cebf0bbc0764" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\nabla\cdot\big(\kappa(\mathbf x) \nabla u(\mathbf x)\big) &amp;= f(\mathbf x) &amp; \mathbf x &amp;\in \Omega \\
 u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \partial\Omega \\
 \nabla u(\mathbf x) \cdot \mathbf{\hat n}(\mathbf x) &amp;= h(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_N \subset\partial\Omega
@@ -982,10 +988,6 @@ u(\mathbf x) &amp;= g(\mathbf x) &amp; \mathbf x &amp;\in \Gamma_D \subset \part
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling Plots [91a5bcdd-55d7-5caf-9e0b-520d859cae80]
-└ @ Base loading.jl:1662
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cost2 (generic function with 1 method)
 </pre></div>
 </div>
@@ -1315,6 +1317,13 @@ Limited to simpler models.</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Slides</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-08-24-finite-differences.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-08-24 Finite Differences</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
