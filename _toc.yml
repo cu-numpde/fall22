@@ -8,3 +8,4 @@ chapters:
 - file: slides
   sections:
   - file: slides/2022-08-22-first-day.ipynb
+  - file: slides/2022-08-24-finite-differences.ipynb

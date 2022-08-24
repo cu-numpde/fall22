@@ -16,7 +16,7 @@ Welcome to **CSCI-5636: Numerical Solution of Partial Differential Equations**
 
 * - Name
   - Objectives
-* - [2022-08-22-derivatives](https://classroom.github.com/a/Y_75hFL8)
+* - [2022-08-24-derivatives](https://classroom.github.com/a/8I4O5IcG)
   - Use GitHub classroom and observe two kinds of numerical error: rounding error and discretization (aka. truncation) error.
 :::
 ::::
@@ -24,6 +24,8 @@ Welcome to **CSCI-5636: Numerical Solution of Partial Differential Equations**
 :::{admonition} Resources
 
 * [SIAM Membership](http://www.siam.org/students/memberships.php) is free for CU students (30% discount on SIAM books)
+* Lecture series
+  * [Bangerth, *Finite element methods in scientific computing course*](https://www.math.colostate.edu/~bangerth/videos.html) (focus on deal.II finite element library and C++)
 * Books
   * [Driscoll and Braun, *Fundamentals of Numerical Computation*](https://fncbook.github.io/fnc/frontmatter.html) (free, in Julia with demo notebooks)
   * [Myers, Van de Geijn, Van de Geijn, *Linear Algebra: Foundations to Frontiers*](http://www.ulaff.net/downloads.html) (free PDF and videos)
