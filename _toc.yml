@@ -10,3 +10,4 @@ chapters:
   - file: slides/2022-08-22-first-day.ipynb
   - file: slides/2022-08-24-finite-differences.ipynb
   - file: slides/2022-08-26-fd-solutions.ipynb
+  - file: slides/2022-08-29-fd-verification.ipynb
