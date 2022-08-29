@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2022-08-24 Finite Differences &#8212; Numerical Solution of Partial Differential Equations</title>
+    <title>2022-08-26 FD Solutions &#8212; Numerical Solution of Partial Differential Equations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-08-29 FD Verification" href="2022-08-29-fd-verification.html" />
     <link rel="prev" title="2022-08-24 Finite Differences" href="2022-08-24-finite-differences.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -143,7 +144,12 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     2022-08-24 Finite Differences
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
     </a>
    </li>
   </ul>
@@ -374,7 +380,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-08-24 Finite Differences
+   2022-08-26 FD Solutions
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -516,7 +522,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2022-08-24 Finite Differences</h1>
+                <h1>2022-08-26 FD Solutions</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -528,7 +534,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-08-24 Finite Differences
+   2022-08-26 FD Solutions
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -671,8 +677,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="finite-differences">
-<h1>2022-08-24 Finite Differences<a class="headerlink" href="#finite-differences" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="fd-solutions">
+<h1>2022-08-26 FD Solutions<a class="headerlink" href="#fd-solutions" title="Permalink to this headline">#</a></h1>
 <section id="last-time">
 <h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
@@ -687,7 +693,7 @@ title="Print to PDF"
 <li><p>Discuss activity</p></li>
 <li><p>Measuring errors</p></li>
 <li><p>Stable discretizations</p></li>
-<li></li>
+<li><p>Solutions and matrix properties</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -702,8 +708,8 @@ title="Print to PDF"
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="finite-difference-collocation-approach-to-solve-u">
 <h1>Finite Difference/collocation approach to solve <span class="math notranslate nohighlight">\(u\)</span>:<a class="headerlink" href="#finite-difference-collocation-approach-to-solve-u" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-e67ad22f-a3ac-4d07-afad-f7cffce5cd4b">
-<span class="eqno">(5)<a class="headerlink" href="#equation-e67ad22f-a3ac-4d07-afad-f7cffce5cd4b" title="Permalink to this equation">#</a></span>\[\begin{gather} -\frac{d^2 u}{dx^2} = f(x) \quad x \in \Omega = (-1,1) \\
+<div class="amsmath math notranslate nohighlight" id="equation-4aa86df9-299a-44d4-856a-24ff9ae4fb28">
+<span class="eqno">(5)<a class="headerlink" href="#equation-4aa86df9-299a-44d4-856a-24ff9ae4fb28" title="Permalink to this equation">#</a></span>\[\begin{gather} -\frac{d^2 u}{dx^2} = f(x) \quad x \in \Omega = (-1,1) \\
 u(-1) = a \quad \frac{du}{dx}(1) = b .
 \end{gather}\]</div>
 <ul class="simple">
@@ -727,26 +733,26 @@ u(-1) = a \quad \frac{du}{dx}(1) = b .
 <h1>A note on stable computation<a class="headerlink" href="#a-note-on-stable-computation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-15</span><span class="w"></span>
 <span class="nd">@show</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
 <span class="nd">@show</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x = 1.0e-10
-log(1 + x) = 1.000000082690371e-10
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x = 1.0e-15
+log(1 + x) = 1.110223024625156e-15
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.000000082690371e-10
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.110223024625156e-15
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="ss">:black</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">([</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">log1p</span><span class="p">],</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">.8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c">#plot(h -&gt; 1*h, color=:black)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">([</span><span class="n">h</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="p">),</span><span class="w"> </span><span class="n">log1p</span><span class="p">],</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-15</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-15</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -800,7 +806,7 @@ log(1 + x) = 1.000000082690371e-10
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">grids</span><span class="w"></span>
 <span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
-<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">yy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fprime</span><span class="o">.</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">yy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fprime</span><span class="o">.</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="n">error</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
@@ -820,7 +826,7 @@ log(1 + x) = 1.000000082690371e-10
 <span class="w">    </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">refinement_error</span><span class="p">(</span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">d</span><span class="p">)</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">hs</span><span class="w"> </span><span class="n">hs</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;h&quot;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -982,11 +988,18 @@ log(1 + x) = 1.000000082690371e-10
 <span class="w">    </span><span class="n">D</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">h</span><span class="w">  </span><span class="mi">1</span><span class="o">/</span><span class="n">h</span><span class="p">]</span><span class="w"></span>
 <span class="w">    </span><span class="n">D</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
+<span class="n">diff1_mat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>diff1_mat (generic function with 1 method)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 Matrix{Float64}:
+ -2.0   2.0   0.0   0.0  0.0
+ -1.0   0.0   1.0   0.0  0.0
+  0.0  -1.0   0.0   1.0  0.0
+  0.0   0.0  -1.0   0.0  1.0
+  0.0   0.0   0.0  -2.0  2.0
 </pre></div>
 </div>
 </div>
@@ -1251,6 +1264,13 @@ When building a matrix system for the BVP, we can implement this boundary condit
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-08-24 Finite Differences</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-08-29-fd-verification.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-08-29 FD Verification</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
