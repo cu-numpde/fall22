@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-08-31 Fourier and conditioning" href="2022-08-31-fourier.html" />
     <link rel="prev" title="2022-08-26 FD Solutions" href="2022-08-26-fd-solutions.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -149,6 +150,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
     </a>
    </li>
   </ul>
@@ -1042,22 +1048,14 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">eigvals</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigen</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real</span><span class="o">.</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">vectors</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="k">end</span><span class="p">]))</span><span class="w"></span>
+<span class="n">cond</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">vectors</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10-element Vector{ComplexF64}:
-   -7.219363424932637e-8 + 0.0im
- -1.0787811616230769e-14 - 0.26047226650040234im
- -1.0787811616230769e-14 + 0.26047226650040234im
-  -1.942890293094024e-16 - 1.1490666646784673im
-  -1.942890293094024e-16 + 1.1490666646784673im
-  3.3306690738754696e-16 - 1.4095389311788624im
-  3.3306690738754696e-16 + 1.4095389311788624im
-  3.7470027081099033e-16 - 0.750000000000001im
-  3.7470027081099033e-16 + 0.750000000000001im
-    7.219365506018768e-8 + 0.0im
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.235843048053087e8
 </pre></div>
 </div>
 </div>
@@ -1114,26 +1112,24 @@ When building a matrix system for the BVP, we can implement this boundary condit
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@show</span><span class="w"> </span><span class="n">cond</span><span class="p">(</span><span class="n">L</span><span class="p">)</span><span class="w"></span>
-<span class="n">eigvals</span><span class="p">(</span><span class="n">L</span><span class="p">)</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@show</span><span class="w"> </span><span class="n">cond</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+<span class="n">eigvals</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cond(L) = 36.5545720479542
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cond(L[2:end, 2:end]) = 34.501035019135145
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10-element Vector{Float64}:
- 0.27138320646341163
- 1.0
- 1.0
- 1.052800005964599
- 2.250000000000001
- 3.7185832004988066
- 5.281416799501184
- 6.749999999999994
- 7.947199994035395
- 8.728616793536574
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element Vector{Float64}:
+ 0.27138320646341185
+ 1.0528000059645986
+ 2.249999999999998
+ 3.7185832004988097
+ 5.28141679950118
+ 6.749999999999993
+ 7.947199994035394
+ 8.72861679353658
 </pre></div>
 </div>
 </div>
@@ -1146,8 +1142,8 @@ When building a matrix system for the BVP, we can implement this boundary condit
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">laplacian_dirichlet</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="n">f</span><span class="p">[</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"></span>
 </pre></div>
@@ -1194,7 +1190,7 @@ When building a matrix system for the BVP, we can implement this boundary condit
 <h1>Discrete eigenfunctions<a class="headerlink" href="#discrete-eigenfunctions" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="p">)</span><span class="w"></span>
 <span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">laplacian_dirichlet</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="n">Lambda</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigen</span><span class="p">(</span><span class="n">L</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">Lambda</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
@@ -1206,7 +1202,7 @@ When building a matrix system for the BVP, we can implement this boundary condit
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">4</span><span class="p">])</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1310,8 +1306,8 @@ When building a matrix system for the BVP, we can implement this boundary condit
 \[p(x) = c_0 + c_1 x + c_2 x^2 + \dotsb.\]</div>
 
 What is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15e4e5b0-02e2-4fb8-acc1-c0a27d1b25af">
-<span class="eqno">(6)<a class="headerlink" href="#equation-15e4e5b0-02e2-4fb8-acc1-c0a27d1b25af" title="Permalink to this equation">#</a></span>\[\begin{align} p(0) &amp;= c_0 \\
+<div class="amsmath math notranslate nohighlight" id="equation-b0e99a12-4906-4d7f-9f51-838864f8b043">
+<span class="eqno">(6)<a class="headerlink" href="#equation-b0e99a12-4906-4d7f-9f51-838864f8b043" title="Permalink to this equation">#</a></span>\[\begin{align} p(0) &amp;= c_0 \\
 p'(0) &amp;= c_1 \\ 
 p''(0) &amp;= c_2 \cdot 2\\
 p^{(k)}(0) &amp;= c_k \cdot k! .
@@ -1584,8 +1580,8 @@ after dividing by 2 and moving the boundary term to the right hand side.</p>
 <h1>Fourier analysis of stencils<a class="headerlink" href="#fourier-analysis-of-stencils" title="Permalink to this headline">#</a></h1>
 <p>Consider the plane waves <span class="math notranslate nohighlight">\(\phi(x, \theta) = e^{i\theta x}\)</span>.</p>
 <p>Sample <span class="math notranslate nohighlight">\(\phi\)</span> on a discrete grid <span class="math notranslate nohighlight">\(x = \mathbb Z\)</span> and apply the stencil</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b4bc38c-e9ca-415b-89cd-e44135429757">
-<span class="eqno">(7)<a class="headerlink" href="#equation-8b4bc38c-e9ca-415b-89cd-e44135429757" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9e684312-ef18-4e45-8239-e3c0ccda63b3">
+<span class="eqno">(7)<a class="headerlink" href="#equation-9e684312-ef18-4e45-8239-e3c0ccda63b3" title="Permalink to this equation">#</a></span>\[\begin{align}
 S \phi(x, \theta) &amp;= s_{-1} \phi(x-1, \theta) + s_{0} \phi(x, \theta) + s_1 \phi(x+1,\theta) \\
 &amp;= \Big( s_{-1} e^{-i\theta} + s_0 + s_{1} e^{i\theta} \Big) \phi(x, \theta)
 \end{align}\]</div>
@@ -1641,6 +1637,13 @@ What is the symbol of the continuous second derivative?</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-08-26 FD Solutions</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-08-31-fourier.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-08-31 Fourier and conditioning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
