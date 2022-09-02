@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2022-08-31 Fourier and conditioning &#8212; Numerical Solution of Partial Differential Equations</title>
+    <title>2022-09-02 Chebyshev collocation &#8212; Numerical Solution of Partial Differential Equations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,8 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2022-09-02 Chebyshev collocation" href="2022-09-02-chebyshev.html" />
-    <link rel="prev" title="2022-08-29 FD Verification" href="2022-08-29-fd-verification.html" />
+    <link rel="prev" title="2022-08-31 Fourier and conditioning" href="2022-08-31-fourier.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -152,13 +151,13 @@ const thebe_selector_output = ".output, .cell_output"
      2022-08-29 FD Verification
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
      2022-08-31 Fourier and conditioning
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="2022-09-02-chebyshev.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      2022-09-02 Chebyshev collocation
     </a>
    </li>
@@ -223,7 +222,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-08-31-fourier.ipynb"
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-02-chebyshev.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -301,7 +300,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-08-31-fourier.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-02-chebyshev.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -329,7 +328,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/slides/2022-08-31-fourier.ipynb"
+        <a href="../_sources/slides/2022-09-02-chebyshev.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -390,7 +389,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-08-31 Fourier and conditioning
+   2022-09-02 Chebyshev collocation
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -401,49 +400,6 @@ title="Print to PDF"
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#today">
      Today
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#reading-to-discuss-today">
-     Reading to discuss today
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#talks-in-ecot-831-after-class-12-15">
-     Talks in ECOT 831 after class (12:15)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interpolation-by-vandermonde-matrices">
-   Interpolation by Vandermonde matrices
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-order">
-   Convergence order
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#observations">
-     Observations
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#high-order-discretization-of-the-laplacian">
-   High order discretization of the Laplacian
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-poisson-problem-u-xx-f-with-boundary-conditions">
-     The Poisson problem
-     <span class="math notranslate nohighlight">
-      \(-u_{xx} = f\)
-     </span>
-     with boundary conditions
     </a>
    </li>
   </ul>
@@ -463,21 +419,6 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convergence-rate">
    Convergence rate
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symmetry-in-boundary-conditions-dirichlet">
-   Symmetry in boundary conditions: Dirichlet
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symmetry-in-boundary-conditions-neumann">
-   Symmetry in boundary conditions: Neumann
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fourier-analysis-of-stencils">
-   Fourier analysis of stencils
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -549,6 +490,21 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#lagrange-interpolating-polynomials">
    Lagrange interpolating polynomials
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differentiating-via-chebyshev">
+   Differentiating via Chebyshev
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-a-bvp-on-chebyshev-nodes">
+   Solving a BVP on Chebyshev nodes
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectral-exponential-convergence">
+   “spectral” (exponential) convergence
   </a>
  </li>
 </ul>
@@ -560,7 +516,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2022-08-31 Fourier and conditioning</h1>
+                <h1>2022-09-02 Chebyshev collocation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -572,7 +528,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-08-31 Fourier and conditioning
+   2022-09-02 Chebyshev collocation
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -583,49 +539,6 @@ title="Print to PDF"
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#today">
      Today
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#reading-to-discuss-today">
-     Reading to discuss today
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#talks-in-ecot-831-after-class-12-15">
-     Talks in ECOT 831 after class (12:15)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interpolation-by-vandermonde-matrices">
-   Interpolation by Vandermonde matrices
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-order">
-   Convergence order
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#observations">
-     Observations
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#high-order-discretization-of-the-laplacian">
-   High order discretization of the Laplacian
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-poisson-problem-u-xx-f-with-boundary-conditions">
-     The Poisson problem
-     <span class="math notranslate nohighlight">
-      \(-u_{xx} = f\)
-     </span>
-     with boundary conditions
     </a>
    </li>
   </ul>
@@ -645,21 +558,6 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convergence-rate">
    Convergence rate
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symmetry-in-boundary-conditions-dirichlet">
-   Symmetry in boundary conditions: Dirichlet
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symmetry-in-boundary-conditions-neumann">
-   Symmetry in boundary conditions: Neumann
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fourier-analysis-of-stencils">
-   Fourier analysis of stencils
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -731,6 +629,21 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#lagrange-interpolating-polynomials">
    Lagrange interpolating polynomials
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#differentiating-via-chebyshev">
+   Differentiating via Chebyshev
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-a-bvp-on-chebyshev-nodes">
+   Solving a BVP on Chebyshev nodes
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectral-exponential-convergence">
+   “spectral” (exponential) convergence
   </a>
  </li>
 </ul>
@@ -743,33 +656,23 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fourier-and-conditioning">
-<h1>2022-08-31 Fourier and conditioning<a class="headerlink" href="#fourier-and-conditioning" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="chebyshev-collocation">
+<h1>2022-09-02 Chebyshev collocation<a class="headerlink" href="#chebyshev-collocation" title="Permalink to this headline">#</a></h1>
 <section id="last-time">
 <h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Solutions and matrix properties</p></li>
-<li><p>Arbitrary order discretization</p></li>
-<li><p>Method of manufactured solutions</p></li>
+<li><p>Method of Manufactured Solutions</p></li>
+<li><p>Techniques for boundary conditions</p></li>
+<li><p>Fourier analysis of stencils</p></li>
 </ul>
 </section>
 <section id="today">
 <h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Techniques for boundary conditions</p></li>
-<li><p>Fourier analysis of stencils</p></li>
 <li><p>Conditioning of Vandermonde matrices</p></li>
-</ul>
-</section>
-<section id="reading-to-discuss-today">
-<h2>Reading to discuss today<a class="headerlink" href="#reading-to-discuss-today" title="Permalink to this headline">#</a></h2>
-<p><a class="reference external" href="https://jedbrown.org/files/RoacheGhiaWhite-JFEEditorialPolicyStatementControlOfNumericalAccuracy-1986.pdf">Journal of Fluids Engineering: Editorial Policy Statement on the Control of Numerical Accuracy (1986)</a></p>
-</section>
-<section id="talks-in-ecot-831-after-class-12-15">
-<h2>Talks in ECOT 831 after class (12:15)<a class="headerlink" href="#talks-in-ecot-831-after-class-12-15" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Igor Baratta (Cambridge): Toward performance-portable matrix-free solvers in FEniCSx</p></li>
-<li><p>Joseph Dean (Cambridge): Hybridised discontinuous Galerkin methods in FEniCSx</p></li>
+<li><p>Chebyshev polynomials</p></li>
+<li><p>Solving Poisson using Chebyshev polynomials</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -796,78 +699,8 @@ title="Print to PDF"
 <span class="w">    </span><span class="n">rhs</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">rhs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">V</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fdstencil (generic function with 1 method)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="interpolation-by-vandermonde-matrices">
-<h1>Interpolation by Vandermonde matrices<a class="headerlink" href="#interpolation-by-vandermonde-matrices" title="Permalink to this headline">#</a></h1>
-<p>We can compute a polynomial</p>
-<div class="math notranslate nohighlight">
-\[ p(x) = c_0 + c_1 x + c_2 x^2 + \dotsb \]</div>
-<p>that assumes function values <span class="math notranslate nohighlight">\(p(x_i) = u_i\)</span> by solving a linear system with the Vandermonde matrix.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split} \underbrace{\begin{bmatrix} 1 &amp; x_0 &amp; x_0^2 &amp; \dotsb \\
-    1 &amp; x_1 &amp; x_1^2 &amp; \dotsb \\
-    1 &amp; x_2 &amp; x_2^2 &amp; \dotsb \\
-    \vdots &amp; &amp; &amp; \ddots \end{bmatrix}}_V \begin{bmatrix} c_0 \\ c_1 \\ c_2 \\ \vdots \end{bmatrix} = \begin{bmatrix} u_0 \\ u_1 \\ u_2 \\ \vdots \end{bmatrix} .\end{split}\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span><span class="w"></span>
-<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot</span><span class="p">([</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">fdstencil</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">z</span><span class="p">)],</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w"> </span>
-<span class="n">scatter!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;grid points&quot;</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_5_0.svg" src="../_images/2022-08-31-fourier_5_0.svg" /></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="convergence-order">
-<h1>Convergence order<a class="headerlink" href="#convergence-order" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="o">-</span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
-<span class="k">function</span><span class="w"> </span><span class="n">diff_error</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">du</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mf">.5</span><span class="w"></span>
-<span class="w">    </span><span class="n">fdstencil</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">du</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">diff_error</span><span class="p">(</span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="mf">.5</span><span class="o">+</span><span class="mf">0.1</span><span class="o">*</span><span class="n">h</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">hs</span><span class="p">]</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">h</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^?</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_7_0.svg" src="../_images/2022-08-31-fourier_7_0.svg" /></div>
-</div>
-<section id="observations">
-<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>When using <span class="math notranslate nohighlight">\(n=3\)</span> points, we fit a polynomial of degree 2 and have error <span class="math notranslate nohighlight">\(O(h^3)\)</span> for interpolation <span class="math notranslate nohighlight">\(p(0)\)</span>.</p></li>
-<li><p>Each derivative gives up one order of accuracy in general.</p></li>
-<li><p>Centered diff on uniform grids can have extra cancellation (superconvergence)</p></li>
-<li><p>The Vandermonde matrix is notoriously ill-conditioned with many points <span class="math notranslate nohighlight">\(n\)</span>. We recommend using a <a class="reference external" href="https://doi.org/10.1137/S0036144596322507">stable algorithm from Fornberg</a>.</p></li>
-</ul>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="high-order-discretization-of-the-laplacian">
-<h1>High order discretization of the Laplacian<a class="headerlink" href="#high-order-discretization-of-the-laplacian" title="Permalink to this headline">#</a></h1>
-<section id="the-poisson-problem-u-xx-f-with-boundary-conditions">
-<h2>The Poisson problem <span class="math notranslate nohighlight">\(-u_{xx} = f\)</span> with boundary conditions<a class="headerlink" href="#the-poisson-problem-u-xx-f-with-boundary-conditions" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">poisson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="p">,</span><span class="w"> </span><span class="n">forcing</span><span class="p">;</span><span class="w"> </span><span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">),</span><span class="w"> </span><span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">))</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">poisson_fd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="p">,</span><span class="w"> </span><span class="n">forcing</span><span class="p">;</span><span class="w"> </span><span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">),</span><span class="w"> </span><span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">))</span><span class="w"></span>
 <span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">forcing</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
@@ -886,26 +719,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poisson (generic function with 1 method)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson</span><span class="p">(</span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">),</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">))</span><span class="w"></span>
-<span class="n">L</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6×6 Matrix{Float64}:
- -5.20833   10.0       -7.5       3.33333  -0.625      0.0
- -5.72917   10.4167    -3.125    -2.08333   0.520833   0.0
-  0.520833  -8.33333   15.625    -8.33333   0.520833   0.0
-  0.0        0.520833  -8.33333  15.625    -8.33333    0.520833
-  0.0        0.520833  -2.08333  -3.125    10.4167    -5.72917
-  0.0        0.0       -0.0       0.0      -0.0        1.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poisson_fd (generic function with 1 method)
 </pre></div>
 </div>
 </div>
@@ -942,7 +756,18 @@ Then <div class="math notranslate nohighlight">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_14_0.svg" src="../_images/2022-08-31-fourier_14_0.svg" /></div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">UndefVarError</span>: poisson not defined
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="mi">2</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="nb">eval</span>
+   <span class="o">@</span> <span class="o">./</span><span class="n">boot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">368</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">include_string</span><span class="p">(</span><span class="n">mapexpr</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">REPL</span><span class="o">.</span><span class="n">softscope</span><span class="p">),</span> <span class="n">mod</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">code</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">filename</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1428</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -952,9 +777,9 @@ Then <div class="math notranslate nohighlight">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="o">:</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
 <span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">ns</span><span class="w"></span>
-<span class="k">function</span><span class="w"> </span><span class="n">poisson_error</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">function</span><span class="w"> </span><span class="n">poisson_fd_error</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_fd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">tanh</span><span class="p">),</span><span class="w"></span>
 <span class="w">        </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
 <span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
@@ -964,106 +789,20 @@ Then <div class="math notranslate nohighlight">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poisson_error (generic function with 1 method)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poisson_fd_error (generic function with 1 method)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">poisson_error</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ns</span><span class="p">],</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">poisson_fd_error</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ns</span><span class="p">],</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">h</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">h</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_17_0.svg" src="../_images/2022-08-31-fourier_17_0.svg" /></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="symmetry-in-boundary-conditions-dirichlet">
-<h1>Symmetry in boundary conditions: Dirichlet<a class="headerlink" href="#symmetry-in-boundary-conditions-dirichlet" title="Permalink to this headline">#</a></h1>
-<p>We have implemented Dirichlet conditions by modifying the first row of the matrix,
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ \\ &amp; &amp; A_{1:,:} &amp; &amp; \\ \\ \end{bmatrix} \begin{bmatrix} u_0 \\ \\ u_{1:} \\ \\ \end{bmatrix} = \begin{bmatrix} a \\ \\ f_{1:} \\ \\ \end{bmatrix} . \end{split}\]</div>
-</p>
-<ul class="simple">
-<li><p>This matrix is not symmetric even if <span class="math notranslate nohighlight">\(A\)</span> is.</p></li>
-<li><p>We can eliminate <span class="math notranslate nohighlight">\(u_0\)</span> and create a reduced system for <span class="math notranslate nohighlight">\(u_{1:}\)</span>.</p></li>
-<li><p>Generalize: consider a <span class="math notranslate nohighlight">\(2\times 2\)</span> block system
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{bmatrix} I &amp; 0 \\ A_{10} &amp; A_{11} \end{bmatrix} \begin{bmatrix} u_0 \\ u_1 \end{bmatrix} = \begin{bmatrix} f_0 \\ f_1 \end{bmatrix} .\end{split}\]</div>
-</p></li>
-</ul>
-<p>We can rearrange as
-<div class="math notranslate nohighlight">
-\[ A_{11} u_1 = f_1 - A_{10} f_0, \]</div>
-
-which is symmetric if <span class="math notranslate nohighlight">\(A_{11}\)</span> is.</p>
-<ul class="simple">
-<li><p>This is called “lifting” and is often done implicitly in the mathematics literature.  It is convenient for linear solvers and eigenvalue solvers, but inconvenient for IO and postprocessing, as well as some nonlinear problems.</p></li>
-<li><p>Convenient alternative: write
-<div class="math notranslate nohighlight">
-\[\begin{split} \begin{bmatrix} I &amp; 0 \\ 0 &amp; A_{11} \end{bmatrix} \begin{bmatrix} u_0 \\ u_1 \end{bmatrix} = \begin{bmatrix} f_0 \\ f_1 - A_{10} f_0 \end{bmatrix}, \end{split}\]</div>
-
-which is symmetric and decouples the degrees of freedom associated with the boundary. This method applies cleanly to nonlinear problems.</p></li>
-<li><p>Optionally scale the identity by some scalar related to the norm of <span class="math notranslate nohighlight">\(A_{11}\)</span>.</p></li>
-</ul>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="symmetry-in-boundary-conditions-neumann">
-<h1>Symmetry in boundary conditions: Neumann<a class="headerlink" href="#symmetry-in-boundary-conditions-neumann" title="Permalink to this headline">#</a></h1>
-<p>Consider FD discretization of the Neumann boundary condition
-<div class="math notranslate nohighlight">
-\[ \frac{du}{dx}(1) = b . \]</div>
-</p>
-<ol class="simple">
-<li><p>Use a one-sided difference formula as in
-<div class="math notranslate nohighlight">
-\[ \frac{u_n - u_{n-1}}{h} = b . \]</div>
-</p></li>
-</ol>
-<ul class="simple">
-<li><p>an extra discretization choice</p></li>
-<li><p>may reduce order of accuracy compared to interior discretization, lose symmetry.</p></li>
-</ul>
-<ol class="simple">
-<li><p>Temporarily introduce a ghost value <span class="math notranslate nohighlight">\(u_{n+1} = u(x_{n+1} = 1 + h)\)</span> (possibly more) and define it to be a reflection of the values from inside the domain.  In the case <span class="math notranslate nohighlight">\(b=0\)</span>, this reflection is <span class="math notranslate nohighlight">\(u_{n+i} = u_{n-i}\)</span>.  More generally,
-<div class="math notranslate nohighlight">
-\[ u_{n+i} = u_{n-i} + 2b(x_n - x_{n-i}) . \]</div>
-</p></li>
-</ol>
-<p>After this definition of ghost values, we apply the interior discretization at the boundary. For our reference equation, we would write</p>
-<div class="math notranslate nohighlight">
-\[ \frac{-u_{n-1} + 2 u_n - u_{n+1}}{h^2} = f(x_n) \]</div>
-<p>which simplifies to <div class="math notranslate nohighlight">
-\[ \frac{u_n - u_{n-1}}{h^2} = f(x_n)/2 + b/h \]</div>
-
-after dividing by 2 and moving the boundary term to the right hand side.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="fourier-analysis-of-stencils">
-<h1>Fourier analysis of stencils<a class="headerlink" href="#fourier-analysis-of-stencils" title="Permalink to this headline">#</a></h1>
-<p>Consider the plane waves <span class="math notranslate nohighlight">\(\phi(x, \theta) = e^{i\theta x}\)</span>.</p>
-<p>Sample <span class="math notranslate nohighlight">\(\phi\)</span> on a discrete grid <span class="math notranslate nohighlight">\(x = \mathbb Z\)</span> and apply the stencil</p>
-<div class="amsmath math notranslate nohighlight" id="equation-31499100-25b7-46ce-8992-41132af570e2">
-<span class="eqno">(8)<a class="headerlink" href="#equation-31499100-25b7-46ce-8992-41132af570e2" title="Permalink to this equation">#</a></span>\[\begin{align}
-S \phi(x, \theta) &amp;= s_{-1} \phi(x-1, \theta) + s_{0} \phi(x, \theta) + s_1 \phi(x+1,\theta) \\
-&amp;= \Big( s_{-1} e^{-i\theta} + s_0 + s_{1} e^{i\theta} \Big) \phi(x, \theta)
-\end{align}\]</div>
-<p>With <span class="math notranslate nohighlight">\(S = \begin{bmatrix} -1 &amp; 2 &amp; -1 \end{bmatrix}\)</span>, we get
-<div class="math notranslate nohighlight">
-\[S \phi(x, \theta) = \underbrace{(2 - 2 \cos\theta)}_{\hat S(\theta)} \phi(x, \theta)\]</div>
-
-We call <span class="math notranslate nohighlight">\(\hat S(\theta)\)</span> the <em>symbol</em> of the operator.
-What is the symbol of the continuous second derivative?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">([</span><span class="n">theta</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">theta</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">theta</span><span class="o">^</span><span class="mi">2</span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="nb">pi</span><span class="p">,</span><span class="w"> </span><span class="nb">pi</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_26_0.svg" src="../_images/2022-08-31-fourier_26_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_8_0.svg" src="../_images/2022-09-02-chebyshev_8_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="numerically-computing-symbols">
@@ -1118,7 +857,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_29_0.svg" src="../_images/2022-08-31-fourier_29_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_11_0.svg" src="../_images/2022-09-02-chebyshev_11_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="stencils-of-high-order-operators">
@@ -1131,7 +870,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_31_0.svg" src="../_images/2022-08-31-fourier_31_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_13_0.svg" src="../_images/2022-09-02-chebyshev_13_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1141,7 +880,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_32_0.svg" src="../_images/2022-08-31-fourier_32_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_14_0.svg" src="../_images/2022-09-02-chebyshev_14_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="outlook-on-fourier-methods">
@@ -1170,7 +909,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_35_0.svg" src="../_images/2022-08-31-fourier_35_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_17_0.svg" src="../_images/2022-09-02-chebyshev_17_0.svg" /></div>
 </div>
 <p>Group these points into a <span class="math notranslate nohighlight">\(2\times n\)</span> matrix <span class="math notranslate nohighlight">\(X\)</span>. Note that multiplication by any matrix <span class="math notranslate nohighlight">\(A\)</span> is applied to each column separately, i.e.,</p>
 <div class="math notranslate nohighlight">
@@ -1209,11 +948,11 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2-element Vector{Float64}:
- 3.5271281361990567
- 0.7079334345925704
+ 1.1456971880440263
+ 0.06488883506970833
 </pre></div>
 </div>
-<img alt="../_images/2022-08-31-fourier_39_1.svg" src="../_images/2022-08-31-fourier_39_1.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_21_1.svg" src="../_images/2022-09-02-chebyshev_21_1.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1223,7 +962,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_40_0.svg" src="../_images/2022-08-31-fourier_40_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_22_0.svg" src="../_images/2022-09-02-chebyshev_22_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="condition-number-of-interpolation">
@@ -1277,7 +1016,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_43_0.svg" src="../_images/2022-08-31-fourier_43_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_25_0.svg" src="../_images/2022-09-02-chebyshev_25_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="the-bad-singular-vectors">
@@ -1321,7 +1060,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_46_0.svg" src="../_images/2022-08-31-fourier_46_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_28_0.svg" src="../_images/2022-09-02-chebyshev_28_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="choosing-the-source-points">
@@ -1381,7 +1120,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_50_0.svg" src="../_images/2022-08-31-fourier_50_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_32_0.svg" src="../_images/2022-09-02-chebyshev_32_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="condition-number-of-interpolation-on-cosrange-points">
@@ -1401,7 +1140,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_52_0.svg" src="../_images/2022-08-31-fourier_52_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_34_0.svg" src="../_images/2022-09-02-chebyshev_34_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="vandermonde-conditioning-stable-algorithms">
@@ -1416,7 +1155,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_54_0.svg" src="../_images/2022-08-31-fourier_54_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_36_0.svg" src="../_images/2022-09-02-chebyshev_36_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="chebyshev-polynomials">
@@ -1457,7 +1196,7 @@ What is the symbol of the continuous second derivative?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_57_0.svg" src="../_images/2022-08-31-fourier_57_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_39_0.svg" src="../_images/2022-09-02-chebyshev_39_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="derivation-of-chebyshev-polynomials-supplemental">
@@ -1502,7 +1241,7 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_60_0.svg" src="../_images/2022-08-31-fourier_60_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_42_0.svg" src="../_images/2022-09-02-chebyshev_42_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1514,7 +1253,126 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-08-31-fourier_61_0.svg" src="../_images/2022-08-31-fourier_61_0.svg" /></div>
+<img alt="../_images/2022-09-02-chebyshev_43_0.svg" src="../_images/2022-09-02-chebyshev_43_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="differentiating-via-chebyshev">
+<h1>Differentiating via Chebyshev<a class="headerlink" href="#differentiating-via-chebyshev" title="Permalink to this headline">#</a></h1>
+<p>We can differentiate Chebyshev polynomials using the recurrence</p>
+<div class="math notranslate nohighlight">
+\[ \frac{T_k'(x)}{k} = 2 T_{k-1}(x) + \frac{T_{k-2}'(x)}{k-2} \]</div>
+<p>which we can differentiate to evaluate higher derivatives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">chebdiff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vander_chebyshev</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="o">:</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">one</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">dT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">ddT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">ddT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">ddT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ddT</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">,</span><span class="w"> </span><span class="n">ddT</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>chebdiff (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CosRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span><span class="w"></span>
+<span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">,</span><span class="w"> </span><span class="n">ddT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chebdiff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">cos</span><span class="o">.</span><span class="p">(</span><span class="mi">3</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-02-chebyshev_46_0.svg" src="../_images/2022-09-02-chebyshev_46_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="solving-a-bvp-on-chebyshev-nodes">
+<h1>Solving a BVP on Chebyshev nodes<a class="headerlink" href="#solving-a-bvp-on-chebyshev-nodes" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">poisson_cheb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">rhsfunc</span><span class="p">,</span><span class="w"> </span><span class="n">leftbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">),</span><span class="w"> </span><span class="n">rightbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CosRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">,</span><span class="w"> </span><span class="n">ddT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chebdiff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">ddT</span><span class="w"></span>
+<span class="w">    </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhsfunc</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">deriv</span><span class="p">,</span><span class="w"> </span><span class="n">func</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"></span>
+<span class="w">            </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">leftbc</span><span class="o">...</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">rightbc</span><span class="o">...</span><span class="p">)]</span><span class="w"></span>
+<span class="w">        </span><span class="n">L</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">)[</span><span class="n">deriv</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">rhs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>poisson_cheb (generic function with 3 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">d_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">cosh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="w"></span>
+<span class="n">mdd_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_cheb</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="n">mdd_manufactured</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">manufactured</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">d_manufactured</span><span class="p">))</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">manufactured</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-02-chebyshev_49_0.svg" src="../_images/2022-09-02-chebyshev_49_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="spectral-exponential-convergence">
+<h1>“spectral” (exponential) convergence<a class="headerlink" href="#spectral-exponential-convergence" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">poisson_error</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_cheb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mdd_manufactured</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">manufactured</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">d_manufactured</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
+<span class="w">    </span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">manufactured</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="mi">40</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">poisson_error</span><span class="o">.</span><span class="p">(</span><span class="n">ns</span><span class="p">)),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+<span class="n">ps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">n</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">n</span><span class="o">^-</span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ps</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">map</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$</span><span class="s">n^{-</span><span class="si">$p</span><span class="s">}</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-02-chebyshev_51_0.svg" src="../_images/2022-09-02-chebyshev_51_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">poisson_fd_error</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ns</span><span class="p">],</span><span class="w"> </span>
+<span class="w">    </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">n</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">n</span><span class="o">^-</span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ps</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">map</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$</span><span class="s">n^{-</span><span class="si">$p</span><span class="s">}</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-02-chebyshev_52_0.svg" src="../_images/2022-09-02-chebyshev_52_0.svg" /></div>
 </div>
 </section>
 
@@ -1545,19 +1403,12 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="2022-08-29-fd-verification.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="2022-08-31-fourier.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">2022-08-29 FD Verification</p>
+            <p class="prev-next-title">2022-08-31 Fourier and conditioning</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="2022-09-02-chebyshev.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">2022-09-02 Chebyshev collocation</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
