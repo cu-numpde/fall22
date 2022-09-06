@@ -745,7 +745,7 @@ Then <div class="math notranslate nohighlight">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span><span class="w"></span>
-<span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
+<span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_fd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">tanh</span><span class="p">),</span><span class="w"> </span>
 <span class="w">    </span><span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
@@ -756,18 +756,7 @@ Then <div class="math notranslate nohighlight">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">UndefVarError</span>: poisson not defined
-
-<span class="ne">Stacktrace</span>:
- <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
-   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="mi">2</span>
- <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="nb">eval</span>
-   <span class="o">@</span> <span class="o">./</span><span class="n">boot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">368</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
- <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">include_string</span><span class="p">(</span><span class="n">mapexpr</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">REPL</span><span class="o">.</span><span class="n">softscope</span><span class="p">),</span> <span class="n">mod</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">code</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">filename</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
-   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1428</span>
-</pre></div>
-</div>
-</div>
+<img alt="../_images/2022-09-02-chebyshev_5_0.svg" src="../_images/2022-09-02-chebyshev_5_0.svg" /></div>
 </div>
 </section>
 </section>
@@ -948,8 +937,8 @@ Then <div class="math notranslate nohighlight">
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2-element Vector{Float64}:
- 1.1456971880440263
- 0.06488883506970833
+ 1.1812504900415586
+ 0.19380586978311493
 </pre></div>
 </div>
 <img alt="../_images/2022-09-02-chebyshev_21_1.svg" src="../_images/2022-09-02-chebyshev_21_1.svg" /></div>
@@ -957,19 +946,23 @@ Then <div class="math notranslate nohighlight">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">S</span><span class="w"></span>
 <span class="n">tplot</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-02-chebyshev_22_0.svg" src="../_images/2022-09-02-chebyshev_22_0.svg" /></div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S = [1.1812504900415586, 0.1938058697831149]
+</pre></div>
+</div>
+<img alt="../_images/2022-09-02-chebyshev_22_1.svg" src="../_images/2022-09-02-chebyshev_22_1.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="condition-number-of-interpolation">
 <h1>Condition number of interpolation<a class="headerlink" href="#condition-number-of-interpolation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="w"></span>
 <span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
 <span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vander</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="w"></span>
@@ -979,27 +972,22 @@ Then <div class="math notranslate nohighlight">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20-element Vector{Float64}:
- 4141.821782616643
-  756.1886116478436
-   11.201394442903565
-    5.2003668113747805
-    2.326389915733187
-    2.28865315753632
-    2.2826626548042968
-    2.282658231256019
-    2.282657730773852
-    2.2826577307583236
-    2.2826577297323856
-    2.2826577141906412
-    2.2825938632428557
-    2.282352200333904
-    2.2484549739833892
-    2.2449230244092657
-    1.9014541632841195
-    1.7794033224148031
-    1.0093167855491605
-    1.0064482710718898
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15-element Vector{Float64}:
+ 254.1314330885223
+  57.63229087225599
+   3.4501541063893804
+   2.85075329462247
+   2.659547817980216
+   2.659253335387138
+   2.659215781970937
+   2.659215711269169
+   2.659214475544074
+   2.655364041412845
+   2.642849174082302
+   2.2721233220740342
+   2.2554955267412287
+   1.0623840183465387
+   1.0433325107998297
 </pre></div>
 </div>
 </div>
@@ -1025,7 +1013,7 @@ Then <div class="math notranslate nohighlight">
 \[ A = U \Sigma V^T \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">14</span><span class="w"></span>
 <span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
 <span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vander</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="w"></span>
@@ -1036,18 +1024,21 @@ Then <div class="math notranslate nohighlight">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11-element Vector{Float64}:
- 34.77706851205524
- 11.13125653860779
-  3.200622823579756
-  3.1551891145187843
-  3.1464270560667247
-  3.146390542844354
-  3.1459494752514874
-  2.900733962570026
-  2.700731526422623
-  1.2170432449283064
-  1.1628054393968887
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14-element Vector{Float64}:
+ 150.15769624709236
+  36.24363967677967
+   3.1988939449218696
+   2.8573795958381774
+   2.7597019004092984
+   2.7596077922451236
+   2.7595986272009823
+   2.759598420763768
+   2.7579803658612114
+   2.7509438737516154
+   2.351973099419887
+   2.3458371867556482
+   1.087596001076156
+   1.0614798555936527
 </pre></div>
 </div>
 </div>
@@ -1055,7 +1046,7 @@ Then <div class="math notranslate nohighlight">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">U</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1311,8 +1302,8 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 <span class="w">    </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">,</span><span class="w"> </span><span class="n">ddT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chebdiff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">ddT</span><span class="w"></span>
 <span class="w">    </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhsfunc</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">deriv</span><span class="p">,</span><span class="w"> </span><span class="n">func</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"></span>
-<span class="w">            </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">leftbc</span><span class="o">...</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">rightbc</span><span class="o">...</span><span class="p">)]</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">deriv</span><span class="p">,</span><span class="w"> </span><span class="n">func</span><span class="p">))</span><span class="w"> </span><span class="k">in</span><span class="w"></span>
+<span class="w">            </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">leftbc</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">rightbc</span><span class="p">)]</span><span class="w"></span>
 <span class="w">        </span><span class="n">L</span><span class="p">[</span><span class="n">index</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">)[</span><span class="n">deriv</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"></span>
 <span class="w">        </span><span class="n">rhs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">])</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
@@ -1332,9 +1323,9 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="n">d_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">cosh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="w"></span>
 <span class="n">mdd_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
-<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_cheb</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="n">mdd_manufactured</span><span class="p">,</span><span class="w"></span>
+<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_cheb</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">mdd_manufactured</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">manufactured</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">d_manufactured</span><span class="p">))</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">manufactured</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
@@ -1353,7 +1344,7 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 <span class="w">    </span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">manufactured</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
 
-<span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="mi">40</span><span class="w"></span>
+<span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="o">:</span><span class="mi">40</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">poisson_error</span><span class="o">.</span><span class="p">(</span><span class="n">ns</span><span class="p">)),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 <span class="n">ps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">([</span><span class="n">n</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">n</span><span class="o">^-</span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ps</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">map</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$</span><span class="s">n^{-</span><span class="si">$p</span><span class="s">}</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">))</span><span class="w"></span>
@@ -1365,7 +1356,7 @@ T_{n+1}(x) &amp;= 2 x T_n(x) - T_{n-1}(x)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">poisson_fd_error</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ns</span><span class="p">],</span><span class="w"> </span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">poisson_fd_error</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">spoints</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ns</span><span class="p">],</span><span class="w"> </span>
 <span class="w">    </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">([</span><span class="n">n</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">n</span><span class="o">^-</span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ps</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">map</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$</span><span class="s">n^{-</span><span class="si">$p</span><span class="s">}</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ps</span><span class="p">))</span><span class="w"></span>
 </pre></div>
