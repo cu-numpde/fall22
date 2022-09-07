@@ -17,7 +17,7 @@ Recordings will be available in Canvas Mediasite.
 
 ### Instructor: [Jed Brown](https://jedbrown.org), [`jed.brown@colorado.edu`](mailto:jed.brown@colorado.edu), ECOT 824
 
-* Office hours: [Choose a time](https://app.simplymeet.me/jed-simplymeet/numpde)
+* Office hours: [Choose a time](https://app.simplymeet.me/jed/numpde)
 
 :::{tip}
 Chat sessions are important for asking questions, solving problems, discussion of broader academic and career strategy, and to provide feedback so I can make the class serve your needs and those of people with similar experiences and interests.
