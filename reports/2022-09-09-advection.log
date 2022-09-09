@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 1256, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 87, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 694, in async_execute
+    await self.async_execute_cell(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 1012, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 906, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+wind = 1
+x, L, rhs = advdiff_cheb(25, wind, one)
+@show minimum(diff(x))
+plot(x, L \ rhs, legend=:none, marker=:auto)
+------------------
+
+UndefVarError: CosRange not defined
+
+Stacktrace:
+ [1] advdiff_cheb(n::Int64, wind::Int64, rhsfunc::Function, leftbc::Tuple{Int64, typeof(zero)}, rightbc::Tuple{Int64, typeof(zero)}) (repeats 2 times)
+   @ Main ./In[6]:2
+ [2] top-level scope
+   @ In[7]:2
+ [3] eval
+   @ ./boot.jl:368 [inlined]
+ [4] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
+   @ Base ./loading.jl:1428
+LoadError: UndefVarError: CosRange not defined
+

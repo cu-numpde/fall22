@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-09-09 Advection" href="2022-09-09-advection.html" />
     <link rel="prev" title="2022-09-02 Chebyshev collocation" href="2022-09-02-chebyshev.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -164,6 +165,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
     </a>
    </li>
   </ul>
@@ -722,11 +728,17 @@ title="Print to PDF"
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">dT</span><span class="p">,</span><span class="w"> </span><span class="n">ddT</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">cmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">vec</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="mi">120</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="n">spy</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="p">(</span><span class="ss">:square</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:diverging_rainbow_bgymr_45_85_c67_n256</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">cmax</span><span class="p">,</span><span class="w"> </span><span class="n">cmax</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>chebdiff (generic function with 2 methods)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my_spy (generic function with 1 method)
 </pre></div>
 </div>
 </div>
@@ -744,6 +756,7 @@ title="Print to PDF"
 <span class="n">Txx</span><span class="p">,</span><span class="w"> </span><span class="n">dTxx</span><span class="p">,</span><span class="w"> </span><span class="n">ddTxx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chebdiff</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">Txx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Tx</span><span class="p">)</span><span class="w"></span>
 <span class="n">scatter!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">one</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">zero</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span><span class="w"></span>
+<span class="c"># my_spy(Tx)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -875,8 +888,8 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <img alt="../_images/2022-09-07-coefficients_15_0.svg" src="../_images/2022-09-07-coefficients_15_0.svg" /></div>
 </div>
-<div class="amsmath math notranslate nohighlight" id="equation-51c83ae8-3fa8-426b-89aa-911d37349f87">
-<span class="eqno">(9)<a class="headerlink" href="#equation-51c83ae8-3fa8-426b-89aa-911d37349f87" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bc3610a5-d7fa-4090-be70-38ce4de9486f">
+<span class="eqno">(9)<a class="headerlink" href="#equation-bc3610a5-d7fa-4090-be70-38ce4de9486f" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\big(\kappa(x) u_x\big)_x &amp;= 0 &amp; u(-1) &amp;= 0 &amp; \kappa u_x(1) &amp;= 1
 \end{align}\]</div>
 <ul class="simple">
@@ -974,7 +987,7 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;u_h&quot;</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">([</span><span class="n">manufactured</span><span class="w"> </span><span class="n">flux_manufactured_kappa_smooth</span><span class="w"> </span><span class="n">forcing_manufactured_kappa_smooth</span><span class="w"> </span><span class="n">kappa_smooth</span><span class="p">],</span><span class="w"></span>
-<span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;u_manufactured&quot;</span><span class="w"> </span><span class="s">&quot;flux&quot;</span><span class="w"> </span><span class="s">&quot;forcing&quot;</span><span class="w"> </span><span class="s">&quot;kappa&quot;</span><span class="p">])</span><span class="w"></span>
+<span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;u_manufactured&quot;</span><span class="w"> </span><span class="s">&quot;flux&quot;</span><span class="w"> </span><span class="s">&quot;forcing&quot;</span><span class="w"> </span><span class="s">&quot;kappa&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1111,7 +1124,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">forcing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="w"></span>
-<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_conservative</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">kappa_step</span><span class="p">,</span><span class="w"></span>
+
+<span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_nondivergence</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">kappa_step</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="n">forcing</span><span class="p">,</span><span class="w"> </span><span class="n">leftbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">zero</span><span class="p">),</span><span class="w"> </span><span class="n">rightbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">))</span><span class="w"></span>
 <span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">)</span><span class="w"></span>
@@ -1156,14 +1170,14 @@ title="Print to PDF"
 <h1>Solving with the smoothed step <span class="math notranslate nohighlight">\(\kappa\)</span><a class="headerlink" href="#solving-with-the-smoothed-step-kappa" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">epsilon</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.55</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">.45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="p">)</span><span class="w"></span>
-<span class="n">d_kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">epsilon</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.45</span><span class="o">/</span><span class="n">epsilon</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">epsilon</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">epsilon</span><span class="o">=</span><span class="mf">.02</span><span class="p">)</span><span class="o">=</span><span class="w"> </span><span class="mf">.55</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">.45</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="p">)</span><span class="w"></span>
+<span class="n">d_kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">epsilon</span><span class="o">=</span><span class="mf">.02</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.45</span><span class="o">/</span><span class="n">epsilon</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">epsilon</span><span class="p">)</span><span class="o">^-</span><span class="mi">2</span><span class="w"></span>
 <span class="n">flux_manufactured_kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="k">function</span><span class="w"> </span><span class="n">forcing_manufactured_kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cosh</span><span class="p">(</span><span class="mi">2</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"></span>
 <span class="w">    </span><span class="n">d_kappa_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d_manufactured</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
-<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_conservative</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">kappa_tanh</span><span class="p">,</span><span class="w"></span>
+<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poisson_conservative</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="n">kappa_tanh</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="n">forcing_manufactured_kappa_tanh</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="n">leftbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">manufactured</span><span class="p">),</span><span class="w"> </span><span class="n">rightbc</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">manufactured</span><span class="p">))</span><span class="w"></span>
 <span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
@@ -1255,6 +1269,13 @@ title="Print to PDF"
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-09-02 Chebyshev collocation</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-09-09-advection.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-09-09 Advection</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
