@@ -17,8 +17,8 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-wind = 1
-x, L, rhs = advdiff_cheb(25, wind, one)
+wind = 100
+x, L, rhs = advdiff_cheb(40, wind, one)
 @show minimum(diff(x))
 plot(x, L \ rhs, legend=:none, marker=:auto)
 ------------------
