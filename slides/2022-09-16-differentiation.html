@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2022-09-14 Nonlinear solvers &#8212; Numerical Solution of Partial Differential Equations</title>
+    <title>2022-09-16 Differentiation &#8212; Numerical Solution of Partial Differential Equations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,8 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2022-09-16 Differentiation" href="2022-09-16-differentiation.html" />
-    <link rel="prev" title="2022-09-12 Sparsity and solvers" href="2022-09-12-sparsity.html" />
+    <link rel="prev" title="2022-09-14 Nonlinear solvers" href="2022-09-14-nonlinear.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -177,13 +176,13 @@ const thebe_selector_output = ".output, .cell_output"
      2022-09-12 Sparsity and solvers
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
      2022-09-14 Nonlinear solvers
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="2022-09-16-differentiation.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      2022-09-16 Differentiation
     </a>
    </li>
@@ -248,7 +247,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-14-nonlinear.ipynb"
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-16-differentiation.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -326,7 +325,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-14-nonlinear.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-16-differentiation.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -354,7 +353,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/slides/2022-09-14-nonlinear.ipynb"
+        <a href="../_sources/slides/2022-09-16-differentiation.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -415,7 +414,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-09-14 Nonlinear solvers
+   2022-09-16 Differentiation
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -429,65 +428,6 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assembly-cost">
-   Assembly cost
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#newton-raphson-method">
-     Newton-Raphson Method
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#an-implementation">
-   An implementation
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#that-s-really-fast">
-   That’s really fast!
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-of-fixed-point-iteration">
-   Convergence of fixed-point iteration
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#newton-for-systems-of-equations">
-   Newton for systems of equations
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#newton-in-code">
-   Newton in code
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plotting-the-trajectory">
-   Plotting the trajectory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bratu-problem">
-   Bratu problem
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#solving-bratu">
-   Solving Bratu
-  </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#p-laplacian">
@@ -520,13 +460,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#test-it-out">
-   Test it out
+  <a class="reference internal nav-link" href="#experiment-with-parameters">
+   Experiment with parameters
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-model-problem-for-newton-divergence">
-   A model problem for Newton divergence
+  <a class="reference internal nav-link" href="#a-model-problem-for-newton-divergence-compare-nlsolve">
+   A model problem for Newton divergence; compare NLsolve
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nlsolve-for-p-laplacian">
+   NLsolve for p-Laplacian
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -535,8 +480,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cool-what-about-products">
-   Cool, what about products?
+  <a class="reference internal nav-link" href="#cool-what-about-composition-of-functions">
+   Cool, what about composition of functions
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -578,7 +523,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2022-09-14 Nonlinear solvers</h1>
+                <h1>2022-09-16 Differentiation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -590,7 +535,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-09-14 Nonlinear solvers
+   2022-09-16 Differentiation
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -604,65 +549,6 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assembly-cost">
-   Assembly cost
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#newton-raphson-method">
-     Newton-Raphson Method
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#an-implementation">
-   An implementation
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#that-s-really-fast">
-   That’s really fast!
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-of-fixed-point-iteration">
-   Convergence of fixed-point iteration
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise">
-     Exercise
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#newton-for-systems-of-equations">
-   Newton for systems of equations
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#newton-in-code">
-   Newton in code
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plotting-the-trajectory">
-   Plotting the trajectory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bratu-problem">
-   Bratu problem
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#solving-bratu">
-   Solving Bratu
-  </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#p-laplacian">
@@ -695,13 +581,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#test-it-out">
-   Test it out
+  <a class="reference internal nav-link" href="#experiment-with-parameters">
+   Experiment with parameters
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-model-problem-for-newton-divergence">
-   A model problem for Newton divergence
+  <a class="reference internal nav-link" href="#a-model-problem-for-newton-divergence-compare-nlsolve">
+   A model problem for Newton divergence; compare NLsolve
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nlsolve-for-p-laplacian">
+   NLsolve for p-Laplacian
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -710,8 +601,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cool-what-about-products">
-   Cool, what about products?
+  <a class="reference internal nav-link" href="#cool-what-about-composition-of-functions">
+   Cool, what about composition of functions
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -754,23 +645,28 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="nonlinear-solvers">
-<h1>2022-09-14 Nonlinear solvers<a class="headerlink" href="#nonlinear-solvers" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="differentiation">
+<h1>2022-09-16 Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline">#</a></h1>
 <section id="last-time">
 <h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Cost of linear solvers</p></li>
-<li><p>Assembling sparse matrices</p></li>
-<li><p>Rootfinding intro</p></li>
+<li><p>Newton’s method for systems</p></li>
+<li><p>Bratu nonlinear PDE</p></li>
+<li><p>p-Laplacian</p></li>
 </ul>
 </section>
 <section id="today">
 <h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Newton’s method for systems</p></li>
-<li><p>Bratu nonlinear PDE</p></li>
-<li><p>p-Laplacian</p></li>
-<li><p>Techniques for differentiation</p></li>
+<li><p>NLsolve Newton solver library</p>
+<ul>
+<li><p>p-Laplacian robustness</p></li>
+<li><p>diagnostics</p></li>
+</ul>
+</li>
+<li><p>Algorithmic differentiation via Zygote</p></li>
+<li><p>Symbolic differentiation</p></li>
+<li><p>Structured by-hand differentiation</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -828,199 +724,8 @@ title="Print to PDF"
 <span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>advdiff_sparse (generic function with 1 method)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="assembly-cost">
-<h1>Assembly cost<a class="headerlink" href="#assembly-cost" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">400</span><span class="p">;</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="n">n</span><span class="w"></span>
-<span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">wind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_sparse</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">)</span><span class="w"></span>
-<span class="nd">@show</span><span class="w"> </span><span class="n">minimum</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:none</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Pe_h </span><span class="si">$</span><span class="p">(</span><span class="n">wind</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="n">kappa</span><span class="p">)</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum(diff(x)) = 0.005012531328320691
-</pre></div>
-</div>
-<img alt="../_images/2022-09-14-nonlinear_4_1.svg" src="../_images/2022-09-14-nonlinear_4_1.svg" /></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span><span class="w"></span>
-<span class="nd">@time</span><span class="w"> </span><span class="n">advdiff_sparse</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">one</span><span class="p">);</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.157670 seconds (988.07 k allocations: 54.239 MiB, 10.28% gc time, 41.70% compilation time)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># It&#39;s also possible to dynamically insert.</span><span class="w"></span>
-<span class="c"># (But performance this way is generally poor.)</span><span class="w"></span>
-<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spzeros</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
-<span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="n">A</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 SparseMatrixCSC{Float64, Int64} with 1 stored entry:
- 3.0   ⋅    ⋅    ⋅    ⋅ 
-  ⋅    ⋅    ⋅    ⋅    ⋅ 
-  ⋅    ⋅    ⋅    ⋅    ⋅ 
-  ⋅    ⋅    ⋅    ⋅    ⋅ 
-  ⋅    ⋅    ⋅    ⋅    ⋅ 
-</pre></div>
-</div>
-</div>
-</div>
-<section id="newton-raphson-method">
-<h2>Newton-Raphson Method<a class="headerlink" href="#newton-raphson-method" title="Permalink to this headline">#</a></h2>
-<p>Much of numerical analysis reduces to <a class="reference external" href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series</a>, the approximation
-<div class="math notranslate nohighlight">
-\[ f(x) = f(x_0) + f'(x_0) (x-x_0) + f''(x_0) (x - x_0)^2 / 2 + \underbrace{\dotsb}_{O((x-x_0)^3)} \]</div>
 
-centered on some reference point <span class="math notranslate nohighlight">\(x_0\)</span>.</p>
-<p>In numerical computation, it is exceedingly rare to look beyond the first-order approximation
-<div class="math notranslate nohighlight">
-\[ \tilde f_{x_0}(x) = f(x_0) + f'(x_0)(x - x_0) . \]</div>
-
-Since <span class="math notranslate nohighlight">\(\tilde f_{x_0}(x)\)</span> is a linear function, we can explicitly compute the unique solution of <span class="math notranslate nohighlight">\(\tilde f_{x_0}(x) = 0\)</span> as
-<div class="math notranslate nohighlight">
-\[ x = x_0 - f(x_0) / f'(x_0) . \]</div>
-
-This is Newton’s Method (aka Newton-Raphson or Newton-Raphson-Simpson) for finding the roots of differentiable functions.</p>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="an-implementation">
-<h1>An implementation<a class="headerlink" href="#an-implementation" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">fp</span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"> </span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">100</span><span class="w"> </span><span class="c"># max number of iterations</span><span class="w"></span>
-<span class="w">        </span><span class="n">fx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">fpx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">verbose</span><span class="w"></span>
-<span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;[</span><span class="si">$k</span><span class="s">] x=</span><span class="si">$x</span><span class="s">  f(x)=</span><span class="si">$fx</span><span class="s">  f&#39;(x)=</span><span class="si">$fpx</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">end</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tol</span><span class="w"></span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">fx</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"></span>
-<span class="w">        </span><span class="k">end</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fx</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fpx</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w">  </span>
-<span class="k">end</span><span class="w"></span>
-<span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">newton</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">eps</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">eps</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] x=1  f(x)=-0.45969769413186023  f&#39;(x)=-1.8414709848078965
-[2] x=0.7503638678402439  f(x)=-0.018923073822117442  f&#39;(x)=-1.6819049529414878
-[3] x=0.7391128909113617  f(x)=-4.6455898990771516e-5  f&#39;(x)=-1.6736325442243012
-[4] x=0.739085133385284  f(x)=-2.847205804457076e-10  f&#39;(x)=-1.6736120293089505
-[5] x=0.7390851332151607  f(x)=0.0  f&#39;(x)=-1.6736120291832148
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7390851332151607, 0.0, 5)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="that-s-really-fast">
-<h1>That’s really fast!<a class="headerlink" href="#that-s-really-fast" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p>10 digits of accuracy in 4 iterations.</p></li>
-<li><p>How is this convergence test different from the one we used for bisection?</p></li>
-<li><p>How can this break down?</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[ x_{k+1} = x_k - f(x_k)/f'(x_k) \]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">newton</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">.2</span><span class="o">*</span><span class="nb">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] x=0.3141592653589793  f(x)=0.6368972509361742  f&#39;(x)=-1.3090169943749475
-[2] x=0.8007054703914749  f(x)=-0.10450500785604744  f&#39;(x)=-1.7178474183038182
-[3] x=0.7398706100060081  f(x)=-0.0013148113494647617  f&#39;(x)=-1.6741923555416478
-[4] x=0.7390852693340639  f(x)=-2.2781024078266654e-7  f&#39;(x)=-1.6736121297866664
-[5] x=0.7390851332151648  f(x)=-6.8833827526759706e-15  f&#39;(x)=-1.673612029183218
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.7390851332151648, -6.8833827526759706e-15, 5)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="convergence-of-fixed-point-iteration">
-<h1>Convergence of fixed-point iteration<a class="headerlink" href="#convergence-of-fixed-point-iteration" title="Permalink to this headline">#</a></h1>
-<p>Consider the iteration
-<div class="math notranslate nohighlight">
-\[x_{k+1} = g(x_k)\]</div>
-
-where <span class="math notranslate nohighlight">\(g\)</span> is a continuously differentiable function.
-Suppose that there exists a fixed point <span class="math notranslate nohighlight">\(x_* = g(x_*)\)</span>.  By the <a class="reference external" href="https://en.wikipedia.org/wiki/Mean_value_theorem">mean value theorem</a>, we have that
-<div class="math notranslate nohighlight">
-\[ x_{k+1} - x_* = g(x_k) - g(x_*) = g'(c_k) (x_k - x_*) \]</div>
-
-for some <span class="math notranslate nohighlight">\(c_i\)</span> between <span class="math notranslate nohighlight">\(x_k\)</span> and <span class="math notranslate nohighlight">\(x_*\)</span>.</p>
-<p>Taking absolute values, <div class="math notranslate nohighlight">
-\[|e_{k+1}| = |g'(c_k)| |e_k|,\]</div>
- which converges to zero if <span class="math notranslate nohighlight">\(|g'(c_k)| &lt; 1\)</span>.</p>
-<section id="exercise">
-<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Write Newton’s method for <span class="math notranslate nohighlight">\(f(x) = 0\)</span> from initial guess <span class="math notranslate nohighlight">\(x_0\)</span> as a fixed point method.</p></li>
-<li><p>Suppose the Newton iterates <span class="math notranslate nohighlight">\(x_k\)</span> converge to a simple root <span class="math notranslate nohighlight">\(x_*\)</span>, <span class="math notranslate nohighlight">\(x_k \to x_*\)</span>. What is <span class="math notranslate nohighlight">\(\lvert g'(x_*) \rvert\)</span> for Newton’s method?</p></li>
-</ul>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="newton-for-systems-of-equations">
-<h1>Newton for systems of equations<a class="headerlink" href="#newton-for-systems-of-equations" title="Permalink to this headline">#</a></h1>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf u \in \mathbb R^n\)</span> and consider the function <span class="math notranslate nohighlight">\(\mathbf f(\mathbf u) \in \mathbb R^n\)</span>. Then
-<div class="math notranslate nohighlight">
-\[ \mathbf f(\mathbf u) = \mathbf f(\mathbf u_0) + \underbrace{\mathbf f'(\mathbf u_0)}_{n\times n} \underbrace{\mathbf \delta \mathbf u}_{n\times 1} + \frac 1 2 \underbrace{\mathbf f''(\mathbf u_0)}_{n\times n \times n} {(\delta \mathbf u)^2}_{n\times n} + O(|\delta\mathbf u|^3).\]</div>
-</p>
-<p>We drop all but the first two terms and name the Jacobian matrix <span class="math notranslate nohighlight">\(J(\mathbf u) = \mathbf f'(\mathbf u)\)</span>,
-<div class="math notranslate nohighlight">
-\[ \mathbf f(\mathbf u) \approx \mathbf f(\mathbf u_0) + J \delta \mathbf u .\]</div>
-
-Solving the right hand side equal to zero yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67998416-07b1-40bf-9093-50ee182d9ca7">
-<span class="eqno">(13)<a class="headerlink" href="#equation-67998416-07b1-40bf-9093-50ee182d9ca7" title="Permalink to this equation">#</a></span>\[\begin{align}
-J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
-\mathbf u_{k+1} &amp;= \mathbf u_k + \delta \mathbf u
-\end{align}\]</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="newton-in-code">
-<h1>Newton in code<a class="headerlink" href="#newton-in-code" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span><span class="w"> </span><span class="n">jacobian</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">maxits</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"></span>
+<span class="k">function</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span><span class="w"> </span><span class="n">jacobian</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">maxits</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u0</span><span class="w"></span>
 <span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">)]</span><span class="w"></span>
 <span class="w">    </span><span class="n">normhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
@@ -1043,127 +748,12 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">residual</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y</span><span class="p">]</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-<span class="k">function</span><span class="w"> </span><span class="n">jacobian</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="mi">2</span><span class="n">x</span><span class="w"> </span><span class="mi">2</span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-
-<span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">normhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span><span class="w"> </span><span class="n">jacobian</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">normhist</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_18_0.svg" src="../_images/2022-09-14-nonlinear_18_0.svg" /></div>
-</div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="plotting-the-trajectory">
-<h1>Plotting the trajectory<a class="headerlink" href="#plotting-the-trajectory" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">],</span><span class="w"> </span><span class="n">xy</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">:</span><span class="p">],</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
-<span class="n">circle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="mi">1</span><span class="nb">im</span><span class="o">*</span><span class="kt">LinRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">))</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">circle</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">circle</span><span class="p">))</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">ylims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="n">axes</span><span class="o">=</span><span class="ss">:equal</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_20_0.svg" src="../_images/2022-09-14-nonlinear_20_0.svg" /></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="bratu-problem">
-<h1>Bratu problem<a class="headerlink" href="#bratu-problem" title="Permalink to this headline">#</a></h1>
-<div class="math notranslate nohighlight">
-\[-(u_x)_x - \lambda e^{u}= 0\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">bratu_f</span><span class="p">(</span><span class="n">u</span><span class="p">;</span><span class="w"> </span><span class="n">lambda</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">fdstencil</span><span class="p">([</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">    </span><span class="n">u</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="n">f</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weights</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="n">f</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bratu_f (generic function with 1 method)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">bratu_J</span><span class="p">(</span><span class="n">u</span><span class="p">;</span><span class="w"> </span><span class="n">lambda</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">fdstencil</span><span class="p">([</span><span class="o">-</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="p">]</span><span class="w"> </span><span class="c"># diagonals entries (float)</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
-<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="n">lambda</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bratu_J (generic function with 1 method)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="solving-bratu">
-<h1>Solving Bratu<a class="headerlink" href="#solving-bratu" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
-<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"></span>
-<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">normhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">bratu_f</span><span class="p">,</span><span class="w"> </span><span class="n">bratu_J</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">);</span><span class="w"></span>
-
-<span class="n">plot</span><span class="p">(</span><span class="n">normhist</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_25_0.svg" src="../_images/2022-09-14-nonlinear_25_0.svg" /></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_26_0.svg" src="../_images/2022-09-14-nonlinear_26_0.svg" /></div>
-</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="p-laplacian">
 <h1><span class="math notranslate nohighlight">\(p\)</span>-Laplacian<a class="headerlink" href="#p-laplacian" title="Permalink to this headline">#</a></h1>
 <div class="math notranslate nohighlight">
-\[ -(|u_x|^{p-2} u_x)_x = 0 \]</div>
+\[ -\big(|u_x|^{p-2} u_x\big)_x = 0 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plaplace_p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="w"></span>
@@ -1243,7 +833,7 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_31_0.svg" src="../_images/2022-09-14-nonlinear_31_0.svg" /></div>
+<img alt="../_images/2022-09-16-differentiation_7_0.svg" src="../_images/2022-09-16-differentiation_7_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1252,7 +842,7 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_32_0.svg" src="../_images/2022-09-14-nonlinear_32_0.svg" /></div>
+<img alt="../_images/2022-09-16-differentiation_8_0.svg" src="../_images/2022-09-16-differentiation_8_0.svg" /></div>
 </div>
 <section id="what-s-wrong">
 <h2>What’s wrong?<a class="headerlink" href="#what-s-wrong" title="Permalink to this headline">#</a></h2>
@@ -1348,19 +938,20 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="test-it-out">
-<h1>Test it out<a class="headerlink" href="#test-it-out" title="Permalink to this headline">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="experiment-with-parameters">
+<h1>Experiment with parameters<a class="headerlink" href="#experiment-with-parameters" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plaplace_p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="w"></span>
-<span class="n">plaplace_forcing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.1</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plaplace_p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.6</span><span class="w"></span>
+<span class="n">plaplace_forcing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
 <span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">normhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newton</span><span class="p">(</span><span class="n">plaplace_fzygote</span><span class="p">,</span><span class="w"> </span><span class="n">plaplace_Jzygote</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">maxits</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">normhist</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_41_0.svg" src="../_images/2022-09-14-nonlinear_41_0.svg" /></div>
+<img alt="../_images/2022-09-16-differentiation_17_0.svg" src="../_images/2022-09-16-differentiation_17_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1369,7 +960,7 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_42_0.svg" src="../_images/2022-09-14-nonlinear_42_0.svg" /></div>
+<img alt="../_images/2022-09-16-differentiation_18_0.svg" src="../_images/2022-09-16-differentiation_18_0.svg" /></div>
 </div>
 <ul class="simple">
 <li><p>Can you fix the <code class="docutils literal notranslate"><span class="pre">plaplace_J</span></code> to differentiate correctly (analytically)?</p></li>
@@ -1377,8 +968,8 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 <li><p>How might we fix or work around it?</p></li>
 </ul>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="a-model-problem-for-newton-divergence">
-<h1>A model problem for Newton divergence<a class="headerlink" href="#a-model-problem-for-newton-divergence" title="Permalink to this headline">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="a-model-problem-for-newton-divergence-compare-nlsolve">
+<h1>A model problem for Newton divergence; compare NLsolve<a class="headerlink" href="#a-model-problem-for-newton-divergence-compare-nlsolve" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="c"># what happens as this is changed</span><span class="w"></span>
@@ -1391,7 +982,64 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-14-nonlinear_45_0.svg" src="../_images/2022-09-14-nonlinear_45_0.svg" /></div>
+<img alt="../_images/2022-09-16-differentiation_21_0.svg" src="../_images/2022-09-16-differentiation_21_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">NLsolve</span><span class="w"></span>
+
+<span class="n">nlsolve</span><span class="p">(</span><span class="n">fk</span><span class="p">,</span><span class="w"> </span><span class="n">Jk</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">],</span><span class="w"> </span><span class="n">show_trace</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iter     f(x) inf-norm    Step 2-norm 
+------   --------------   --------------
+     0     7.615942e-01              NaN
+     1     0.000000e+00     1.000000e+00
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results of Nonlinear Solver Algorithm
+ * Algorithm: Trust-region with dogleg and autoscaling
+ * Starting Point: [1.0]
+ * Zero: [0.0]
+ * Inf-norm of residuals: 0.000000
+ * Iterations: 1
+ * Convergence: true
+   * |x - x&#39;| &lt; 0.0e+00: false
+   * |f(x)| &lt; 1.0e-08: true
+ * Function Calls (f): 2
+ * Jacobian Calls (df/dx): 2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="nlsolve-for-p-laplacian">
+<h1><a class="reference external" href="https://juliapackages.com/p/nlsolve">NLsolve</a> for p-Laplacian<a class="headerlink" href="#nlsolve-for-p-laplacian" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plaplace_p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.5</span><span class="w"></span>
+<span class="n">plaplace_forcing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">sol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nlsolve</span><span class="p">(</span><span class="n">plaplace_fzygote</span><span class="p">,</span><span class="w"> </span><span class="n">plaplace_Jzygote</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">store_trace</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="n">fnorms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">sol</span><span class="o">.</span><span class="n">trace</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fnorm</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">sol</span><span class="o">.</span><span class="n">iterations</span><span class="p">]</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">fnorms</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-16-differentiation_24_0.svg" src="../_images/2022-09-16-differentiation_24_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">sol</span><span class="o">.</span><span class="n">initial_x</span><span class="w"> </span><span class="n">sol</span><span class="o">.</span><span class="n">zero</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;initial&quot;</span><span class="w"> </span><span class="s">&quot;solution&quot;</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-16-differentiation_25_0.svg" src="../_images/2022-09-16-differentiation_25_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="what-about-symbolic-differentiation">
@@ -1407,12 +1055,6 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┌ Info: Precompiling Symbolics [0c5d862f-8b57-4792-8d23-62f2024744c7]
-└ @ Base loading.jl:1662
-<span class=" -Color -Color-Bold -Color-Bold-Yellow">┌ Warning: </span>Replacing docs for `SciMLBase.sol :: Union{Tuple, Tuple{D}, Tuple{S}, Tuple{N}, Tuple{T}} where {T, N, S, D}` in module `SciMLBase`
-<span class=" -Color -Color-Bold -Color-Bold-Yellow">└ </span>@ Base.Docs docs/Docs.jl:240
-</pre></div>
-</div>
 <div class="output text_latex math notranslate nohighlight">
 \[\begin{equation}
 \frac{dtanh(x)}{dx}
@@ -1433,8 +1075,8 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="cool-what-about-products">
-<h1>Cool, what about products?<a class="headerlink" href="#cool-what-about-products" title="Permalink to this headline">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="cool-what-about-composition-of-functions">
+<h1>Cool, what about composition of functions<a class="headerlink" href="#cool-what-about-composition-of-functions" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
@@ -1515,8 +1157,8 @@ J \delta \mathbf u &amp;= -\mathbf f(\mathbf u_k) \\
 <section class="tex2jax_ignore mathjax_ignore" id="we-can-go-the-other-way">
 <h1>We can go the other way<a class="headerlink" href="#we-can-go-the-other-way" title="Permalink to this headline">#</a></h1>
 <p>We can differentiate a composition <span class="math notranslate nohighlight">\(h(g(f(x)))\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5a1c4ab-d891-4c66-8d6b-8f246095dc47">
-<span class="eqno">(14)<a class="headerlink" href="#equation-a5a1c4ab-d891-4c66-8d6b-8f246095dc47" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-df3d086b-d1fe-4fc3-beac-7f1bc840d135">
+<span class="eqno">(15)<a class="headerlink" href="#equation-df3d086b-d1fe-4fc3-beac-7f1bc840d135" title="Permalink to this equation">#</a></span>\[\begin{align}
   \operatorname{d} h &amp;= h' \operatorname{d} g \\
   \operatorname{d} g &amp;= g' \operatorname{d} f \\
   \operatorname{d} f &amp;= f' \operatorname{d} x.
@@ -1719,19 +1361,12 @@ top:
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="2022-09-12-sparsity.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="2022-09-14-nonlinear.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">2022-09-12 Sparsity and solvers</p>
+            <p class="prev-next-title">2022-09-14 Nonlinear solvers</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="2022-09-16-differentiation.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">2022-09-16 Differentiation</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
