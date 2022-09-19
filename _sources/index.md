@@ -18,6 +18,8 @@ Welcome to **CSCI-5636: Numerical Solution of Partial Differential Equations**
   - Objectives
 * - [2022-08-24-derivatives](https://classroom.github.com/a/8I4O5IcG)
   - Use GitHub classroom and observe two kinds of numerical error: rounding error and discretization (aka. truncation) error.
+* - [2022-09-19-blasius](https://classroom.github.com/a/RBCyaHyy)
+  - Solve a nonlinear PDE using spectral methods. Learn libraries and assess accuracy.
 :::
 ::::
 

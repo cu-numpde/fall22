@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2022-09-16 Differentiation &#8212; Numerical Solution of Partial Differential Equations</title>
+    <title>2022-09-19 Blasius &#8212; Numerical Solution of Partial Differential Equations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,7 +55,6 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2022-09-14 Nonlinear solvers" href="2022-09-14-nonlinear.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -115,22 +114,22 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../syllabus.html">
    Syllabus
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../slides.html">
    Slides
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="2022-08-22-first-day.html">
      2022-08-22 First Day
@@ -181,8 +180,8 @@ const thebe_selector_output = ".output, .cell_output"
      2022-09-14 Nonlinear solvers
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
      2022-09-16 Differentiation
     </a>
    </li>
@@ -247,7 +246,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-16-differentiation.ipynb"
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-19-transient.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -325,7 +324,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-16-differentiation.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-19-transient.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -353,7 +352,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/slides/2022-09-16-differentiation.ipynb"
+        <a href="../_sources/slides/2022-09-19-transient.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -414,7 +413,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-09-16 Differentiation
+   2022-09-19 Blasius
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -533,7 +532,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2022-09-16 Differentiation</h1>
+                <h1>2022-09-19 Blasius</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -545,7 +544,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-09-16 Differentiation
+   2022-09-19 Blasius
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -665,18 +664,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="differentiation">
-<h1>2022-09-16 Differentiation<a class="headerlink" href="#differentiation" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="blasius">
+<h1>2022-09-19 Blasius<a class="headerlink" href="#blasius" title="Permalink to this headline">#</a></h1>
 <section id="last-time">
 <h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Newton’s method for systems</p></li>
-<li><p>Bratu nonlinear PDE</p></li>
-<li><p>p-Laplacian</p></li>
-</ul>
-</section>
-<section id="today">
-<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>NLsolve Newton solver library</p>
 <ul>
@@ -686,8 +677,15 @@ title="Print to PDF"
 </li>
 <li><p>Algorithmic differentiation via Zygote</p></li>
 <li><p>Symbolic differentiation</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
 <li><p>Structured by-hand differentiation</p></li>
 <li><p>Concept of PDE-based inference (inverse problems)</p></li>
+<li><p>The Blasius problem (activity)</p></li>
+<li><p>Intro to transient problems</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -854,7 +852,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_7_0.svg" src="../_images/2022-09-16-differentiation_7_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_7_0.svg" src="../_images/2022-09-19-transient_7_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -863,7 +861,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_8_0.svg" src="../_images/2022-09-16-differentiation_8_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_8_0.svg" src="../_images/2022-09-19-transient_8_0.svg" /></div>
 </div>
 <section id="what-s-wrong">
 <h2>What’s wrong?<a class="headerlink" href="#what-s-wrong" title="Permalink to this headline">#</a></h2>
@@ -972,7 +970,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_17_0.svg" src="../_images/2022-09-16-differentiation_17_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_17_0.svg" src="../_images/2022-09-19-transient_17_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -981,7 +979,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_18_0.svg" src="../_images/2022-09-16-differentiation_18_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_18_0.svg" src="../_images/2022-09-19-transient_18_0.svg" /></div>
 </div>
 <ul class="simple">
 <li><p>Can you fix the <code class="docutils literal notranslate"><span class="pre">plaplace_J</span></code> to differentiate correctly (analytically)?</p></li>
@@ -1003,7 +1001,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_21_0.svg" src="../_images/2022-09-16-differentiation_21_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_21_0.svg" src="../_images/2022-09-19-transient_21_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1058,7 +1056,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_24_0.svg" src="../_images/2022-09-16-differentiation_24_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_24_0.svg" src="../_images/2022-09-19-transient_24_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1067,7 +1065,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-16-differentiation_25_0.svg" src="../_images/2022-09-16-differentiation_25_0.svg" /></div>
+<img alt="../_images/2022-09-19-transient_25_0.svg" src="../_images/2022-09-19-transient_25_0.svg" /></div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="what-about-symbolic-differentiation">
@@ -1185,8 +1183,8 @@ title="Print to PDF"
 <section class="tex2jax_ignore mathjax_ignore" id="we-can-go-the-other-way">
 <h1>We can go the other way<a class="headerlink" href="#we-can-go-the-other-way" title="Permalink to this headline">#</a></h1>
 <p>We can differentiate a composition <span class="math notranslate nohighlight">\(h(g(f(x)))\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-879dda0e-7c46-4b19-9b59-4a49d8eaf19c">
-<span class="eqno">(15)<a class="headerlink" href="#equation-879dda0e-7c46-4b19-9b59-4a49d8eaf19c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3ca0cf5b-8fbe-4c0d-8d45-e0215210849f">
+<span class="eqno">()<a class="headerlink" href="#equation-3ca0cf5b-8fbe-4c0d-8d45-e0215210849f" title="Permalink to this equation">#</a></span>\[\begin{align}
   \operatorname{d} h &amp;= h' \operatorname{d} g \\
   \operatorname{d} g &amp;= g' \operatorname{d} f \\
   \operatorname{d} f &amp;= f' \operatorname{d} x.
@@ -1398,13 +1396,6 @@ top:
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="2022-09-14-nonlinear.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">2022-09-14 Nonlinear solvers</p>
-        </div>
-    </a>
 </div>
             </footer>
         </div>
