@@ -1,0 +1,931 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-09-19 Blasius &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-09-21 Transient" href="2022-09-21-transient.html" />
+    <link rel="prev" title="2022-09-16 Differentiation" href="2022-09-16-differentiation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-19-blasius.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-19-blasius.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-09-19-blasius.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-19 Blasius
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hand-coding-derivatives-it-s-all-chain-rule-and-associativity">
+   Hand coding derivatives: it’s all chain rule and associativity
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#we-can-go-the-other-way">
+   We can go the other way
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-reverse-mode-example">
+   A reverse mode example
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kinds-of-algorithmic-differentation">
+   Kinds of algorithmic differentation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-zygote-work">
+   How does Zygote work?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-or-reverse">
+   Forward or reverse?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference-using-pde-based-models">
+   Inference using PDE-based models
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compressible-blasius-boundary-layer">
+   Compressible Blasius boundary layer
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-09-19 Blasius</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-19 Blasius
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hand-coding-derivatives-it-s-all-chain-rule-and-associativity">
+   Hand coding derivatives: it’s all chain rule and associativity
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#we-can-go-the-other-way">
+   We can go the other way
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-reverse-mode-example">
+   A reverse mode example
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kinds-of-algorithmic-differentation">
+   Kinds of algorithmic differentation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-does-zygote-work">
+   How does Zygote work?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-or-reverse">
+   Forward or reverse?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference-using-pde-based-models">
+   Inference using PDE-based models
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compressible-blasius-boundary-layer">
+   Compressible Blasius boundary layer
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="blasius">
+<h1>2022-09-19 Blasius<a class="headerlink" href="#blasius" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>NLsolve Newton solver library</p>
+<ul>
+<li><p>p-Laplacian robustness</p></li>
+<li><p>diagnostics</p></li>
+</ul>
+</li>
+<li><p>Algorithmic differentiation via Zygote</p></li>
+<li><p>Symbolic differentiation</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Structured by-hand differentiation</p></li>
+<li><p>Concept of PDE-based inference (inverse problems)</p></li>
+<li><p>The Blasius problem (activity)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">Zygote</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">vander</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nb">nothing</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">V</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vander (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="hand-coding-derivatives-it-s-all-chain-rule-and-associativity">
+<h1>Hand coding derivatives: it’s all chain rule and associativity<a class="headerlink" href="#hand-coding-derivatives-it-s-all-chain-rule-and-associativity" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ df = f'(x) dx \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">^</span><span class="nb">pi</span><span class="w"></span>
+<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">f</span><span class="p">(</span><span class="mf">1.9</span><span class="p">),</span><span class="w"> </span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.9</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-1.5346823414986814, (-34.03241959914049,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="n">dy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dx</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">^</span><span class="nb">pi</span><span class="w"></span>
+<span class="w">        </span><span class="n">da</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="o">^</span><span class="p">(</span><span class="nb">pi</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dy</span><span class="w"></span>
+<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">da</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">dc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dy</span><span class="w"></span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">        </span><span class="n">dy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dc</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">dy</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">df</span><span class="p">(</span><span class="mf">1.9</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-34.03241959914048
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="we-can-go-the-other-way">
+<h1>We can go the other way<a class="headerlink" href="#we-can-go-the-other-way" title="Permalink to this headline">#</a></h1>
+<p>We can differentiate a composition <span class="math notranslate nohighlight">\(h(g(f(x)))\)</span> as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d5696968-a320-4107-bd90-ba2de1982224">
+<span class="eqno">(16)<a class="headerlink" href="#equation-d5696968-a320-4107-bd90-ba2de1982224" title="Permalink to this equation">#</a></span>\[\begin{align}
+  \operatorname{d} h &amp;= h' \operatorname{d} g \\
+  \operatorname{d} g &amp;= g' \operatorname{d} f \\
+  \operatorname{d} f &amp;= f' \operatorname{d} x.
+\end{align}\]</div>
+<p>What we’ve done above is called “forward mode”, and amounts to placing the parentheses in the chain rule like</p>
+<div class="math notranslate nohighlight">
+\[ \operatorname d h = \frac{dh}{dg} \left(\frac{dg}{df} \left(\frac{df}{dx} \operatorname d x \right) \right) .\]</div>
+<p>The expression means the same thing if we rearrange the parentheses,</p>
+<div class="math notranslate nohighlight">
+\[ \operatorname d h = \left( \left( \left( \frac{dh}{dg} \right) \frac{dg}{df} \right) \frac{df}{dx} \right) \operatorname d x \]</div>
+<p>which we can compute with in reverse order via</p>
+<div class="math notranslate nohighlight">
+\[ \underbrace{\bar x}_{\frac{dh}{dx}} = \underbrace{\bar g \frac{dg}{df}}_{\bar f} \frac{df}{dx} .\]</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="a-reverse-mode-example">
+<h1>A reverse mode example<a class="headerlink" href="#a-reverse-mode-example" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ \underbrace{\bar x}_{\frac{dh}{dx}} = \underbrace{\bar g \frac{dg}{df}}_{\bar f} \frac{df}{dx} .\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="nb">pi</span><span class="w"></span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="mf">1.4</span><span class="p">),</span><span class="w"> </span><span class="n">gradient</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.32484122107701546, (-1.2559761698835525,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">gback</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y_</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="nb">pi</span><span class="w"></span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">    </span><span class="c"># backward pass</span><span class="w"></span>
+<span class="w">    </span><span class="n">c_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y_</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span>
+<span class="w">    </span><span class="n">b_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y_</span><span class="w"></span>
+<span class="w">    </span><span class="n">a_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b_</span><span class="w"></span>
+<span class="w">    </span><span class="n">x_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="nb">pi</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a_</span><span class="w"></span>
+<span class="w">    </span><span class="n">x_</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">gback</span><span class="p">(</span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.2559761698835525
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kinds-of-algorithmic-differentation">
+<h1>Kinds of algorithmic differentation<a class="headerlink" href="#kinds-of-algorithmic-differentation" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Source transformation: Fortran code in, Fortran code out</p>
+<ul>
+<li><p>Duplicates compiler features, usually incomplete language coverage</p></li>
+<li><p>Produces efficient code</p></li>
+</ul>
+</li>
+<li><p>Operator overloading: C++ types</p>
+<ul>
+<li><p>Hard to vectorize</p></li>
+<li><p>Loops are effectively unrolled/inefficient</p></li>
+</ul>
+</li>
+<li><p>Just-in-time compilation: tightly coupled with compiler</p>
+<ul>
+<li><p>JIT lag</p></li>
+<li><p>Needs dynamic language features (JAX) or tight integration with compiler (Zygote, Enzyme)</p></li>
+<li><p>Some <a class="reference external" href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#control-flow">sharp bits</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="how-does-zygote-work">
+<h1>How does Zygote work?<a class="headerlink" href="#how-does-zygote-work" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">h1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="mi">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="w"></span>
+<span class="n">h2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="nd">@code_llvm</span><span class="w"> </span><span class="n">h1</span><span class="p">(</span><span class="mf">4.</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ In[7]:1 within `h1`
+define <span class=" -Color -Color-Cyan">double</span> @julia_h1_5414<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">double</span> %0<span class=" -Color -Color-Yellow">)</span> #0 <span class=" -Color -Color-Yellow">{</span>
+top:
+; ┌ @ intfuncs.jl:322 within `literal_pow`
+; │┌ @ operators.jl:591 within `*` @ float.jl:385
+    %1 = <span class=" -Color -Color-Bold">fmul</span> <span class=" -Color -Color-Cyan">double</span> %0, %0
+    %2 = <span class=" -Color -Color-Bold">fmul</span> <span class=" -Color -Color-Cyan">double</span> %1, %0
+; └└
+; ┌ @ promotion.jl:389 within `*` @ float.jl:385
+   %3 = <span class=" -Color -Color-Bold">fmul</span> <span class=" -Color -Color-Cyan">double</span> %0, <span class=" -Color -Color-Yellow">3.000000e+00</span>
+; └
+; ┌ @ float.jl:383 within `+`
+   %4 = <span class=" -Color -Color-Bold">fadd</span> <span class=" -Color -Color-Cyan">double</span> %3, %2
+; └
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Cyan">double</span> %4
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_llvm</span><span class="w"> </span><span class="n">gradient</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span><span class="w"> </span><span class="mf">4.</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ /home/jed/.julia/packages/Zygote/xGkZ5/src/compiler/interface.jl:95 within `gradient`
+define <span class=" -Color -Color-Yellow">[1</span> x <span class=" -Color -Color-Cyan">double</span><span class=" -Color -Color-Yellow">]</span> @julia_gradient_5495<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">double</span> %0<span class=" -Color -Color-Yellow">)</span> #0 <span class=" -Color -Color-Yellow">{</span>
+top:
+;  @ /home/jed/.julia/packages/Zygote/xGkZ5/src/compiler/interface.jl:97 within `gradient`
+; ┌ @ /home/jed/.julia/packages/Zygote/xGkZ5/src/compiler/interface.jl:45 within `#60`
+; │┌ @ In[7]:1 within `Pullback`
+; ││┌ @ /home/jed/.julia/packages/Zygote/xGkZ5/src/compiler/chainrules.jl:206 within `ZBack`
+; │││┌ @ /home/jed/.julia/packages/Zygote/xGkZ5/src/lib/number.jl:12 within `literal_pow_pullback`
+; ││││┌ @ intfuncs.jl:321 within `literal_pow`
+; │││││┌ @ float.jl:385 within `*`
+        %1 = <span class=" -Color -Color-Bold">fmul</span> <span class=" -Color -Color-Cyan">double</span> %0, %0
+; ││││└└
+; ││││┌ @ promotion.jl:389 within `*` @ float.jl:385
+       %2 = <span class=" -Color -Color-Bold">fmul</span> <span class=" -Color -Color-Cyan">double</span> %1, <span class=" -Color -Color-Yellow">3.000000e+00</span>
+; │└└└└
+; │┌ @ /home/jed/.julia/packages/Zygote/xGkZ5/src/lib/lib.jl:17 within `accum`
+; ││┌ @ float.jl:383 within `+`
+     %3 = <span class=" -Color -Color-Bold">fadd</span> <span class=" -Color -Color-Cyan">double</span> %2, <span class=" -Color -Color-Yellow">3.000000e+00</span>
+; └└└
+;  @ /home/jed/.julia/packages/Zygote/xGkZ5/src/compiler/interface.jl:98 within `gradient`
+  %.fca.0.insert = <span class=" -Color -Color-Bold">insertvalue</span> <span class=" -Color -Color-Yellow">[1</span> x <span class=" -Color -Color-Cyan">double</span><span class=" -Color -Color-Yellow">]</span> zeroinitializer, <span class=" -Color -Color-Cyan">double</span> %3, <span class=" -Color -Color-Yellow">0</span>
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Yellow">[1</span> x <span class=" -Color -Color-Cyan">double</span><span class=" -Color -Color-Yellow">]</span> %.fca.0.insert
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="forward-or-reverse">
+<h1>Forward or reverse?<a class="headerlink" href="#forward-or-reverse" title="Permalink to this headline">#</a></h1>
+<p>It all depends on the shape.</p>
+<div class="math notranslate nohighlight">
+\[ \operatorname d h = \frac{dh}{dg} \left(\frac{dg}{df} \left(\frac{df}{dx} \operatorname d x \right) \right) .\]</div>
+<div class="math notranslate nohighlight">
+\[ \operatorname d h = \left( \left( \left( \frac{dh}{dg} \right) \frac{dg}{df} \right) \frac{df}{dx} \right) \operatorname d x \]</div>
+<ul class="simple">
+<li><p>One input, many outputs: use forward mode</p>
+<ul>
+<li><p>“One input” can be looking in one direction</p></li>
+</ul>
+</li>
+<li><p>Many inputs, one output: use reverse mode</p>
+<ul>
+<li><p>Will need to traverse execution backwards (“tape”)</p></li>
+<li><p>Hierarchical checkpointing</p></li>
+</ul>
+</li>
+<li><p>About square? Forward is usually a bit more efficient.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="inference-using-pde-based-models">
+<h1>Inference using PDE-based models<a class="headerlink" href="#inference-using-pde-based-models" title="Permalink to this headline">#</a></h1>
+<img src="https://crikit.science/_images/diagram.png" width="100%" /></section>
+<section class="tex2jax_ignore mathjax_ignore" id="compressible-blasius-boundary-layer">
+<h1><a class="reference external" href="https://en.wikipedia.org/wiki/Blasius_boundary_layer#Compressible_Blasius_boundary_layer">Compressible Blasius boundary layer</a><a class="headerlink" href="#compressible-blasius-boundary-layer" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Activity will solve this 1D nonlinear PDE</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-09-16-differentiation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-09-16 Differentiation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-09-21-transient.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-09-21 Transient</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1479 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-09-21 Transient &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-09-19 Blasius" href="2022-09-19-blasius.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-09-21 Transient
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-21-transient.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-21-transient.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-09-21-transient.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-21 Transient
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compressible-blasius-boundary-layer">
+   Compressible Blasius boundary layer
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ordinary-differential-equations">
+   Ordinary Differential Equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-differential-equations">
+   Solving differential equations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-equations">
+     Linear equations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#can-do-the-same-for-systems">
+     Can do the same for systems
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-does-it-mean-to-exponentiate-a-matrix">
+       What does it mean to exponentiate a matrix?
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#question">
+       Question
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-euler-method">
+   Forward Euler method
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-euler-on-a-linear-system">
+   Forward Euler on a linear system
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-stability-analysis">
+     Linear Stability Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-diagrams-a-property-of-methods">
+   Stability diagrams (a property of methods)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implicit-methods">
+   Implicit methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-with-centered-stencil">
+   Advection with centered stencil
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-with-upwind-stencil">
+   Advection with upwind stencil
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#centered-advection-with-runge-kutta">
+   Centered advection with Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#midpoint-trapezoid-and-theta-methods">
+   Midpoint/trapezoid and
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-theta-solver">
+   A
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stiff-decay-to-cosine">
+   Stiff decay to cosine
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-as-linear-ode">
+   Advection as linear ODE
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heat-equation-as-linear-ode">
+   Heat equation as linear ODE
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-classes-and-the-theta-method">
+   Stability classes and the
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition-a-stability">
+     Definition:
+     <span class="math notranslate nohighlight">
+      \(A\)
+     </span>
+     -stability
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition-l-stability">
+     Definition:
+     <span class="math notranslate nohighlight">
+      \(L\)
+     </span>
+     -stability
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectrum-of-operators">
+   Spectrum of operators
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-09-21 Transient</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-21 Transient
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#compressible-blasius-boundary-layer">
+   Compressible Blasius boundary layer
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ordinary-differential-equations">
+   Ordinary Differential Equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-differential-equations">
+   Solving differential equations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-equations">
+     Linear equations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#can-do-the-same-for-systems">
+     Can do the same for systems
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-does-it-mean-to-exponentiate-a-matrix">
+       What does it mean to exponentiate a matrix?
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#question">
+       Question
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-euler-method">
+   Forward Euler method
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-euler-on-a-linear-system">
+   Forward Euler on a linear system
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-stability-analysis">
+     Linear Stability Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-diagrams-a-property-of-methods">
+   Stability diagrams (a property of methods)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implicit-methods">
+   Implicit methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-with-centered-stencil">
+   Advection with centered stencil
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-with-upwind-stencil">
+   Advection with upwind stencil
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#centered-advection-with-runge-kutta">
+   Centered advection with Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#midpoint-trapezoid-and-theta-methods">
+   Midpoint/trapezoid and
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-theta-solver">
+   A
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stiff-decay-to-cosine">
+   Stiff decay to cosine
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#advection-as-linear-ode">
+   Advection as linear ODE
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heat-equation-as-linear-ode">
+   Heat equation as linear ODE
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-classes-and-the-theta-method">
+   Stability classes and the
+   <span class="math notranslate nohighlight">
+    \(\theta\)
+   </span>
+   method
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition-a-stability">
+     Definition:
+     <span class="math notranslate nohighlight">
+      \(A\)
+     </span>
+     -stability
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition-l-stability">
+     Definition:
+     <span class="math notranslate nohighlight">
+      \(L\)
+     </span>
+     -stability
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectrum-of-operators">
+   Spectrum of operators
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="transient">
+<h1>2022-09-21 Transient<a class="headerlink" href="#transient" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Structured by-hand differentiation</p></li>
+<li><p>Concept of PDE-based inference (inverse problems)</p></li>
+<li><p>The Blasius problem (activity)</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Blasius working session</p></li>
+<li><p>Intro to transient problems</p></li>
+<li><p>Stability diagrams</p></li>
+<li><p>Energy dissipation</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(L\)</span> stability</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">Zygote</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">vander</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nb">nothing</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="n">k</span><span class="w"></span>
+<span class="w">        </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">V</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">V</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vander (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="compressible-blasius-boundary-layer">
+<h1><a class="reference external" href="https://en.wikipedia.org/wiki/Blasius_boundary_layer#Compressible_Blasius_boundary_layer">Compressible Blasius boundary layer</a><a class="headerlink" href="#compressible-blasius-boundary-layer" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Activity will solve this 1D nonlinear PDE</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ordinary-differential-equations">
+<h1>Ordinary Differential Equations<a class="headerlink" href="#ordinary-differential-equations" title="Permalink to this headline">#</a></h1>
+<p>Given initial condition <span class="math notranslate nohighlight">\(u_0 = u(t=0)\)</span>, find <span class="math notranslate nohighlight">\(u(t)\)</span> for <span class="math notranslate nohighlight">\(t &gt; 0\)</span> that satisfies</p>
+<div class="math notranslate nohighlight">
+\[ \dot u \equiv \frac{\partial u}{\partial t} = f(t, u) \]</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Application</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(f\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Orbital dynamics</p></td>
+<td><p>position, momentum</p></td>
+<td><p>conservation of momentum</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chemical reactions</p></td>
+<td><p>concentration</p></td>
+<td><p>conservation of atoms</p></td>
+</tr>
+<tr class="row-even"><td><p>Epidemiology</p></td>
+<td><p>infected/recovered population</p></td>
+<td><p>transmission and recovery</p></td>
+</tr>
+<tr class="row-odd"><td><p>Heat transfer</p></td>
+<td><p>temperature</p></td>
+<td><p>conservation of energy</p></td>
+</tr>
+<tr class="row-even"><td><p>Seismology</p></td>
+<td><p>displacement, momentum</p></td>
+<td><p>conservative of momentum</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="solving-differential-equations">
+<h1>Solving differential equations<a class="headerlink" href="#solving-differential-equations" title="Permalink to this headline">#</a></h1>
+<section id="linear-equations">
+<h2>Linear equations<a class="headerlink" href="#linear-equations" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ \dot u = A(t) u + \text{source}(t)\]</div>
+<ul class="simple">
+<li><p>Autonomous if <span class="math notranslate nohighlight">\(A(t) = A\)</span> and source independent of <span class="math notranslate nohighlight">\(t\)</span></p></li>
+<li><p>Suppose <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(a = A\)</span> are scalars: <span class="math notranslate nohighlight">\(u(t) = e^{at} u_0\)</span></p></li>
+</ul>
+</section>
+<section id="can-do-the-same-for-systems">
+<h2>Can do the same for systems<a class="headerlink" href="#can-do-the-same-for-systems" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ y(t) = e^{A t} y_0 \]</div>
+<section id="what-does-it-mean-to-exponentiate-a-matrix">
+<h3>What does it mean to exponentiate a matrix?<a class="headerlink" href="#what-does-it-mean-to-exponentiate-a-matrix" title="Permalink to this headline">#</a></h3>
+<p>Taylor series!</p>
+<div class="math notranslate nohighlight">
+\[ e^A = 1 + A + \frac{A^2}{2} + \frac{A^3}{3!} + \dotsb \]</div>
+<p>and there are many <a class="reference external" href="http://www.cs.cornell.edu/cv/ResearchPDF/19ways+.pdf">practical ways to compute it</a>.</p>
+</section>
+<section id="question">
+<h3>Question<a class="headerlink" href="#question" title="Permalink to this headline">#</a></h3>
+<p>Suppose that the diagonalization <span class="math notranslate nohighlight">\(A = X \Lambda X^{-1}\)</span> exists and derive a finite expression for the matrix exponential using the scalar <code class="docutils literal notranslate"><span class="pre">exp</span></code> function.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="forward-euler-method">
+<h1>Forward Euler method<a class="headerlink" href="#forward-euler-method" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">ode_euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ode_euler (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">f1</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="w"></span>
+
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_euler</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">.5</span><span class="p">],</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.4</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">cos</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_12_0.svg" src="../_images/2022-09-21-transient_12_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="forward-euler-on-a-linear-system">
+<h1>Forward Euler on a linear system<a class="headerlink" href="#forward-euler-on-a-linear-system" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">f2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_euler</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="o">&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">sin</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_14_0.svg" src="../_images/2022-09-21-transient_14_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">eigen</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigen{ComplexF64, ComplexF64, Matrix{ComplexF64}, Vector{ComplexF64}}
+values:
+2-element Vector{ComplexF64}:
+ 0.0 - 1.0im
+ 0.0 + 1.0im
+vectors:
+2×2 Matrix{ComplexF64}:
+ 0.707107-0.0im       0.707107+0.0im
+      0.0-0.707107im       0.0+0.707107im
+</pre></div>
+</div>
+</div>
+</div>
+<section id="linear-stability-analysis">
+<h2>Linear Stability Analysis<a class="headerlink" href="#linear-stability-analysis" title="Permalink to this headline">#</a></h2>
+<p>Why did Euler converge on the first problem (with sufficiently small steps) while always diverging on the second problem?</p>
+<p>We can understand the convergence of methods by analyzing the test problem
+<div class="math notranslate nohighlight">
+\[ \dot u = \lambda u \]</div>
+
+for different values of <span class="math notranslate nohighlight">\(\lambda\)</span> in the complex plane.
+One step of the Euler method with step size <span class="math notranslate nohighlight">\(h\)</span> maps
+<div class="math notranslate nohighlight">
+\[ u \to u + h \lambda u = \underbrace{(1 + h \lambda)}_{R(h \lambda)} u \]</div>
+
+where we have introduced the complex-valued function <span class="math notranslate nohighlight">\(R(z)\)</span>.</p>
+<ul class="simple">
+<li><p>When does this map cause solutions to “blow up” and when is it stable?</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stability-diagrams-a-property-of-methods">
+<h1>Stability diagrams (a property of methods)<a class="headerlink" href="#stability-diagrams-a-property-of-methods" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">plot_stability</span><span class="p">(</span><span class="n">Rz</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">;</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">ylims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="n">xlims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">xlims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="n">ylims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">ylims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">heatmap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">Rz</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="nb">im</span><span class="o">*</span><span class="n">y</span><span class="p">)),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:bwr</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">aspect_ratio</span><span class="o">=</span><span class="ss">:equal</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Forward Euler&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_18_0.svg" src="../_images/2022-09-21-transient_18_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="implicit-methods">
+<h1>Implicit methods<a class="headerlink" href="#implicit-methods" title="Permalink to this headline">#</a></h1>
+<p>Recall that forward Euler is the step
+<div class="math notranslate nohighlight">
+\[ \tilde u(h) = u(0) + h f(0, u(0)) . \]</div>
+
+This can be evaluated <strong>explicitly</strong>; all the terms on the right hand side are known so the approximation <span class="math notranslate nohighlight">\(\tilde u(h)\)</span> is computed merely by evaluating the right hand side.
+Let’s consider an alternative, <strong>backward Euler</strong> (or “implicit Euler”),
+<div class="math notranslate nohighlight">
+\[ \tilde u(h) = u(0) + h f(h, \tilde u(h)) . \]</div>
+
+This is a (generally) nonlinear equation for <span class="math notranslate nohighlight">\(\tilde u(h)\)</span>.
+For the test equation <span class="math notranslate nohighlight">\(\dot u = \lambda u\)</span>, the backward Euler method is
+<div class="math notranslate nohighlight">
+\[ \tilde u(h) = u(0) + h \lambda \tilde u(h) \]</div>
+
+or
+<div class="math notranslate nohighlight">
+\[ \tilde u(h) = \underbrace{\frac{1}{1 - h \lambda}}_{R(h\lambda)} u(0) . \]</div>
+</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">z</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Backward Euler&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_21_0.svg" src="../_images/2022-09-21-transient_21_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="advection-with-centered-stencil">
+<h1>Advection with centered stencil<a class="headerlink" href="#advection-with-centered-stencil" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">advect_center</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">uwrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u</span><span class="p">[</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">u</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="w"></span>
+<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">uwrap</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">uwrap</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">f</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_euler</span><span class="p">(</span><span class="n">advect_center</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.02</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">nsteps</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">nsteps÷8</span><span class="p">)</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nsteps = 51
+</pre></div>
+</div>
+<img alt="../_images/2022-09-21-transient_24_1.svg" src="../_images/2022-09-21-transient_24_1.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="advection-with-upwind-stencil">
+<h1>Advection with upwind stencil<a class="headerlink" href="#advection-with-upwind-stencil" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">advect_upwind</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">uwrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u</span><span class="p">[</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">u</span><span class="o">...</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="w"></span>
+<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">uwrap</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">uwrap</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">f</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_euler</span><span class="p">(</span><span class="n">advect_upwind</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.002</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.644245 seconds (170.48 k allocations: 8.775 MiB, 99.71% compilation time)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">nsteps÷8</span><span class="p">)</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_27_0.svg" src="../_images/2022-09-21-transient_27_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="centered-advection-with-runge-kutta">
+<h1>Centered advection with Runge-Kutta<a class="headerlink" href="#centered-advection-with-runge-kutta" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">ode_rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="n">ydot1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">ydot2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ydot1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">ydot3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">ydot2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">ydot4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">ydot3</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="o">/</span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ydot1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">ydot2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">ydot3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ydot4</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ode_rk4 (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">51</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk4</span><span class="p">(</span><span class="n">advect_center</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">nsteps÷8</span><span class="p">)</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.151425 seconds (608.14 k allocations: 30.478 MiB, 11.39% gc time, 99.67% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/2022-09-21-transient_30_1.svg" src="../_images/2022-09-21-transient_30_1.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="midpoint-trapezoid-and-theta-methods">
+<h1>Midpoint/trapezoid and <span class="math notranslate nohighlight">\(\theta\)</span> methods<a class="headerlink" href="#midpoint-trapezoid-and-theta-methods" title="Permalink to this headline">#</a></h1>
+<p>Forward and backward Euler are bookends of the family known as <span class="math notranslate nohighlight">\(\theta\)</span> methods.</p>
+<div class="math notranslate nohighlight">
+\[ \tilde u(h) = u(0) + h f\Big(\theta h, \theta\tilde u(h) + (1-\theta)u(0) \Big) \]</div>
+<p>which, for linear problems, is solved as</p>
+<div class="math notranslate nohighlight">
+\[ (I - h \theta A) u(h) = \Big(I + h (1-\theta) A \Big) u(0) . \]</div>
+<p><span class="math notranslate nohighlight">\(\theta=0\)</span> is explicit Euler, <span class="math notranslate nohighlight">\(\theta=1\)</span> is implicit Euler, and <span class="math notranslate nohighlight">\(\theta=1/2\)</span> are the midpoint or trapezoid rules (equivalent for linear problems).
+The stability function is
+<div class="math notranslate nohighlight">
+\[ R(z) = \frac{1 + (1-\theta)z}{1 - \theta z}. \]</div>
+</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">theta</span><span class="o">*</span><span class="n">z</span><span class="p">)</span><span class="w"></span>
+<span class="n">theta</span><span class="o">=</span><span class="mf">.8</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_33_0.svg" src="../_images/2022-09-21-transient_33_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="a-theta-solver">
+<h1>A <span class="math notranslate nohighlight">\(\theta\)</span> solver<a class="headerlink" href="#a-theta-solver" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">forcing</span><span class="o">=</span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">forcing</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">theta</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ode_theta_linear (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Test on oscillator</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="o">&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">sin</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_36_0.svg" src="../_images/2022-09-21-transient_36_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stiff-decay-to-cosine">
+<h1>Stiff decay to cosine<a class="headerlink" href="#stiff-decay-to-cosine" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[\dot u = -k(u - \cos t) = -k u + k \cos t\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">.2</span><span class="p">],</span><span class="w"> </span><span class="n">forcing</span><span class="o">=</span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">cos</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_38_0.svg" src="../_images/2022-09-21-transient_38_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="advection-as-linear-ode">
+<h1>Advection as linear ODE<a class="headerlink" href="#advection-as-linear-ode" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">advect_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">wrap</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">upwind</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">wrap</span><span class="o">.</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">]))</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">wrap</span><span class="o">.</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="mi">2</span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">advect_matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 SparseMatrixCSC{Float64, Int64} with 11 stored entries:
+  0.0   -1.25    ⋅      ⋅     1.25
+  1.25    ⋅    -1.25    ⋅      ⋅ 
+   ⋅     1.25    ⋅    -1.25    ⋅ 
+   ⋅      ⋅     1.25    ⋅    -1.25
+ -1.25    ⋅      ⋅     1.25    ⋅ 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advect_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.04</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mf">1.</span><span class="p">);</span><span class="w"></span>
+<span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">nsteps÷8</span><span class="p">)</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1.502921 seconds (5.20 M allocations: 266.134 MiB, 7.38% gc time, 99.92% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/2022-09-21-transient_41_1.svg" src="../_images/2022-09-21-transient_41_1.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="heat-equation-as-linear-ode">
+<h1>Heat equation as linear ODE<a class="headerlink" href="#heat-equation-as-linear-ode" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>How do different <span class="math notranslate nohighlight">\(\theta \in [0, 1]\)</span> compare in terms of stability?</p></li>
+<li><p>Are there artifacts even when the solution is stable?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">heat_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">wrap</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">wrap</span><span class="o">.</span><span class="p">([</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">heat_matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 SparseMatrixCSC{Float64, Int64} with 15 stored entries:
+ -12.5     6.25     ⋅       ⋅      6.25
+   6.25  -12.5     6.25     ⋅       ⋅ 
+    ⋅      6.25  -12.5     6.25     ⋅ 
+    ⋅       ⋅      6.25  -12.5     6.25
+   6.25     ⋅       ⋅      6.25  -12.5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heat_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">200</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.070092 seconds (117.35 k allocations: 6.568 MiB, 99.10% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/2022-09-21-transient_44_1.svg" src="../_images/2022-09-21-transient_44_1.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stability-classes-and-the-theta-method">
+<h1>Stability classes and the <span class="math notranslate nohighlight">\(\theta\)</span> method<a class="headerlink" href="#stability-classes-and-the-theta-method" title="Permalink to this headline">#</a></h1>
+<section id="definition-a-stability">
+<h2>Definition: <span class="math notranslate nohighlight">\(A\)</span>-stability<a class="headerlink" href="#definition-a-stability" title="Permalink to this headline">#</a></h2>
+<p>A method is <span class="math notranslate nohighlight">\(A\)</span>-stable if the stability region
+<div class="math notranslate nohighlight">
+\[ \{ z : |R(z)| \le 1 \} \]</div>
+
+contains the entire left half plane <div class="math notranslate nohighlight">
+\[ \Re[z] \le 0 .\]</div>
+
+This means that the method can take arbitrarily large time steps without becoming unstable (diverging) for any problem that is indeed physically stable.</p>
+</section>
+<section id="definition-l-stability">
+<h2>Definition: <span class="math notranslate nohighlight">\(L\)</span>-stability<a class="headerlink" href="#definition-l-stability" title="Permalink to this headline">#</a></h2>
+<p>A time integrator with stability function <span class="math notranslate nohighlight">\(R(z)\)</span> is <span class="math notranslate nohighlight">\(L\)</span>-stable if
+<div class="math notranslate nohighlight">
+\[ \lim_{z\to\infty} R(z) = 0 .\]</div>
+
+For the <span class="math notranslate nohighlight">\(\theta\)</span> method, we have
+<div class="math notranslate nohighlight">
+\[ \lim_{z\to \infty} \frac{1 + (1-\theta)z}{1 - \theta z} = \frac{1-\theta}{\theta} . \]</div>
+
+Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is <span class="math notranslate nohighlight">\(L\)</span>-stable.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="spectrum-of-operators">
+<h1>Spectrum of operators<a class="headerlink" href="#spectrum-of-operators" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.1</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="s">, h=</span><span class="si">$h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">advect_matrix</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="nb">true</span><span class="p">)))</span><span class="w"></span>
+<span class="n">scatter!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">ev</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_49_0.svg" src="../_images/2022-09-21-transient_49_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.01</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="s">, h=</span><span class="si">$h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">heat_matrix</span><span class="p">(</span><span class="mi">20</span><span class="p">)))</span><span class="w"></span>
+<span class="n">scatter!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">ev</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-21-transient_50_0.svg" src="../_images/2022-09-21-transient_50_0.svg" /></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-09-19-blasius.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-09-19 Blasius</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
