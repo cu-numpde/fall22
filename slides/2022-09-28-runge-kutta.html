@@ -1,0 +1,1653 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-09-28 Runge-Kutta &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-09-26 Stiffness" href="2022-09-26-stiffness.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-09-28-runge-kutta.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-09-28-runge-kutta.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-09-28-runge-kutta.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-28 Runge-Kutta
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stiffness">
+   Stiffness
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discuss-is-advection-diffusion-stiff">
+     Discuss: is advection-diffusion stiff?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-scaling">
+   Cost scaling
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-precision-error-vs-cost">
+   Work-precision (error vs cost)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#runge-kutta-methods">
+   Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#past-methods-as-runge-kutta">
+   Past methods as Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-function-for-runge-kutta">
+   Stability function for Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-stability">
+   Plotting stability
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heun-s-method-and-rk4">
+   Heun’s method and RK4
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-explicit-rk-solver">
+   An explicit RK solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-convergence-and-accuracy">
+   Measuring convergence and accuracy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-precision-or-accuracy-vs-cost">
+   Work-precision (or accuracy vs cost)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effective-rk-stability-diagrams">
+   Effective RK stability diagrams
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#runge-kutta-order-conditions">
+   Runge-Kutta order conditions
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#order-conditions-are-nonlinear-algebraic-equations">
+   Order conditions are nonlinear algebraic equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations">
+   Observations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theorem-from-hairer-norsett-and-wanner">
+   Theorem (from Hairer, Nørsett, and Wanner)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#embedded-error-estimation">
+   Embedded error estimation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adaptive-step-size-control">
+   Adaptive step size control
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagonally-implicit-runge-kutta-methods">
+   Diagonally Implicit Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fully-implicit-runge-kutta-methods">
+   Fully implicit Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#explore-benchmarks-https-benchmarks-sciml-ai">
+   Explore benchmarks: https://benchmarks.sciml.ai/
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#report-out-discuss-next-class">
+     Report-out/discuss next class
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-09-28 Runge-Kutta</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-09-28 Runge-Kutta
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stiffness">
+   Stiffness
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discuss-is-advection-diffusion-stiff">
+     Discuss: is advection-diffusion stiff?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-scaling">
+   Cost scaling
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-precision-error-vs-cost">
+   Work-precision (error vs cost)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#runge-kutta-methods">
+   Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#past-methods-as-runge-kutta">
+   Past methods as Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-function-for-runge-kutta">
+   Stability function for Runge-Kutta
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-stability">
+   Plotting stability
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heun-s-method-and-rk4">
+   Heun’s method and RK4
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-explicit-rk-solver">
+   An explicit RK solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#measuring-convergence-and-accuracy">
+   Measuring convergence and accuracy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-precision-or-accuracy-vs-cost">
+   Work-precision (or accuracy vs cost)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#effective-rk-stability-diagrams">
+   Effective RK stability diagrams
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#runge-kutta-order-conditions">
+   Runge-Kutta order conditions
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#order-conditions-are-nonlinear-algebraic-equations">
+   Order conditions are nonlinear algebraic equations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations">
+   Observations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theorem-from-hairer-norsett-and-wanner">
+   Theorem (from Hairer, Nørsett, and Wanner)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#embedded-error-estimation">
+   Embedded error estimation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties">
+   Properties
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adaptive-step-size-control">
+   Adaptive step size control
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagonally-implicit-runge-kutta-methods">
+   Diagonally Implicit Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fully-implicit-runge-kutta-methods">
+   Fully implicit Runge-Kutta methods
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#explore-benchmarks-https-benchmarks-sciml-ai">
+   Explore benchmarks: https://benchmarks.sciml.ai/
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#report-out-discuss-next-class">
+     Report-out/discuss next class
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="runge-kutta">
+<h1>2022-09-28 Runge-Kutta<a class="headerlink" href="#runge-kutta" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Advection-diffusion</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>- and <span class="math notranslate nohighlight">\(L\)</span>-stability</p></li>
+<li><p>Spatial, temporal, and physical dissipation</p></li>
+<li><p>Stiffness</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Exploring stiffness</p></li>
+<li><p>Runge-Kutta methods</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">plot_stability</span><span class="p">(</span><span class="n">Rz</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">;</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">ylims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="n">xlims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">xlims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="n">ylims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">ylims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">heatmap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">Rz</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="nb">im</span><span class="o">*</span><span class="n">y</span><span class="p">)),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:bwr</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">aspect_ratio</span><span class="o">=</span><span class="ss">:equal</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">forcing</span><span class="o">=</span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">forcing</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="o">*</span><span class="n">theta</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">rhs</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">theta</span><span class="o">*</span><span class="n">z</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">wrap</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">wrap</span><span class="o">.</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="n">advect_upwind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">wind</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="w"></span>
+<span class="w">        </span><span class="n">advect_center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">wind</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="n">dx</span><span class="w"></span>
+<span class="w">        </span><span class="n">stencil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">diffuse</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">upwind</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">advect_upwind</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">upwind</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">advect_center</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">stencil</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">advdiff_matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mf">.1</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 SparseMatrixCSC{Float64, Int64} with 15 stored entries:
+ -1.25   -0.625    ⋅       ⋅      1.875
+  1.875  -1.25   -0.625    ⋅       ⋅ 
+   ⋅      1.875  -1.25   -0.625    ⋅ 
+   ⋅       ⋅      1.875  -1.25   -0.625
+ -0.625    ⋅       ⋅      1.875  -1.25
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stiffness">
+<h1>Stiffness<a class="headerlink" href="#stiffness" title="Permalink to this headline">#</a></h1>
+<blockquote>
+<div><p>Stiff equations are problems for which explicit methods don’t work. (Hairer and Wanner, 2002)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>“stiff” dates to Curtiss and Hirschfelder (1952)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">.2</span><span class="p">],</span><span class="w"> </span><span class="n">forcing</span><span class="o">=</span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">cos</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_4_0.svg" src="../_images/2022-09-28-runge-kutta_4_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">mms_error</span><span class="p">(</span><span class="n">h</span><span class="p">;</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">.2</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">forcing</span><span class="o">=</span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">thist</span><span class="p">[</span><span class="k">end</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">u_exact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u0</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">k</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">^</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">T</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">u_exact</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mms_error (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:topleft</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_6_0.svg" src="../_images/2022-09-28-runge-kutta_6_0.svg" /></div>
+</div>
+<section id="discuss-is-advection-diffusion-stiff">
+<h2>Discuss: is advection-diffusion stiff?<a class="headerlink" href="#discuss-is-advection-diffusion-stiff" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">80</span><span class="w"></span>
+<span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.05</span><span class="w"></span>
+<span class="n">lambda_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="n">cfl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">lambda_min</span><span class="p">,</span><span class="w"> </span><span class="n">cfl</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="s">, h=</span><span class="si">$h</span><span class="s">, Pe_h = </span><span class="si">$</span><span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="n">kappa</span><span class="p">)</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="n">scatter!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">ev</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_8_0.svg" src="../_images/2022-09-28-runge-kutta_8_0.svg" /></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cost-scaling">
+<h1>Cost scaling<a class="headerlink" href="#cost-scaling" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Spatial discretization with error <span class="math notranslate nohighlight">\(O((\Delta x)^p)\)</span></p></li>
+<li><p>Time discretization with error <span class="math notranslate nohighlight">\(O((\Delta t)^q)\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c"># spatial order of accuracy</span><span class="w"></span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c"># temporal order of accuracy</span><span class="w"></span>
+<span class="n">Pe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="c"># Peclet number with wind=1</span><span class="w"></span>
+
+<span class="n">dt_accuracy</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">q</span><span class="p">)</span><span class="w"></span>
+<span class="n">dt_stability</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">Pe</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_stability</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)],</span><span class="w"></span>
+<span class="w">    </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;accuracy&quot;</span><span class="w"> </span><span class="s">&quot;stability&quot;</span><span class="p">],</span><span class="w"> </span>
+<span class="w">    </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:bottomright</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">Delta x</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">Delta t</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_10_0.svg" src="../_images/2022-09-28-runge-kutta_10_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">error</span><span class="p">((</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">dt</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">dt_stability</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)))</span><span class="w"> </span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">dt_stability</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)))</span><span class="w"> </span><span class="n">dx</span><span class="o">.^</span><span class="n">p</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;accuracy&quot;</span><span class="w"> </span><span class="s">&quot;stability&quot;</span><span class="w"> </span><span class="s">&quot;spatial only&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;number of grid points&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_11_0.svg" src="../_images/2022-09-28-runge-kutta_11_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="work-precision-error-vs-cost">
+<h1>Work-precision (error vs cost)<a class="headerlink" href="#work-precision-error-vs-cost" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="n">Pe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_stability</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)]</span><span class="w"></span>
+<span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="n">n</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">.^</span><span class="mf">1.5</span><span class="p">)</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="w"> </span><span class="c"># O(n^1.5 solve cost)</span><span class="w"></span>
+<span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span><span class="w"> </span><span class="n">dx</span><span class="o">.^</span><span class="n">p</span><span class="o">+</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.^</span><span class="n">q</span><span class="p">]</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;explicit_accuracy&quot;</span><span class="w"> </span><span class="s">&quot;explicit_stable&quot;</span><span class="w"> </span><span class="s">&quot;implicit&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;cost&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_13_0.svg" src="../_images/2022-09-28-runge-kutta_13_0.svg" /></div>
+</div>
+<ul class="simple">
+<li><p>Stability can be an extreme demand for explicit methods</p></li>
+<li><p>Order of accuracy matters; usually balance spatial order <span class="math notranslate nohighlight">\(p\)</span> and temporal order <span class="math notranslate nohighlight">\(q\)</span></p></li>
+<li><p>Actual cost depends heavily on solver efficiency: O(n) vs O(n^2)</p></li>
+<li><p>“Constants matter”</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="runge-kutta-methods">
+<h1>Runge-Kutta methods<a class="headerlink" href="#runge-kutta-methods" title="Permalink to this headline">#</a></h1>
+<p>The methods we have considered thus far can all be expressed as Runge-Kutta methods, which are expressed in terms of <span class="math notranslate nohighlight">\(s\)</span> “stage” equations (possibly coupled) and a completion formula.  For the ODE</p>
+<div class="math notranslate nohighlight">
+\[ \dot u = f(t, u) \]</div>
+<p>the Runge-Kutta method is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+Y_i = u(t) + h \sum_j a_{ij} f(t+c_j h, Y_j) \\
+u(t+h) = u(t) + h \sum_j b_j f(t+c_j h, Y_j)
+\end{split}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c\)</span> is a vector of <em>abscissa</em>, <span class="math notranslate nohighlight">\(A\)</span> is a table of coefficients, and <span class="math notranslate nohighlight">\(b\)</span> is a vector of completion weights.</p>
+<p>These coefficients are typically expressed in a Butcher Table
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c} c &amp; A \\ \hline &amp; b^T \end{array} \right] = \left[ \begin{array}{c|cc}
+c_0 &amp; a_{00} &amp; a_{01} \\
+c_1 &amp; a_{10} &amp; a_{11} \\
+\hline
+&amp; b_0 &amp; b_1
+\end{array} \right] . \end{split}\]</div>
+
+We will see that, for consistency, the abscissa <span class="math notranslate nohighlight">\(c\)</span> are always the row sums of <span class="math notranslate nohighlight">\(A\)</span> and that <span class="math notranslate nohighlight">\(\sum_i b_i = 1\)</span>.</p>
+<p>If the matrix <span class="math notranslate nohighlight">\(A\)</span> is strictly lower triangular, then the method is <strong>explicit</strong> (does not require solving equations).</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="past-methods-as-runge-kutta">
+<h1>Past methods as Runge-Kutta<a class="headerlink" href="#past-methods-as-runge-kutta" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Forward Euler
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|cc}
+0 &amp; 0 \\
+\hline
+&amp; 1
+\end{array} \right] ,\end{split}\]</div>
+</p></li>
+<li><p>Backward Euler
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c}
+1 &amp; 1 \\
+\hline
+&amp; 1
+\end{array} \right] ,\end{split}\]</div>
+</p></li>
+<li><p>Midpoint
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c}
+\frac 1 2 &amp; \frac 1 2 \\
+\hline
+&amp; 1
+\end{array} \right]. \end{split}\]</div>
+</p></li>
+</ul>
+<p>Indeed, the <span class="math notranslate nohighlight">\(\theta\)</span> method is
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c}
+\theta &amp; \theta \\
+\hline
+&amp; 1
+\end{array} \right] \end{split}\]</div>
+
+and an alternative “endpoint” variant of <span class="math notranslate nohighlight">\(\theta\)</span> (a generalization of the trapezoid rule) is
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|cc}
+0 &amp; 0 &amp; 0 \\
+1 &amp; 1-\theta &amp; \theta \\
+\hline
+&amp; 1-\theta &amp; \theta
+\end{array} \right]. \end{split}\]</div>
+</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stability-function-for-runge-kutta">
+<h1>Stability function for Runge-Kutta<a class="headerlink" href="#stability-function-for-runge-kutta" title="Permalink to this headline">#</a></h1>
+<p>To develop an algebraic expression for stability in terms of the Butcher Table, we consider the test equation</p>
+<div class="math notranslate nohighlight">
+\[ \dot u = \lambda u \]</div>
+<p>and apply the RK method to yield</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{split} Y_i = u(0) + h \sum_j a_{ij} \lambda Y_j \\
+u(h) = u(0) + h \sum_j b_j \lambda Y_j \end{split} \end{split}\]</div>
+<p>or, in matrix form,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{split} Y = \mathbb 1 u(0) + h \lambda A Y \\
+u(h) = u(0) + h \lambda b^T Y \end{split} \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbb 1\)</span> is a column vector of length <span class="math notranslate nohighlight">\(s\)</span> consisting of all ones.
+This reduces to
+<div class="math notranslate nohighlight">
+\[ u(h) = \underbrace{\Big( 1 + h\lambda b^T (I - h \lambda A)^{-1} \mathbb 1 \Big)}_{R(h\lambda)} u(0) . \]</div>
+</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plotting-stability">
+<h1>Plotting stability<a class="headerlink" href="#plotting-stability" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ u(h) = \underbrace{\Big( 1 + h\lambda b^T (I - h \lambda A)^{-1} \mathbb 1 \Big)}_{R(h\lambda)} u(0) \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="kt">RKTable</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="o">::</span><span class="kt">Matrix</span><span class="w"></span>
+<span class="w">    </span><span class="n">b</span><span class="o">::</span><span class="kt">Matrix</span><span class="w"></span>
+<span class="w">    </span><span class="n">c</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">RKTable</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">new</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">rk_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">rk</span><span class="p">;</span><span class="w"> </span><span class="n">brow</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">rk</span><span class="o">.</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rk</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">z</span><span class="o">*</span><span class="n">rk</span><span class="o">.</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rk_stability (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"></span>
+<span class="n">rk_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="n">theta</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="n">rk_theta_endpoint</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="w"> </span><span class="n">theta</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="w"> </span><span class="n">theta</span><span class="p">])</span><span class="w"></span>
+<span class="n">table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rk_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta = </span><span class="si">$theta</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_26_0.svg" src="../_images/2022-09-28-runge-kutta_26_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="heun-s-method-and-rk4">
+<h1>Heun’s method and RK4<a class="headerlink" href="#heun-s-method-and-rk4" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">heun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">.5</span><span class="w"> </span><span class="mf">.5</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">heun</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Heun&#39;s method&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_28_0.svg" src="../_images/2022-09-28-runge-kutta_28_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">rk4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
+<span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">rk4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;RK4&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_29_0.svg" src="../_images/2022-09-28-runge-kutta_29_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="an-explicit-rk-solver">
+<h1>An explicit RK solver<a class="headerlink" href="#an-explicit-rk-solver" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight" id="equation-d6bd5d03-d3a6-40ba-b3da-bc30f94122c8">
+<span class="eqno">(19)<a class="headerlink" href="#equation-d6bd5d03-d3a6-40ba-b3da-bc30f94122c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+Y_i &amp;= u(t) + h \sum_j a_{ij} f(t+c_j h, Y_j) &amp;
+u(t+h) &amp;= u(t) + h \sum_j b_j f(t+c_j h, Y_j)
+\end{align}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">rk4</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">fY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">s</span><span class="w"></span>
+<span class="w">            </span><span class="n">ti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">Yi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">fY</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">fY</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span><span class="w"> </span><span class="n">Yi</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ode_rk_explicit (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">linear_oscillator</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">linear_oscillator</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">cos</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_32_0.svg" src="../_images/2022-09-28-runge-kutta_32_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="measuring-convergence-and-accuracy">
+<h1>Measuring convergence and accuracy<a class="headerlink" href="#measuring-convergence-and-accuracy" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">mms_error</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u_exact</span><span class="p">;</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">rk4</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_exact</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">thist</span><span class="p">[</span><span class="k">end</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="k">end</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u_exact</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="o">:</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="n">linear_oscillator_exact</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>linear_oscillator_exact (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">heun_errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">linear_oscillator</span><span class="p">,</span><span class="w"> </span><span class="n">linear_oscillator_exact</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">heun</span><span class="p">)</span><span class="w"></span>
+<span class="n">rk4_errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">linear_oscillator</span><span class="p">,</span><span class="w"> </span><span class="n">linear_oscillator_exact</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">rk4</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">heun_errors</span><span class="p">)</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">rk4_errors</span><span class="p">)],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;heun&quot;</span><span class="w"> </span><span class="s">&quot;rk4&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">hs</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">2</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">3</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^</span><span class="si">$p</span><span class="se">\$</span><span class="s">&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]],</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:topleft</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_35_0.svg" src="../_images/2022-09-28-runge-kutta_35_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="work-precision-or-accuracy-vs-cost">
+<h1>Work-precision (or accuracy vs cost)<a class="headerlink" href="#work-precision-or-accuracy-vs-cost" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">heun_nfeval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">heun</span><span class="o">.</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">hs</span><span class="w"></span>
+<span class="n">rk4_nfeval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">rk4</span><span class="o">.</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">hs</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">heun_nfeval</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">heun_errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;heun&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">rk4_nfeval</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">rk4_errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;rk4&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;number of evaluations&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_37_0.svg" src="../_images/2022-09-28-runge-kutta_37_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="effective-rk-stability-diagrams">
+<h1>Effective RK stability diagrams<a class="headerlink" href="#effective-rk-stability-diagrams" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">rk</span><span class="p">;</span><span class="w"> </span><span class="n">brow</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">rk</span><span class="o">.</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">fsal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rk</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"> </span><span class="o">≈</span><span class="w"> </span><span class="n">rk</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="k">end</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fsal</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z</span><span class="w"></span>
+<span class="w">    </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rk</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">brow</span><span class="p">,</span><span class="o">:</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">z</span><span class="o">*</span><span class="n">rk</span><span class="o">.</span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">heun</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Heun&#39;s method&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_39_0.svg" src="../_images/2022-09-28-runge-kutta_39_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">rk4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;RK4&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">ylims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_40_0.svg" src="../_images/2022-09-28-runge-kutta_40_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="runge-kutta-order-conditions">
+<h1>Runge-Kutta order conditions<a class="headerlink" href="#runge-kutta-order-conditions" title="Permalink to this headline">#</a></h1>
+<p>We consider the autonomous differential equation</p>
+<div class="math notranslate nohighlight">
+\[ \dot u = f(u) . \]</div>
+<p>Higher derivatives of the exact soultion can be computed using the chain rule, e.g.,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\ddot u(t) &amp;= f'(u) \dot u = f'(u) f(u) \\
+\dddot u(t) &amp;= f''(u) f(u) f(u) + f'(u) f'(u) f(u) . \\
+\end{align*}\]</div>
+<p>Note that if <span class="math notranslate nohighlight">\(f(u)\)</span> is linear, <span class="math notranslate nohighlight">\(f''(u) = 0\)</span>.
+Meanwhile, the numerical solution is a function of the time step <span class="math notranslate nohighlight">\(h\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+Y_i(h) &amp;= u(0) + h \sum_j a_{ij} f(Y_j) \\
+U(h) &amp;= u(0) + h \sum_j b_j f(Y_j).
+\end{split}\end{split}\]</div>
+<p>We will take the limit <span class="math notranslate nohighlight">\(h\to 0\)</span> and equate derivatives of the numerical solution.  First we differentiate the stage equations,</p>
+<p>\begin{split}
+Y_i(0) &amp;= u(0) \
+\dot Y_i(0) &amp;= \sum_j a_{ij} f(Y_j) \
+\ddot Y_i(0) &amp;= 2 \sum_j a_{ij} \dot f(Y_j) \
+&amp;= 2 \sum_j a_{ij} f’(Y_j) \dot Y_j \
+&amp;= 2\sum_{j,k} a_{ij} a_{jk} f’(Y_j) f(Y_k) \
+\dddot Y_i(0) &amp;= 3 \sum_j a_{ij} \ddot f (Y_j) \
+&amp;= 3 \sum_j a_{ij} \Big( \sum_k f’’(Y_j) \dot Y_j \dot Y_k + f’(Y_j) \ddot Y_j \Big) \
+&amp;= 3 \sum_{j,k,\ell} a_{ij} a_{jk} \Big( a_{j\ell} f’’(Y_j) f(Y_k) f(Y_\ell) + 2 a_{k\ell} f’(Y_j) f’(Y_k) f(Y_\ell)  \Big)
+\end{split}</p>
+<p>where we have used Liebnitz’s formula for the <span class="math notranslate nohighlight">\(m\)</span>th derivative,
+<div class="math notranslate nohighlight">
+\[ (h \phi(h))^{(m)}|_{h=0} = m \phi^{(m-1)}(0) .\]</div>
+
+Similar formulas apply for <span class="math notranslate nohighlight">\(\dot U(0)\)</span>, <span class="math notranslate nohighlight">\(\ddot U(0)\)</span>, and <span class="math notranslate nohighlight">\(\dddot U(0)\)</span>, with <span class="math notranslate nohighlight">\(b_j\)</span> in place of <span class="math notranslate nohighlight">\(a_{ij}\)</span>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="order-conditions-are-nonlinear-algebraic-equations">
+<h1>Order conditions are nonlinear algebraic equations<a class="headerlink" href="#order-conditions-are-nonlinear-algebraic-equations" title="Permalink to this headline">#</a></h1>
+<p>Equating terms <span class="math notranslate nohighlight">\(\dot u(0) = \dot U(0)\)</span> yields
+<div class="math notranslate nohighlight">
+\[ \sum_j b_j = 1, \]</div>
+
+equating <span class="math notranslate nohighlight">\(\ddot u(0) = \ddot U(0)\)</span> yields
+<div class="math notranslate nohighlight">
+\[ 2 \sum_{j,k} b_j a_{jk} = 1 , \]</div>
+
+and equating <span class="math notranslate nohighlight">\(\dddot u(0) = \dddot U(0)\)</span> yields the two equations
+\begin{split}
+3\sum_{j,k,\ell} b_j a_{jk} a_{j\ell} &amp;= 1 \
+6 \sum_{j,k,\ell} b_j a_{jk} a_{k\ell} &amp;= 1 .
+\end{split}</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="observations">
+<h1>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>These are systems of nonlinear equations for the coefficients <span class="math notranslate nohighlight">\(a_{ij}\)</span> and <span class="math notranslate nohighlight">\(b_j\)</span>.  There is no guarantee that they have solutions.</p></li>
+<li><p>The number of equations grows rapidly as the order increases.</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(1)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(2)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(3)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(4)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(5)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(6)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(7)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(8)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(9)}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(u^{(10)}\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p># terms</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>9</p></td>
+<td><p>20</p></td>
+<td><p>48</p></td>
+<td><p>115</p></td>
+<td><p>286</p></td>
+<td><p>719</p></td>
+</tr>
+<tr class="row-odd"><td><p>cumulative</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>8</p></td>
+<td><p>17</p></td>
+<td><p>37</p></td>
+<td><p>85</p></td>
+<td><p>200</p></td>
+<td><p>486</p></td>
+<td><p>1205</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>Usually the number of order conditions does not exactly match the number of free parameters, meaning that the remaining parameters can be optimized (usually numerically) for different purposes, such as to minimize the leading error terms or to maximize stability in certain regions of the complex plane.  Finding globally optimal solutions can be extremely demanding.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Rooted trees provide a convenient notation</p></li>
+</ul>
+<p><img alt="Trees and elementary differentials up to order 5. From Hairer, Nørsett, and Wanner." src="../_images/rktrees.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="theorem-from-hairer-norsett-and-wanner">
+<h1>Theorem (from Hairer, Nørsett, and Wanner)<a class="headerlink" href="#theorem-from-hairer-norsett-and-wanner" title="Permalink to this headline">#</a></h1>
+<p>A Runge-Kutta method is of order <span class="math notranslate nohighlight">\(p\)</span> if and only if
+<div class="math notranslate nohighlight">
+\[ \gamma(\mathcal t) \sum_{j} b_j \Phi_j(t) = 1 \]</div>
+
+for all trees <span class="math notranslate nohighlight">\(t\)</span> of order <span class="math notranslate nohighlight">\(\le p\)</span>.</p>
+<p>For a linear autonomous equation
+<div class="math notranslate nohighlight">
+\[ \dot u = A u \]</div>
+
+we only need one additional order condition per order of accuracy because <span class="math notranslate nohighlight">\(f'' = 0\)</span>.
+These conditions can also be derived by equating derivatives of the stability function <span class="math notranslate nohighlight">\(R(z)\)</span> with the exponential <span class="math notranslate nohighlight">\(e^z\)</span>.
+For a linear non-autonomous equation
+<div class="math notranslate nohighlight">
+\[ \dot u = A(t) u + g(t) \]</div>
+
+or more generally, an autonomous system with quadratic right hand side,
+<div class="math notranslate nohighlight">
+\[ \dot u = B (u \otimes u) + A u + C \]</div>
+
+where <span class="math notranslate nohighlight">\(B\)</span> is a rank 3 tensor, we have <span class="math notranslate nohighlight">\(f''' = 0\)</span>, thus limiting the number of order conditions.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="embedded-error-estimation">
+<h1>Embedded error estimation<a class="headerlink" href="#embedded-error-estimation" title="Permalink to this headline">#</a></h1>
+<p>It is often possible to design Runge-Kutta methods with multiple completion orders, say of order <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(p-1\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left[ \begin{array}{c|c} c &amp; A \\ \hline &amp; b^T  \\ &amp; \tilde b^T \end{array} \right] . \end{split}\]</div>
+<p>The classical RK4 does not come with an embedded method, but most subsequent RK methods do. The <a class="reference external" href="https://en.wikipedia.org/wiki/Bogacki%E2%80%93Shampine_method">Bogacki-Shampine method</a> is one such method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">bs3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">9</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="o">/</span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mi">2</span><span class="o">/</span><span class="mi">9</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="o">/</span><span class="mi">9</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">7</span><span class="o">/</span><span class="mi">24</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">bs3</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;BS3 third order&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_52_0.svg" src="../_images/2022-09-28-runge-kutta_52_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">bs3</span><span class="p">,</span><span class="w"> </span><span class="n">brow</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;BS3 second order&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_53_0.svg" src="../_images/2022-09-28-runge-kutta_53_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="properties">
+<h1>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">bs3</span><span class="o">.</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="n">display</span><span class="p">(</span><span class="n">bs3</span><span class="o">.</span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4×4 Matrix{Float64}:
+ 0.0       0.0       0.0       0.0
+ 0.5       0.0       0.0       0.0
+ 0.0       0.75      0.0       0.0
+ 0.222222  0.333333  0.444444  0.0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2×4 Matrix{Float64}:
+ 0.222222  0.333333  0.444444  0.0
+ 0.291667  0.25      0.333333  0.125
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>First same as last (FSAL): the completion formula <span class="math notranslate nohighlight">\(b\)</span> is the same as the last row of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<ul>
+<li><p>Stage can be reused as first stage of the next time step. So this 4-stage method has a cost equal to a 3-stage method.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta%E2%80%93Fehlberg_method">Fehlberg</a>, a 6-stage, 5th order method for which the 4th order embedded formula has been optimized for accuracy.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Dormand%E2%80%93Prince_method">Dormand-Prince</a>, a 7-stage, 5th order method with the FSAL property, with the 5th order completion formula optimized for accuracy.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="adaptive-step-size-control">
+<h1>Adaptive step size control<a class="headerlink" href="#adaptive-step-size-control" title="Permalink to this headline">#</a></h1>
+<p>Given a completion formula <span class="math notranslate nohighlight">\(b^T\)</span> of order <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(\tilde b^T\)</span> of order <span class="math notranslate nohighlight">\(p-1\)</span>, an estimate of the local truncation error (on this step) is given by
+<div class="math notranslate nohighlight">
+\[ e_{\text{loc}}(h) = \lVert h (b - \tilde b)^T f(Y) \rVert \in O(h^p) . \]</div>
+
+Given a tolerance <span class="math notranslate nohighlight">\(\epsilon\)</span>, we would like to find <span class="math notranslate nohighlight">\(h_*\)</span> such that
+<div class="math notranslate nohighlight">
+\[ e_{\text{loc}}(h_*) &lt; \epsilon . \]</div>
+
+If <div class="math notranslate nohighlight">
+\[e_{\text{loc}}(h) = c h^p\]</div>
+ for some constant <span class="math notranslate nohighlight">\(c\)</span>, then
+<div class="math notranslate nohighlight">
+\[ c h_*^p &lt; \epsilon \]</div>
+
+implies
+<div class="math notranslate nohighlight">
+\[ h_* &lt; \left( \frac{\epsilon}{c} \right)^{1/p} . \]</div>
+
+Given the estimate with the current <span class="math notranslate nohighlight">\(h\)</span>,
+<div class="math notranslate nohighlight">
+\[ c = e_{\text{loc}}(h) / h^p \]</div>
+
+we conclude
+<div class="math notranslate nohighlight">
+\[ \frac{h_*}{h} &lt; \left( \frac{\epsilon}{e_{\text{loc}}(h)} \right)^{1/p} . \]</div>
+</p>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Usually a “safety factor” less than 1 is included so the predicted error is less than the threshold to reject a time step.</p></li>
+<li><p>We have used an absolute tolerance above.  If the values of solution variables vary greatly in time, a relative tolerance <span class="math notranslate nohighlight">\(e_{\text{loc}}(h) / \lVert u(t) \rVert\)</span> or a combination thereof is desirable.</p></li>
+<li><p>There is a debate about whether one should optimize the rate at which error is accumulated with respect to work (estimate above) or with respect to simulated time (as above, but with error behaving as <span class="math notranslate nohighlight">\(O(h^{p-1})\)</span>).  For problems with a range of time scales at different periods, this is usually done with respect to work.</p></li>
+<li><p>Global error control is an active research area.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="diagonally-implicit-runge-kutta-methods">
+<h1>Diagonally Implicit Runge-Kutta methods<a class="headerlink" href="#diagonally-implicit-runge-kutta-methods" title="Permalink to this headline">#</a></h1>
+<div class="floatright">
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c} c &amp; A \\ \hline &amp; b^T \end{array} \right] = \left[ \begin{array}{c|cc}
+c_0 &amp; a_{00} &amp; 0 \\
+c_1 &amp; a_{10} &amp; a_{11} \\
+\hline
+&amp; b_0 &amp; b_1
+\end{array} \right] \end{split}\]</div>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># From Hairer and Wanner Table 6.5 L-stable SDIRK</span><span class="w"></span>
+<span class="n">dirk4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">17</span><span class="o">/</span><span class="mi">50</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">25</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">371</span><span class="o">/</span><span class="mi">1360</span><span class="w"> </span><span class="o">-</span><span class="mi">137</span><span class="o">/</span><span class="mi">2720</span><span class="w"> </span><span class="mi">15</span><span class="o">/</span><span class="mi">544</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">25</span><span class="o">/</span><span class="mi">24</span><span class="w"> </span><span class="o">-</span><span class="mi">49</span><span class="o">/</span><span class="mi">48</span><span class="w"> </span><span class="mi">125</span><span class="o">/</span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="mi">85</span><span class="o">/</span><span class="mi">12</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mi">24</span><span class="o">/</span><span class="mi">24</span><span class="w"> </span><span class="o">-</span><span class="mi">49</span><span class="o">/</span><span class="mi">48</span><span class="w"> </span><span class="mi">125</span><span class="o">/</span><span class="mi">16</span><span class="w"> </span><span class="o">-</span><span class="mi">85</span><span class="o">/</span><span class="mi">12</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="mi">59</span><span class="o">/</span><span class="mi">48</span><span class="w"> </span><span class="o">-</span><span class="mi">17</span><span class="o">/</span><span class="mi">96</span><span class="w"> </span><span class="mi">225</span><span class="o">/</span><span class="mi">32</span><span class="w"> </span><span class="o">-</span><span class="mi">85</span><span class="o">/</span><span class="mi">12</span><span class="w"> </span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="c">#dirk4.A</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">dirk4</span><span class="p">,</span><span class="w"> </span><span class="n">brow</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;DIRK fourth order&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_62_0.svg" src="../_images/2022-09-28-runge-kutta_62_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">dirk4</span><span class="p">,</span><span class="w"> </span><span class="n">brow</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;DIRK third order&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_63_0.svg" src="../_images/2022-09-28-runge-kutta_63_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="fully-implicit-runge-kutta-methods">
+<h1>Fully implicit Runge-Kutta methods<a class="headerlink" href="#fully-implicit-runge-kutta-methods" title="Permalink to this headline">#</a></h1>
+<div class="floatright">
+<div class="math notranslate nohighlight">
+\[\begin{split} \left[ \begin{array}{c|c} c &amp; A \\ \hline &amp; b^T \end{array} \right] = \left[ \begin{array}{c|cc}
+c_0 &amp; a_{00} &amp; a_{01} \\
+c_1 &amp; a_{10} &amp; a_{11} \\
+\hline
+&amp; b_0 &amp; b_1
+\end{array} \right] \end{split}\]</div>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">radau3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">5</span><span class="o">/</span><span class="mi">12</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">12</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">radau3</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Radau 3&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_65_0.svg" src="../_images/2022-09-28-runge-kutta_65_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">gauss4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">-</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">+</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span><span class="w"></span>
+<span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rk_eff_stability</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">gauss4</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Gauss 4&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-09-28-runge-kutta_66_0.svg" src="../_images/2022-09-28-runge-kutta_66_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="explore-benchmarks-https-benchmarks-sciml-ai">
+<h1>Explore benchmarks: <a class="reference external" href="https://benchmarks.sciml.ai/">https://benchmarks.sciml.ai/</a><a class="headerlink" href="#explore-benchmarks-https-benchmarks-sciml-ai" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Find at least one interesting figure</p></li>
+<li><p>You can work in groups</p></li>
+</ul>
+<section id="report-out-discuss-next-class">
+<h2>Report-out/discuss next class<a class="headerlink" href="#report-out-discuss-next-class" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Explain something about the figure</p></li>
+<li><p>Ask a question</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-09-26-stiffness.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-09-26 Stiffness</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

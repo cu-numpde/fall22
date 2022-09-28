@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-09-28 Runge-Kutta" href="2022-09-28-runge-kutta.html" />
     <link rel="prev" title="2022-09-23 Transient" href="2022-09-23-transient.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -204,6 +205,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
     </a>
    </li>
   </ul>
@@ -685,7 +691,7 @@ title="Print to PDF"
 <li><p>Stability diagrams</p></li>
 <li><p>Energy dissipation</p></li>
 <li><p>Exploring the <span class="math notranslate nohighlight">\(\theta\)</span> method</p></li>
-<li><p>PDE at ODE</p></li>
+<li><p>PDE as ODE</p></li>
 </ul>
 </section>
 <section id="today">
@@ -820,17 +826,20 @@ title="Print to PDF"
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
-<span class="n">heat_matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"></span>
+<span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">heat_matrix</span><span class="p">(</span><span class="mi">8</span><span class="p">)))</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5×5 SparseMatrixCSC{Float64, Int64} with 15 stored entries:
- -12.5     6.25     ⋅       ⋅      6.25
-   6.25  -12.5     6.25     ⋅       ⋅ 
-    ⋅      6.25  -12.5     6.25     ⋅ 
-    ⋅       ⋅      6.25  -12.5     6.25
-   6.25     ⋅       ⋅      6.25  -12.5
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element Vector{Float64}:
+ -64.0
+ -54.62741699796952
+ -54.6274169979695
+ -31.999999999999996
+ -31.99999999999998
+  -9.372583002030481
+  -9.37258300203047
+   1.4210854715202004e-14
 </pre></div>
 </div>
 </div>
@@ -841,14 +850,14 @@ title="Print to PDF"
 <span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">heat_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
 <span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
 <span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">200</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.005</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mf">.1</span><span class="p">);</span><span class="w"></span>
 <span class="n">nsteps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.036457 seconds (75.67 k allocations: 4.493 MiB, 96.12% compilation time)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.033819 seconds (82.24 k allocations: 5.521 MiB, 95.34% compilation time)
 </pre></div>
 </div>
 <img alt="../_images/2022-09-26-stiffness_8_1.svg" src="../_images/2022-09-26-stiffness_8_1.svg" /></div>
@@ -884,10 +893,10 @@ Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is
 <h1>Spectrum of operators<a class="headerlink" href="#spectrum-of-operators" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="w"></span>
-<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.1</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mf">0.5</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.05</span><span class="w"></span>
 <span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="s">, h=</span><span class="si">$h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">advect_matrix</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="nb">true</span><span class="p">)))</span><span class="w"></span>
+<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">advect_matrix</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="nb">false</span><span class="p">)))</span><span class="w"></span>
 <span class="n">scatter!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">ev</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 </div>
@@ -897,10 +906,10 @@ Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="w"></span>
-<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.01</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
+<span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.001</span><span class="w"></span>
 <span class="n">plot_stability</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Rz_theta</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\$\\</span><span class="s">theta=</span><span class="si">$theta</span><span class="s">, h=</span><span class="si">$h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">heat_matrix</span><span class="p">(</span><span class="mi">20</span><span class="p">)))</span><span class="w"></span>
+<span class="n">ev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eigvals</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">heat_matrix</span><span class="p">(</span><span class="mi">40</span><span class="p">)))</span><span class="w"></span>
 <span class="n">scatter!</span><span class="p">(</span><span class="n">real</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span><span class="w"> </span><span class="n">imag</span><span class="p">(</span><span class="n">ev</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 </div>
@@ -911,8 +920,8 @@ Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="advection-diffusion-as-linear-ode">
 <h1>Advection-diffusion as linear ODE<a class="headerlink" href="#advection-diffusion-as-linear-ode" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-73d64af7-b507-4f06-8c60-0ef7bfdfefd0">
-<span class="eqno">(17)<a class="headerlink" href="#equation-73d64af7-b507-4f06-8c60-0ef7bfdfefd0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5e7569b0-5df4-433d-b6ce-360b6c554604">
+<span class="eqno">(17)<a class="headerlink" href="#equation-5e7569b0-5df4-433d-b6ce-360b6c554604" title="Permalink to this equation">#</a></span>\[\begin{align}
 (-\kappa u_x + w u)_x &amp;= 0 &amp; Pe_L &amp;= \frac{L \lvert w \rvert}{\kappa}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -952,10 +961,10 @@ Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
-<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">upwind</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
 <span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
 <span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">16</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.04</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_theta_linear</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">.04</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
@@ -1059,8 +1068,8 @@ Evidently only <span class="math notranslate nohighlight">\(\theta=1\)</span> is
 </p></li>
 <li><p>Apply this to test function <span class="math notranslate nohighlight">\(e^{i\theta x}\)</span> to get the symbol</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-26e1d731-2de4-4b07-a4c3-aee75b67f752">
-<span class="eqno">(18)<a class="headerlink" href="#equation-26e1d731-2de4-4b07-a4c3-aee75b67f752" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5ed60e24-1731-4b15-8e9f-e82d648a45e8">
+<span class="eqno">(18)<a class="headerlink" href="#equation-5ed60e24-1731-4b15-8e9f-e82d648a45e8" title="Permalink to this equation">#</a></span>\[\begin{align}
 L_{\Delta x} e^{i\theta x}
 &amp;=
 \frac{\kappa}{(\Delta x)^2} \Big[ e^{-i\theta\Delta x} - 2 + e^{i\theta\Delta x} \Big] e^{i\theta x} \\
@@ -1129,7 +1138,7 @@ L_{\Delta x} e^{i\theta x}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
-<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:topleft</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
@@ -1144,7 +1153,7 @@ L_{\Delta x} e^{i\theta x}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
-<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">80</span><span class="w"></span>
 <span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
 <span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.05</span><span class="w"></span>
 <span class="n">lambda_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
@@ -1186,7 +1195,36 @@ L_{\Delta x} e^{i\theta x}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-26-stiffness_37_0.svg" src="../_images/2022-09-26-stiffness_37_0.svg" /></div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Cannot</span> <span class="n">convert</span> <span class="n">Float64</span> <span class="n">to</span> <span class="n">series</span> <span class="n">data</span> <span class="k">for</span> <span class="n">plotting</span>
+
+<span class="ne">Stacktrace</span>:
+  <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">error</span><span class="p">(</span><span class="n">s</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">error</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">35</span>
+  <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">_prepare_series_data</span><span class="p">(</span><span class="n">x</span><span class="p">::</span><span class="n">Float64</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">RecipesPipeline</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">/</span><span class="n">OXGmH</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">series</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">8</span>
+  <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">_series_data_vector</span><span class="p">(</span><span class="n">x</span><span class="p">::</span><span class="n">Float64</span><span class="p">,</span> <span class="n">plotattributes</span><span class="p">::</span><span class="n">Dict</span><span class="p">{</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">Any</span><span class="p">})</span>
+    <span class="o">@</span> <span class="n">RecipesPipeline</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">/</span><span class="n">OXGmH</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">series</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">35</span>
+  <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="n">macro</span> <span class="n">expansion</span>
+    <span class="o">@</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">/</span><span class="n">OXGmH</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">series</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">134</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">apply_recipe</span><span class="p">(</span><span class="n">plotattributes</span><span class="p">::</span><span class="n">AbstractDict</span><span class="p">{</span><span class="n">Symbol</span><span class="p">,</span> <span class="n">Any</span><span class="p">},</span> <span class="c1">#unused#::Type{RecipesPipeline.SliceIt}, x::Any, y::Any, z::Any)</span>
+    <span class="o">@</span> <span class="n">RecipesPipeline</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesBase</span><span class="o">/</span><span class="n">qpxEX</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">RecipesBase</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">289</span>
+  <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="n">_process_userrecipes</span><span class="o">!(</span>plt::Any, plotattributes::Any, args::Any<span class="o">)</span>
+    <span class="o">@</span> <span class="n">RecipesPipeline</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">/</span><span class="n">OXGmH</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">user_recipe</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">36</span>
+  <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="n">recipe_pipeline</span><span class="o">!(</span>plt::Any, plotattributes::Any, args::Any<span class="o">)</span>
+    <span class="o">@</span> <span class="n">RecipesPipeline</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">/</span><span class="n">OXGmH</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">RecipesPipeline</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">70</span>
+  <span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="n">_plot</span><span class="o">!(</span>plt::Plots.Plot, plotattributes::Any, args::Any<span class="o">)</span>
+    <span class="o">@</span> <span class="n">Plots</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">Plots</span><span class="o">/</span><span class="n">lW9ll</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">plot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">209</span>
+  <span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="c1">#plot#145</span>
+    <span class="o">@</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">Plots</span><span class="o">/</span><span class="n">lW9ll</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">plot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">91</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+    <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">231</span><span class="p">]:</span><span class="mi">8</span>
+ <span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="nb">eval</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">boot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">368</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="n">include_string</span><span class="p">(</span><span class="n">mapexpr</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">REPL</span><span class="o">.</span><span class="n">softscope</span><span class="p">),</span> <span class="n">mod</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">code</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">filename</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1428</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1209,7 +1247,7 @@ L_{\Delta x} e^{i\theta x}
 <h1>Work-precision (error vs cost)<a class="headerlink" href="#work-precision-error-vs-cost" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="n">Pe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
 <span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_stability</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)]</span><span class="w"></span>
@@ -1221,7 +1259,24 @@ L_{\Delta x} e^{i\theta x}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2022-09-26-stiffness_40_0.svg" src="../_images/2022-09-26-stiffness_40_0.svg" /></div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">MethodError</span>: no method matching +(::Float64, ::Vector{Float64})
+<span class="n">For</span> <span class="n">element</span><span class="o">-</span><span class="n">wise</span> <span class="n">addition</span><span class="p">,</span> <span class="n">use</span> <span class="n">broadcasting</span> <span class="k">with</span> <span class="n">dot</span> <span class="n">syntax</span><span class="p">:</span> <span class="n">scalar</span> <span class="o">.+</span> <span class="n">array</span>
+<span class="n">Closest</span> <span class="n">candidates</span> <span class="n">are</span><span class="p">:</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="o">...</span><span class="p">)</span> <span class="n">at</span> <span class="n">operators</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">591</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">T</span><span class="p">,</span> <span class="p">::</span><span class="n">T</span><span class="p">)</span> <span class="n">where</span> <span class="n">T</span><span class="o">&lt;</span><span class="p">:</span><span class="n">Union</span><span class="p">{</span><span class="n">Float16</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">Float64</span><span class="p">}</span> <span class="n">at</span> <span class="nb">float</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">383</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">Union</span><span class="p">{</span><span class="n">Float16</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">Float64</span><span class="p">},</span> <span class="p">::</span><span class="n">BigFloat</span><span class="p">)</span> <span class="n">at</span> <span class="n">mpfr</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">414</span>
+  <span class="o">...</span>
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+   <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">230</span><span class="p">]:</span><span class="mi">6</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="nb">eval</span>
+   <span class="o">@</span> <span class="o">./</span><span class="n">boot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">368</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">include_string</span><span class="p">(</span><span class="n">mapexpr</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">REPL</span><span class="o">.</span><span class="n">softscope</span><span class="p">),</span> <span class="n">mod</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">code</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">filename</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1428</span>
+</pre></div>
+</div>
+</div>
 </div>
 <ul class="simple">
 <li><p>Stability can be an extreme demand for explicit methods</p></li>
@@ -1264,6 +1319,13 @@ L_{\Delta x} e^{i\theta x}
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-09-23 Transient</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-09-28-runge-kutta.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-09-28 Runge-Kutta</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
