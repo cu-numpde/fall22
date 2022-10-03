@@ -23,3 +23,4 @@ chapters:
   - file: slides/2022-09-23-transient.ipynb
   - file: slides/2022-09-26-stiffness.ipynb
   - file: slides/2022-09-28-runge-kutta.ipynb
+  - file: slides/2022-10-03-2d.ipynb
