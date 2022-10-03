@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-09-30 2D Advection-diffusion and waves" href="2022-10-03-2d.html" />
     <link rel="prev" title="2022-09-26 Stiffness" href="2022-09-26-stiffness.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -209,6 +210,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-09-30 2D Advection-diffusion and waves
     </a>
    </li>
   </ul>
@@ -886,7 +892,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">hs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
-<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="w"></span>
+<span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mms_error</span><span class="o">.</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="o">.</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:topleft</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span><span class="w"> </span><span class="n">hs</span><span class="o">.^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\$</span><span class="s">h^2</span><span class="se">\$</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
@@ -903,7 +909,7 @@ title="Print to PDF"
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="w"></span>
 <span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">80</span><span class="w"></span>
 <span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
-<span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.05</span><span class="w"></span>
+<span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"></span>
 <span class="n">lambda_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dx</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
 <span class="n">cfl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">lambda_min</span><span class="p">,</span><span class="w"> </span><span class="n">cfl</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"></span>
@@ -929,7 +935,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c"># spatial order of accuracy</span><span class="w"></span>
-<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">   </span><span class="c"># temporal order of accuracy</span><span class="w"></span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">   </span><span class="c"># temporal order of accuracy</span><span class="w"></span>
 <span class="n">Pe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="c"># Peclet number with wind=1</span><span class="w"></span>
 
 <span class="n">dt_accuracy</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">q</span><span class="p">)</span><span class="w"></span>
@@ -966,8 +972,8 @@ title="Print to PDF"
 <h1>Work-precision (error vs cost)<a class="headerlink" href="#work-precision-error-vs-cost" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="n">Pe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
 <span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_stability</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="n">dt_accuracy</span><span class="o">.</span><span class="p">(</span><span class="n">dx</span><span class="p">)]</span><span class="w"></span>
 <span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="n">n</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">.^</span><span class="mf">1.5</span><span class="p">)</span><span class="o">./</span><span class="n">dt</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="w"> </span><span class="c"># O(n^1.5 solve cost)</span><span class="w"></span>
@@ -1147,8 +1153,8 @@ This reduces to
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="an-explicit-rk-solver">
 <h1>An explicit RK solver<a class="headerlink" href="#an-explicit-rk-solver" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-d6bd5d03-d3a6-40ba-b3da-bc30f94122c8">
-<span class="eqno">(19)<a class="headerlink" href="#equation-d6bd5d03-d3a6-40ba-b3da-bc30f94122c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ac844266-3c9d-4f74-b47d-1511921c2cb7">
+<span class="eqno">(19)<a class="headerlink" href="#equation-ac844266-3c9d-4f74-b47d-1511921c2cb7" title="Permalink to this equation">#</a></span>\[\begin{align}
 Y_i &amp;= u(t) + h \sum_j a_{ij} f(t+c_j h, Y_j) &amp;
 u(t+h) &amp;= u(t) + h \sum_j b_j f(t+c_j h, Y_j)
 \end{align}\]</div>
@@ -1188,7 +1194,7 @@ u(t+h) &amp;= u(t) + h \sum_j b_j f(t+c_j h, Y_j)
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">linear_oscillator</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
-<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">linear_oscillator</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">linear_oscillator</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
 <span class="n">plot!</span><span class="p">([</span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">cos</span><span class="p">])</span><span class="w"></span>
 </pre></div>
@@ -1624,6 +1630,13 @@ c_1 &amp; a_{10} &amp; a_{11} \\
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-09-26 Stiffness</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-10-03-2d.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-09-30 2D Advection-diffusion and waves</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
