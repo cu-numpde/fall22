@@ -1,0 +1,1334 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-10-12 Krylov and preconditioning &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-10-10 Iterative Solvers" href="2022-10-10-iterative.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-10-03 2D Advection-diffusion and waves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-05-factorization.html">
+     2022-10-05 Factorization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-07-linear-solvers.html">
+     2022-10-07 Linear Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-10-iterative.html">
+     2022-10-10 Iterative Solvers
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-10-12 Krylov and preconditioning
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-10-12-krylov.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-10-12-krylov.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-10-12-krylov.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-10-12 Krylov and preconditioning
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#krylov-subspaces">
+   Krylov subspaces
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arnoldi-iteration">
+   Arnoldi iteration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-conditioning-of-arnoldi-process">
+   Aside: Conditioning of Arnoldi process
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gmres">
+   GMRES
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-notes-on-gmres">
+   More notes on GMRES
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments-in-petsc">
+   Experiments in PETSc
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-preconditioners">
+   Simple preconditioners
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jacobi-pc-type-jacobi">
+     Jacobi
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       -pc_type
+      </span>
+      <span class="pre">
+       jacobi
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gauss-seidel-pc-type-sor">
+     Gauss-Seidel
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       -pc_type
+      </span>
+      <span class="pre">
+       sor
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#over-relaxation">
+       Over-relaxation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-p-laplacian-example">
+     Run p-Laplacian example
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-problems">
+   Symmetric problems
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lanczos-iteration-like-gmres-for-symmetric-problems">
+     Lanczos iteration: like GMRES for symmetric problems
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conjugate-gradients-changing-the-norm">
+     Conjugate Gradients: changing the norm
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#incomplete-factorization">
+   Incomplete factorization
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kershaw-1978-matrix">
+     Kershaw (1978) matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#domain-decomposition">
+   Domain decomposition
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alternating-schwarz-method">
+     Alternating Schwarz method
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additive-schwarz">
+   Additive Schwarz
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-algorithm">
+   The algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theory">
+   Theory
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence-theory">
+   Convergence theory
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#petsc-experiments">
+   PETSc experiments
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-10-12 Krylov and preconditioning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-10-12 Krylov and preconditioning
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#krylov-subspaces">
+   Krylov subspaces
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arnoldi-iteration">
+   Arnoldi iteration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aside-conditioning-of-arnoldi-process">
+   Aside: Conditioning of Arnoldi process
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gmres">
+   GMRES
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#more-notes-on-gmres">
+   More notes on GMRES
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments-in-petsc">
+   Experiments in PETSc
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-preconditioners">
+   Simple preconditioners
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jacobi-pc-type-jacobi">
+     Jacobi
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       -pc_type
+      </span>
+      <span class="pre">
+       jacobi
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gauss-seidel-pc-type-sor">
+     Gauss-Seidel
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       -pc_type
+      </span>
+      <span class="pre">
+       sor
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#over-relaxation">
+       Over-relaxation
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-p-laplacian-example">
+     Run p-Laplacian example
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experiments">
+     Experiments
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-problems">
+   Symmetric problems
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lanczos-iteration-like-gmres-for-symmetric-problems">
+     Lanczos iteration: like GMRES for symmetric problems
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conjugate-gradients-changing-the-norm">
+     Conjugate Gradients: changing the norm
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#incomplete-factorization">
+   Incomplete factorization
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Experiments
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kershaw-1978-matrix">
+     Kershaw (1978) matrix
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#domain-decomposition">
+   Domain decomposition
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alternating-schwarz-method">
+     Alternating Schwarz method
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additive-schwarz">
+   Additive Schwarz
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-algorithm">
+   The algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#theory">
+   Theory
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence-theory">
+   Convergence theory
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#petsc-experiments">
+   PETSc experiments
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="krylov-and-preconditioning">
+<h1>2022-10-12 Krylov and preconditioning<a class="headerlink" href="#krylov-and-preconditioning" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Classical iterative methods</p></li>
+<li><p>Concept of preconditioning</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Krylov methods (focus on GMRES)</p></li>
+<li><p>PETSc experiments</p></li>
+<li><p>Simple preconditioners</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">cmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">vec</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="mi">120</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="n">spy</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="p">(</span><span class="ss">:square</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:diverging_rainbow_bgymr_45_85_c67_n256</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">cmax</span><span class="p">,</span><span class="w"> </span><span class="n">cmax</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">idx</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">    </span><span class="n">in_domain</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil_advect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="n">wind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="o">-</span><span class="n">wind</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">wind</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil_diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stencil_advect</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">stencil_diffuse</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="n">neighbors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="w"></span>
+<span class="w">            </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in_domain</span><span class="o">.</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="o">.</span><span class="p">(</span><span class="n">repeat</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="w"> </span><span class="mi">5</span><span class="p">))[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="o">.</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">stencil</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>advdiff_matrix (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="krylov-subspaces">
+<h1>Krylov subspaces<a class="headerlink" href="#krylov-subspaces" title="Permalink to this headline">#</a></h1>
+<p>All matrix iterations work with approximations in a <em>Krylov subspace</em>, which has the form</p>
+<div class="math notranslate nohighlight">
+\[ K_n = \big[ b \big| Ab \big| A^2 b \big| \dotsm \big| A^{n-1} b \big] . \]</div>
+<p>This matrix is horribly ill-conditioned and cannot stably be computed as written.  Instead, we seek an orthogonal basis <span class="math notranslate nohighlight">\(Q_n\)</span> that spans the same space as <span class="math notranslate nohighlight">\(K_n\)</span>.  We could write this as a factorization</p>
+<div class="math notranslate nohighlight">
+\[ K_n = Q_n R_n \]</div>
+<p>where the first column <span class="math notranslate nohighlight">\(q_0 = b / \lVert b \rVert\)</span>.  The <span class="math notranslate nohighlight">\(R_n\)</span> is unnecessary and hopelessly ill-conditioned, so a slightly different procedure is used.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="arnoldi-iteration">
+<h1>Arnoldi iteration<a class="headerlink" href="#arnoldi-iteration" title="Permalink to this headline">#</a></h1>
+<p>The Arnoldi iteration applies orthogonal similarity transformations to reduce <span class="math notranslate nohighlight">\(A\)</span> to <a class="reference external" href="https://en.wikipedia.org/wiki/Hessenberg_matrix">Hessenberg form</a>, starting from a vector <span class="math notranslate nohighlight">\(q_0 = b\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[ A = Q H Q^* . \]</div>
+<p>Let’s multiply on the right by <span class="math notranslate nohighlight">\(Q\)</span> and examine the first <span class="math notranslate nohighlight">\(n\)</span> columns,</p>
+<div class="math notranslate nohighlight">
+\[ A Q_n = Q_{n+1} H_n \]</div>
+<p>where <span class="math notranslate nohighlight">\(H_n\)</span> is an <span class="math notranslate nohighlight">\((n+1) \times n\)</span> Hessenberg matrix.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="aside-conditioning-of-arnoldi-process">
+<h1>Aside: Conditioning of Arnoldi process<a class="headerlink" href="#aside-conditioning-of-arnoldi-process" title="Permalink to this headline">#</a></h1>
+<p>The Arnoldi process is well-conditioned because <span class="math notranslate nohighlight">\(Q\)</span> is orthogonal and</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned} \lVert H_n \rVert \le \lVert Q_{n+1}^* \rVert \lVert A \rVert \lVert Q_n \rVert \le \lVert A \rVert $$.\\For a lower bound, we have\\$$ \sigma_{\min}(A)^2 \le x^* A^* A x \end{aligned}\end{align} \]</div>
+<p>for all <span class="math notranslate nohighlight">\(x\)</span> of norm 1.  It must also be true for any <span class="math notranslate nohighlight">\(x = Q_n y\)</span> where <span class="math notranslate nohighlight">\(\lVert y\rVert = 1\)</span>, thus</p>
+<div class="math notranslate nohighlight">
+\[ \sigma_{\min}(A)^2 \le y^* Q_n^* A^* A Q_n y = y^* H_n^* Q_{n+1}^* Q_{n+1} H_n y = y^* H_n^* H_n y . \]</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gmres">
+<h1>GMRES<a class="headerlink" href="#gmres" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ A Q_n = Q_{n+1} H_n \]</div>
+<p>GMRES (Generalized Minimum Residual) minimizes
+<div class="math notranslate nohighlight">
+\[ \lVert A x - b \rVert \]</div>
+
+over the subspace <span class="math notranslate nohighlight">\(Q_n\)</span>.  I.e., <span class="math notranslate nohighlight">\(x = Q_n y\)</span> for some <span class="math notranslate nohighlight">\(y\)</span>.  By the Arnoldi recurrence, this is equivalent to
+<div class="math notranslate nohighlight">
+\[ \lVert Q_{n+1} H_n y - b \lVert \]</div>
+
+which can be solved by minimizing
+<div class="math notranslate nohighlight">
+\[ \lVert H_n y - Q_{n+1}^* b \rVert . \]</div>
+
+Since <span class="math notranslate nohighlight">\(q_0 = b/\lVert b \lVert\)</span>, the least squares problem is to minimize
+<div class="math notranslate nohighlight">
+\[ \Big\lVert H_n y - \lVert b \rVert e_0 \Big\rVert . \]</div>
+
+The solution of this least squares problem is achieved by incrementally updating a <span class="math notranslate nohighlight">\(QR\)</span> factorization of <span class="math notranslate nohighlight">\(H_n\)</span>.</p>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>The solution <span class="math notranslate nohighlight">\(x_n\)</span> constructed by GMRES at iteration <span class="math notranslate nohighlight">\(n\)</span> is not explicitly available.  If a solution is needed, it must be constructed by solving the <span class="math notranslate nohighlight">\((n+1)\times n\)</span> least squares problem and forming the solution as a linear combination of the <span class="math notranslate nohighlight">\(n\)</span> vectors <span class="math notranslate nohighlight">\(Q_n\)</span>.  The leading cost is <span class="math notranslate nohighlight">\(2mn\)</span> where <span class="math notranslate nohighlight">\(m \gg n\)</span>.</p></li>
+<li><p>The residual vector <span class="math notranslate nohighlight">\(r_n = A x_n - b\)</span> is not explicitly available in GMRES.  To compute it, first build the solution <span class="math notranslate nohighlight">\(x_n\)</span> as above.</p></li>
+<li><p>GMRES minimizes the 2-norm of the residual <span class="math notranslate nohighlight">\(\lVert r_n \rVert\)</span> which is equivalent to the <span class="math notranslate nohighlight">\(A^* A\)</span> norm of the error <span class="math notranslate nohighlight">\(\lVert x_n - x_* \rVert_{A^* A}\)</span>.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="more-notes-on-gmres">
+<h1>More notes on GMRES<a class="headerlink" href="#more-notes-on-gmres" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>GMRES needs to store the full <span class="math notranslate nohighlight">\(Q_n\)</span>, which is unaffordable for large <span class="math notranslate nohighlight">\(n\)</span> (many iterations).  The standard solution is to choose a “restart” <span class="math notranslate nohighlight">\(k\)</span> and to discard <span class="math notranslate nohighlight">\(Q_n\)</span> and start over with an initial guess <span class="math notranslate nohighlight">\(x_k\)</span> after each <span class="math notranslate nohighlight">\(k\)</span> iterations.  This algorithm is called GMRES(k).  PETSc’s default solver is GMRES(30) and the restart can be controlled using the run-time option <code class="docutils literal notranslate"><span class="pre">-ksp_gmres_restart</span></code>.</p></li>
+<li><p>Most implementations of GMRES use classical Gram-Schmidt because it is much faster in parallel (one reduction per iteration instead of <span class="math notranslate nohighlight">\(n\)</span> reductions per iteration).  The PETSc option <code class="docutils literal notranslate"><span class="pre">-ksp_gmres_modifiedgramschmidt</span></code> can be used when you suspect that classical Gram-Schmidt may be causing instability.</p></li>
+<li><p>There is a very similar (and older) algorithm called GCR that maintains <span class="math notranslate nohighlight">\(x_n\)</span> and <span class="math notranslate nohighlight">\(r_n\)</span>.  This is useful, for example, if a convergence tolerance needs to inspect individual entries.  GCR requires <span class="math notranslate nohighlight">\(2n\)</span> vectors instead of <span class="math notranslate nohighlight">\(n\)</span> vectors, and can tolerate a nonlinear preconditioner.  FGMRES is a newer algorithm with similar properties to GCR.</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="experiments-in-petsc">
+<h1>Experiments in <a class="reference external" href="https://petsc.org">PETSc</a><a class="headerlink" href="#experiments-in-petsc" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>PETSc = Portable Extensible Toolkit for Scientific computing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./configure</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span></code></p>
+<ul>
+<li><p>Depends on BLAS and LAPACK (default system or package manager)</p>
+<ul>
+<li><p>or <code class="docutils literal notranslate"><span class="pre">./configure</span> <span class="pre">--download-f2cblaslapack</span> <span class="pre">--download-blis</span></code></p></li>
+</ul>
+</li>
+<li><p>Depends on MPI for parallelism (package manager)</p>
+<ul>
+<li><p>or <code class="docutils literal notranslate"><span class="pre">./configure</span> <span class="pre">--download-mpich</span></code> (or <code class="docutils literal notranslate"><span class="pre">--download-openmpi</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--rm</span> <span class="pre">jedbrown/petsc</span></code></p></li>
+<li><p>Lots of examples (mostly C and Fortran, some Python)</p></li>
+<li><p>Experimental bindings in Rust, Julia</p></li>
+<li><p>We’ll use <code class="docutils literal notranslate"><span class="pre">src/snes/tutorials/ex15.c</span></code></p>
+<ul>
+<li><p>“p-Bratu”: combines p-Laplacian with Bratu nonlinearity
+<div class="math notranslate nohighlight">
+\[ -\nabla\cdot\big(\kappa(\nabla u) \nabla u\big) - \lambda e^u = f \]</div>
+</p></li>
+<li><p>Newton solver with Krylov on each iteration</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="simple-preconditioners">
+<h1>Simple preconditioners<a class="headerlink" href="#simple-preconditioners" title="Permalink to this headline">#</a></h1>
+<section id="jacobi-pc-type-jacobi">
+<h2>Jacobi <code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">jacobi</span></code><a class="headerlink" href="#jacobi-pc-type-jacobi" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ P_{\text{Jacobi}}^{-1} = D^{-1} \]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the diagonal of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</section>
+<section id="gauss-seidel-pc-type-sor">
+<h2>Gauss-Seidel <code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">sor</span></code><a class="headerlink" href="#gauss-seidel-pc-type-sor" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ P_{GS}^{-1} = (L+D)^{-1} \]</div>
+<p>where <span class="math notranslate nohighlight">\(L\)</span> is the (strictly) lower triangular part of <span class="math notranslate nohighlight">\(A\)</span>.  The upper triangular part may be used instead, or a symmetric form
+<div class="math notranslate nohighlight">
+\[ P_{SGS}^{-1} = (L+U)^{-1} A \Big( I - (L+D)^{-1} \Big) . \]</div>
+</p>
+<section id="over-relaxation">
+<h3>Over-relaxation<a class="headerlink" href="#over-relaxation" title="Permalink to this headline">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">-pc_sor_omega</span> <span class="pre">1.</span></code> is default (Gauss-Seidel)</p>
+</section>
+</section>
+<section id="run-p-laplacian-example">
+<h2>Run p-Laplacian example<a class="headerlink" href="#run-p-laplacian-example" title="Permalink to this headline">#</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> src/snes/tutorials
+<span class="gp">$ </span>make ex15
+<span class="gp">$ </span>./ex15 -da_refine <span class="m">2</span> -dm_view
+<span class="gp">$ </span>./ex15 -ksp_monitor -pc_type jacobi
+<span class="gp">$ </span>./ex15 -snes_view
+</pre></div>
+</div>
+</section>
+<section id="experiments">
+<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>How does iteration count vary under grid refinement?</p></li>
+<li><p>How sensitive is it to parameters</p>
+<ul>
+<li><p>p-Laplacian <code class="docutils literal notranslate"><span class="pre">-p</span></code> <span class="math notranslate nohighlight">\(&gt; 1\)</span> and <code class="docutils literal notranslate"><span class="pre">-epsilon</span></code> <span class="math notranslate nohighlight">\(&gt; 0\)</span></p></li>
+<li><p>Bratu <code class="docutils literal notranslate"><span class="pre">-lambda</span></code> <span class="math notranslate nohighlight">\(&lt; 6.8\)</span></p></li>
+</ul>
+</li>
+<li><p>How sensitive to <code class="docutils literal notranslate"><span class="pre">-ksp_gmres_restart</span></code>?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_monitor_true_residual</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_view_eigenvalues</span></code></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="symmetric-problems">
+<h1>Symmetric problems<a class="headerlink" href="#symmetric-problems" title="Permalink to this headline">#</a></h1>
+<section id="lanczos-iteration-like-gmres-for-symmetric-problems">
+<h2>Lanczos iteration: like GMRES for symmetric problems<a class="headerlink" href="#lanczos-iteration-like-gmres-for-symmetric-problems" title="Permalink to this headline">#</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> is symmetric, then <span class="math notranslate nohighlight">\(H = Q^T A Q\)</span> is also symmetric.  Since <span class="math notranslate nohighlight">\(H\)</span> is Hessenberg, this means <span class="math notranslate nohighlight">\(H\)</span> is tridiagonal.  Instead of storing <span class="math notranslate nohighlight">\(Q_n\)</span>, it is sufficient to store only the last two columns since the iteration satisfies a 3-term recurrence.  The analog of GMRES for the symmetric case is called MINRES and is also useful for solving symmetric indefinite problems.</p>
+</section>
+<section id="conjugate-gradients-changing-the-norm">
+<h2>Conjugate Gradients: changing the norm<a class="headerlink" href="#conjugate-gradients-changing-the-norm" title="Permalink to this headline">#</a></h2>
+<p>Instead of minimizing the <span class="math notranslate nohighlight">\(A^T A\)</span> norm of the error, the Conjugate Gradient method minimizes the <span class="math notranslate nohighlight">\(A\)</span> norm of the error.  For <span class="math notranslate nohighlight">\(A\)</span> to induce a norm, it must be symmetric positive definite.  <a class="reference external" href="http://www.cs.cmu.edu/%7Equake-papers/painless-conjugate-gradient.pdf">Jeremy Shewchuck’s guide to CG</a> is an excellent resource.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="incomplete-factorization">
+<h1>Incomplete factorization<a class="headerlink" href="#incomplete-factorization" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Start factoring like in a sparse direct solver</p>
+<ul>
+<li><p><strong>ILU(0)</strong> Discard fill outside the sparsity pattern of <span class="math notranslate nohighlight">\(A\)</span></p></li>
+<li><p><strong>ILU(<span class="math notranslate nohighlight">\(k\)</span>)</strong>: only allow <span class="math notranslate nohighlight">\(k\)</span> levels of fill</p></li>
+<li><p><strong>ILUT(<span class="math notranslate nohighlight">\(\epsilon\)</span>)</strong>: only keep fill values larger than <span class="math notranslate nohighlight">\(\epsilon\)</span></p></li>
+</ul>
+</li>
+</ul>
+<section id="id1">
+<h2>Experiments<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Try <code class="docutils literal notranslate"><span class="pre">-pc_factor_levels</span> <span class="pre">2</span></code></p></li>
+<li><p>Impact on cost (check <code class="docutils literal notranslate"><span class="pre">-log_view</span></code>)</p></li>
+<li><p>Impact on scalability (<code class="docutils literal notranslate"><span class="pre">-da_refine</span> <span class="pre">6</span></code>)</p></li>
+</ul>
+</section>
+<section id="kershaw-1978-matrix">
+<h2>Kershaw (1978) matrix<a class="headerlink" href="#kershaw-1978-matrix" title="Permalink to this headline">#</a></h2>
+<p>Incomplete Cholesky can break down for SPD matrices.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make <span class="nv">$PETSC_ARCH</span>/tests/ksp/pc/tutorials/ex1
+</pre></div>
+</div>
+<p>and try running.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
+<span class="n">eigvals</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4-element Vector{Float64}:
+ 0.17157287525380904
+ 0.17157287525381085
+ 5.828427124746186
+ 5.82842712474619
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="domain-decomposition">
+<h1>Domain decomposition<a class="headerlink" href="#domain-decomposition" title="Permalink to this headline">#</a></h1>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Ddm_original_logo.png" /></p>
+<section id="alternating-schwarz-method">
+<h2>Alternating Schwarz method<a class="headerlink" href="#alternating-schwarz-method" title="Permalink to this headline">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bc_circ</span> <span class="o">=</span> <span class="n">guess</span><span class="p">()</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span>
+    <span class="n">u_circ</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">A_circ</span><span class="p">,</span> <span class="n">bc_circ</span><span class="p">)</span>
+    <span class="n">bc_rect</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">u_circ</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
+    <span class="n">u_rect</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">A_rect</span><span class="p">,</span> <span class="n">bc_rect</span><span class="p">)</span>
+    <span class="n">bc_circ</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">u_rect</span><span class="p">,</span> <span class="n">circ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This method was proposed in 1870 by <a class="reference external" href="https://en.wikipedia.org/wiki/Hermann_Schwarz">Hermann Schwarz</a> as a theoretical tool, and is now called a <strong>multiplicative</strong> Schwarz method because the solves depend on each other.  We can see it as a generalization of Gauss-Seidel in which we solve on subdomains instead of at individual grid points.  As with Gauss-Seidel, it is difficult to expose parallelism.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="additive-schwarz">
+<h1>Additive Schwarz<a class="headerlink" href="#additive-schwarz" title="Permalink to this headline">#</a></h1>
+<p>The additive Schwarz method is more comparable to Jacobi, with each domain solved in parallel.  Our fundamental operation will be an embedding of each subdomain <span class="math notranslate nohighlight">\(V_i\)</span> into the global domain <span class="math notranslate nohighlight">\(V\)</span>, which we call the <strong>prolongation</strong></p>
+<div class="math notranslate nohighlight">
+\[ P_i : V_i \to V \]</div>
+<p>The transpose of prolongation, <span class="math notranslate nohighlight">\(P_i^T\)</span>, will sometimes be called <strong>restriction</strong>.
+Let’s work an example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">21</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">overlap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="n">domains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n÷3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">n÷3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">n÷3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n÷3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)]</span><span class="w"></span>
+<span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagm</span><span class="p">(</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"></span>
+<span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">))</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">domains</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">push!</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Id</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="o">:</span><span class="n">right</span><span class="p">])</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">cos</span><span class="o">.</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="n">u_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="n">scatter!</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u_2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_2</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-12-krylov_24_0.svg" src="../_images/2022-10-12-krylov_24_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="the-algorithm">
+<h1>The algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this headline">#</a></h1>
+<p>Define the subdomain operator <div class="math notranslate nohighlight">
+\[A_i = P_i^T A P_i\]</div>
+
+The additive Schwarz preconditioner is
+<div class="math notranslate nohighlight">
+\[ M^{-1} = \sum_i P_i A_i^{-1} P_i^T \]</div>
+
+and it has error iteration matrix
+<div class="math notranslate nohighlight">
+\[ I - \sum_i  P_i A_i^{-1} P_i^T A \]</div>
+</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagm</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
+<span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="c"># initial guess</span><span class="w"></span>
+<span class="n">us</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="w"></span>
+<span class="w">    </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="c"># residual</span><span class="w"></span>
+<span class="w">    </span><span class="n">u_next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">Pi</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">P</span><span class="w"></span>
+<span class="w">        </span><span class="n">Ai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pi</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Pi</span><span class="w"></span>
+<span class="w">        </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ai</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="p">(</span><span class="n">Pi</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">u_next</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">Pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ui</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_next</span><span class="p">;</span><span class="w"> </span><span class="n">push!</span><span class="p">(</span><span class="n">us</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">us</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-12-krylov_27_0.svg" src="../_images/2022-10-12-krylov_27_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">#</a></h1>
+<p>Given a linear operator <span class="math notranslate nohighlight">\(A : V \to V\)</span>, suppose we have a collection of prolongation operators <span class="math notranslate nohighlight">\(P_i : V_i \to V\)</span>.  The columns of <span class="math notranslate nohighlight">\(P_i\)</span> are “basis functions” for the subspace <span class="math notranslate nohighlight">\(V_i\)</span>.  The Galerkin operator <span class="math notranslate nohighlight">\(A_i = P_i^T A P_i\)</span> is the action of the original operator <span class="math notranslate nohighlight">\(A\)</span> in the subspace.</p>
+<p>Define the subspace projection</p>
+<div class="math notranslate nohighlight">
+\[ S_i = P_i A_i^{-1} P_i^T A . \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S_i\)</span> is a projector: <span class="math notranslate nohighlight">\(S_i^2 = S_i\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(A\)</span> is SPD, <span class="math notranslate nohighlight">\(S_i\)</span> is SPD with respect to the <span class="math notranslate nohighlight">\(A\)</span> inner product <span class="math notranslate nohighlight">\(x^T A y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(I - S_i\)</span> is <span class="math notranslate nohighlight">\(A\)</span>-orthogonal to the range of <span class="math notranslate nohighlight">\(P_i\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"></span>
+<span class="n">S2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">inv</span><span class="p">(</span><span class="n">A2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"></span>
+<span class="n">norm</span><span class="p">(</span><span class="n">S2</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2036131040197588e-15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">norm</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">S2</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1831170202396054e-15
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> The concept of <span class="math notranslate nohighlight">\(A\)</span>-orthogonality is meaningful only when <span class="math notranslate nohighlight">\(A\)</span> is SPD.
+Does the mathematical expression <span class="math notranslate nohighlight">\( P_i^T A (I - S_i) = 0 \)</span> hold even when <span class="math notranslate nohighlight">\(A\)</span> is nonsymmetric?</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="convergence-theory">
+<h1>Convergence theory<a class="headerlink" href="#convergence-theory" title="Permalink to this headline">#</a></h1>
+<p>The formal convergence is beyond the scope of this course, but the following estimates are useful.  We let <span class="math notranslate nohighlight">\(h\)</span> be the element diameter, <span class="math notranslate nohighlight">\(H\)</span> be the subdomain diameter, and <span class="math notranslate nohighlight">\(\delta\)</span> be the overlap, each normalized such that the global domain diameter is 1.  We express the convergence in terms of the condition number <span class="math notranslate nohighlight">\(\kappa\)</span> for the preconditioned operator.</p>
+<ul class="simple">
+<li><p>(Block) Jacobi: <span class="math notranslate nohighlight">\(\delta=0\)</span>, <span class="math notranslate nohighlight">\(\kappa \sim H^{-2} H/h = (Hh)^{-1}\)</span></p></li>
+<li><p>Overlapping Schwarz: <span class="math notranslate nohighlight">\(\kappa \sim H^{-2} H/\delta = (H \delta)^{-1}\)</span></p></li>
+<li><p>2-level overlapping Schwarz: <span class="math notranslate nohighlight">\(\kappa \sim H/\delta\)</span></p></li>
+</ul>
+<ul class="simple">
+<li><p>Additive <span class="math notranslate nohighlight">\( I - \sum_{i=0}^n S_i, \)</span></p></li>
+<li><p>Multiplicative <span class="math notranslate nohighlight">\( \prod_{i=0}^n (I - S_i), \)</span></p></li>
+<li><p>Hybrid <span class="math notranslate nohighlight">\( (I - S_0) (I - \sum_{i=1}^n S_i) . \)</span></p></li>
+</ul>
+<p>In each case above, the action is expressed in terms of the error iteration operator.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="petsc-experiments">
+<h1>PETSc experiments<a class="headerlink" href="#petsc-experiments" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Compare domain decomposition and multigrid preconditioning</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">asm</span></code> (Additive Schwarz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pc_asm_type</span> <span class="pre">basic</span></code> (symmetric, versus <code class="docutils literal notranslate"><span class="pre">restrict</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pc_asm_overlap</span> <span class="pre">2</span></code> (increase overlap)</p></li>
+<li><p>Effect of direct subdomain solver: <code class="docutils literal notranslate"><span class="pre">-sub_pc_type</span> <span class="pre">lu</span></code></p></li>
+</ul>
+<ul class="simple">
+<li><p>Symmetric example: <code class="docutils literal notranslate"><span class="pre">src/snes/examples/tutorials/ex5.c</span></code></p></li>
+<li><p>Nonsymmetric example: <code class="docutils literal notranslate"><span class="pre">src/snes/examples/tutorials/ex19.c</span></code></p></li>
+<li><p>Compare preconditioned versus unpreconditioned norms.</p></li>
+<li><p>Compare BiCG versus GMRES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">mg</span></code> (Geometric Multigrid)</p></li>
+<li><p>Use monitors:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_monitor_true_residual</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_monitor_singular_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_converged_reason</span></code></p></li>
+<li><p>Explain methods: <code class="docutils literal notranslate"><span class="pre">-snes_view</span></code></p></li>
+<li><p>Performance info: <code class="docutils literal notranslate"><span class="pre">-log_view</span></code></p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-10-10-iterative.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-10-10 Iterative Solvers</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

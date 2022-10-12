@@ -1,0 +1,1243 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-10-07 Linear Solvers &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-10-10 Iterative Solvers" href="2022-10-10-iterative.html" />
+    <link rel="prev" title="2022-10-05 Factorization" href="2022-10-05-factorization.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-10-03 2D Advection-diffusion and waves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-05-factorization.html">
+     2022-10-05 Factorization
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-10-07 Linear Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-10-iterative.html">
+     2022-10-10 Iterative Solvers
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-10-07-linear-solvers.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-10-07-linear-solvers.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-10-07-linear-solvers.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-10-07 Linear Solvers
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#request-an-rc-account">
+   Request an RC account
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#https-www-colorado-edu-rc">
+     https://www.colorado.edu/rc
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#petsc">
+     PETSc
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zulip">
+     Zulip
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gaussian-elimination-and-cholesky">
+   Gaussian elimination and Cholesky
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lu-a">
+     <span class="math notranslate nohighlight">
+      \(LU = A\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cholesky-l-l-t-a">
+     Cholesky
+     <span class="math notranslate nohighlight">
+      \(L L^T = A\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-of-a-banded-solve">
+   Cost of a banded solve
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#question">
+     Question
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#different-orderings">
+   Different orderings
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cholesky-factors-in-nested-dissection">
+   Cholesky factors in nested dissection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-in-nested-dissection">
+   Cost in nested dissection
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-square">
+     2D square
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-cube">
+     3D Cube
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#questions">
+     Questions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-our-intuition">
+   Test our intuition
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-expensive-how-fast">
+   How expensive how fast?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outlook-on-sparse-direct-solvers">
+   Outlook on sparse direct solvers
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-10-07 Linear Solvers</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-10-07 Linear Solvers
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#request-an-rc-account">
+   Request an RC account
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#https-www-colorado-edu-rc">
+     https://www.colorado.edu/rc
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#petsc">
+     PETSc
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zulip">
+     Zulip
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gaussian-elimination-and-cholesky">
+   Gaussian elimination and Cholesky
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lu-a">
+     <span class="math notranslate nohighlight">
+      \(LU = A\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cholesky-l-l-t-a">
+     Cholesky
+     <span class="math notranslate nohighlight">
+      \(L L^T = A\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-of-a-banded-solve">
+   Cost of a banded solve
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#question">
+     Question
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#different-orderings">
+   Different orderings
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cholesky-factors-in-nested-dissection">
+   Cholesky factors in nested dissection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-in-nested-dissection">
+   Cost in nested dissection
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-square">
+     2D square
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-cube">
+     3D Cube
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#questions">
+     Questions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-our-intuition">
+   Test our intuition
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-expensive-how-fast">
+   How expensive how fast?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outlook-on-sparse-direct-solvers">
+   Outlook on sparse direct solvers
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-solvers">
+<h1>2022-10-07 Linear Solvers<a class="headerlink" href="#linear-solvers" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Wave equation and Hamiltonians</p></li>
+<li><p>Symplectic integrators</p></li>
+<li><p>Sparse direct solvers</p>
+<ul>
+<li><p>matrix orderings</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Request RC accounts</p></li>
+<li><p>Sparse direct solvers</p>
+<ul>
+<li><p>impact of ordering on formulation</p></li>
+<li><p>cost scaling</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">cmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">vec</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="mi">120</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="n">spy</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="p">(</span><span class="ss">:square</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:diverging_rainbow_bgymr_45_85_c67_n256</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">cmax</span><span class="p">,</span><span class="w"> </span><span class="n">cmax</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">idx</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="w"></span>
+<span class="w">    </span><span class="n">in_domain</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil_advect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="n">wind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="o">-</span><span class="n">wind</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">wind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">wind</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil_diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stencil_advect</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">stencil_diffuse</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="n">neighbors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="w"></span>
+<span class="w">            </span><span class="n">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in_domain</span><span class="o">.</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="o">.</span><span class="p">(</span><span class="n">repeat</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="w"> </span><span class="mi">5</span><span class="p">))[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="o">.</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">stencil</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>advdiff_matrix (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="request-an-rc-account">
+<h1>Request an RC account<a class="headerlink" href="#request-an-rc-account" title="Permalink to this headline">#</a></h1>
+<section id="https-www-colorado-edu-rc">
+<h2><a class="reference external" href="https://www.colorado.edu/rc">https://www.colorado.edu/rc</a><a class="headerlink" href="#https-www-colorado-edu-rc" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>This gives <code class="docutils literal notranslate"><span class="pre">ssh</span></code> login access. We’ll use <a class="reference external" href="https://curc.readthedocs.io/en/latest/clusters/alpine/index.html">Alpine</a>, which is a modern CPU and GPU cluster.</p></li>
+<li><p>This will be good for benchmarking and larger runs. We’ll also use GPUs later in class.</p></li>
+</ul>
+</section>
+<section id="petsc">
+<h2>PETSc<a class="headerlink" href="#petsc" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>We’ll start using <a class="reference external" href="https://petsc.org">PETSc</a> next week.</p></li>
+<li><p>You can build PETSc on your laptop. You’ll need C development tools.</p>
+<ul>
+<li><p>Linux: use package manager (<code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span></code>, <code class="docutils literal notranslate"><span class="pre">dnf</span> <span class="pre">install</span></code>, …)</p></li>
+<li><p>OSX: install xcode, many people like <a class="reference external" href="https://brew.sh/">homebrew</a> as a package manager</p></li>
+<li><p>Windows: WSL then follow Linux instructions (or MSYS2 or Cygwin)</p></li>
+<li><p>Any: install Docker, then use our image</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="zulip">
+<h2>Zulip<a class="headerlink" href="#zulip" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cu-numpde.zulipchat.com/join/aovsprei6v6nrx7atvwqq7vv/">Join for discussions</a></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="gaussian-elimination-and-cholesky">
+<h1>Gaussian elimination and Cholesky<a class="headerlink" href="#gaussian-elimination-and-cholesky" title="Permalink to this headline">#</a></h1>
+<section id="lu-a">
+<h2><span class="math notranslate nohighlight">\(LU = A\)</span><a class="headerlink" href="#lu-a" title="Permalink to this headline">#</a></h2>
+<p>Given a <span class="math notranslate nohighlight">\(2\times 2\)</span> block matrix, the algorithm proceeds as
+\begin{split}</p>
+<div class="amsmath math notranslate nohighlight" id="equation-088e3e0e-0376-47b2-a68c-962433003899">
+<span class="eqno">(32)<a class="headerlink" href="#equation-088e3e0e-0376-47b2-a68c-962433003899" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} A &amp; B \\ C &amp; D \end{bmatrix}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-952499ac-a008-4f84-a217-bf3f3c878667">
+<span class="eqno">(33)<a class="headerlink" href="#equation-952499ac-a008-4f84-a217-bf3f3c878667" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} L_A &amp; \\ C U_A^{-1} &amp; 1 \end{bmatrix}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-e65f6356-a081-4caa-a00f-4f2f65e9b848">
+<span class="eqno">(34)<a class="headerlink" href="#equation-e65f6356-a081-4caa-a00f-4f2f65e9b848" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} U_A &amp; L_A^{-1} B \\ &amp; S \end{bmatrix}\]</div>
+<p>\end{split}
+where <span class="math notranslate nohighlight">\(L_A U_A = A\)</span> and
+<div class="math notranslate nohighlight">
+\[S = D - C \underbrace{U_A^{-1} L_A^{-1}}_{A^{-1}} B .\]</div>
+</p>
+</section>
+<section id="cholesky-l-l-t-a">
+<h2>Cholesky <span class="math notranslate nohighlight">\(L L^T = A\)</span><a class="headerlink" href="#cholesky-l-l-t-a" title="Permalink to this headline">#</a></h2>
+<p>\begin{split}</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c4ea2b3b-fea6-486e-a4b0-69f059f0a06b">
+<span class="eqno">(35)<a class="headerlink" href="#equation-c4ea2b3b-fea6-486e-a4b0-69f059f0a06b" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} A &amp; B^T \\ B &amp; D \end{bmatrix}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-93d551d4-c810-4723-8d95-31400295b844">
+<span class="eqno">(36)<a class="headerlink" href="#equation-93d551d4-c810-4723-8d95-31400295b844" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} L_A &amp; \\ B L_A^{-T} &amp; 1 \end{bmatrix}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-c53bed2f-3088-49c7-b84a-e28884ee9b34">
+<span class="eqno">(37)<a class="headerlink" href="#equation-c53bed2f-3088-49c7-b84a-e28884ee9b34" title="Permalink to this equation">#</a></span>\[\begin{bmatrix} L_A^T &amp; L_A^{-1} B^T \\ &amp; S \end{bmatrix}\]</div>
+<p>\end{split}
+where <span class="math notranslate nohighlight">\(L_A L_A^T = A\)</span> and
+<div class="math notranslate nohighlight">
+\[ S = D - B \underbrace{L_A^{-T} L_A^{-1}}_{A^{-1}} B^T .\]</div>
+</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">N</span><span class="p">)</span><span class="w"></span>
+<span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="n">my_spy</span><span class="p">(</span><span class="n">sparse</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">L</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_6_0.svg" src="../_images/2022-10-07-linear-solvers_6_0.svg" /></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cost-of-a-banded-solve">
+<h1>Cost of a banded solve<a class="headerlink" href="#cost-of-a-banded-solve" title="Permalink to this headline">#</a></h1>
+<p>Consider an <span class="math notranslate nohighlight">\(N\times N\)</span> matrix with bandwidth <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(1 \le b \le N\)</span>.</p>
+<ul class="simple">
+<li><p>Work one row at a time</p></li>
+<li><p>Each row/column of panel has <span class="math notranslate nohighlight">\(b\)</span> nonzeros</p></li>
+<li><p>Schur update affects <span class="math notranslate nohighlight">\(b\times b\)</span> sub-matrix</p></li>
+<li><p>Total compute cost <span class="math notranslate nohighlight">\(N b^2\)</span></p></li>
+<li><p>Storage cost <span class="math notranslate nohighlight">\(N b\)</span></p></li>
+</ul>
+<section id="question">
+<h2>Question<a class="headerlink" href="#question" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>What bandwidth <span class="math notranslate nohighlight">\(b\)</span> is needed for an <span class="math notranslate nohighlight">\(N = n\times n \times n\)</span> cube in 3 dimensions?</p></li>
+<li><p>What is the memory cost?</p></li>
+<li><p>What is the compute cost?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">my_spy</span><span class="p">(</span><span class="n">sparse</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">L</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_9_0.svg" src="../_images/2022-10-07-linear-solvers_9_0.svg" /></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="different-orderings">
+<h1>Different orderings<a class="headerlink" href="#different-orderings" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">heatmap</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_11_0.svg" src="../_images/2022-10-07-linear-solvers_11_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="n">Metis</span><span class="w"></span>
+<span class="n">perm</span><span class="p">,</span><span class="w"> </span><span class="n">iperm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Metis</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="n">heatmap</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">iperm</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_12_0.svg" src="../_images/2022-10-07-linear-solvers_12_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="c">#my_spy(A[perm, perm])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuiteSparse.CHOLMOD.Factor{Float64}
+type:    LLt
+method:  supernodal
+maxnnz:  0
+nnz:     1109473
+success: true
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}(</span><span class="n">perm</span><span class="p">))</span><span class="w"></span>
+<span class="c">#my_spy(sparse(ch.L))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuiteSparse.CHOLMOD.Factor{Float64}
+type:    LLt
+method:  supernodal
+maxnnz:  0
+nnz:     224791
+success: true
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cholesky-factors-in-nested-dissection">
+<h1>Cholesky factors in nested dissection<a class="headerlink" href="#cholesky-factors-in-nested-dissection" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">40</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">perm</span><span class="p">,</span><span class="w"> </span><span class="n">iperm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Metis</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">perm</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="p">])</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_16_0.svg" src="../_images/2022-10-07-linear-solvers_16_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}(</span><span class="n">perm</span><span class="p">))</span><span class="w"></span>
+<span class="n">my_spy</span><span class="p">(</span><span class="n">sparse</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">L</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_17_0.svg" src="../_images/2022-10-07-linear-solvers_17_0.svg" /></div>
+</div>
+<ul class="simple">
+<li><p>The dense blocks in factor <span class="math notranslate nohighlight">\(L\)</span> are “supernodes”</p></li>
+<li><p>They correspond to “vertex separators” in the ordering</p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="cost-in-nested-dissection">
+<h1>Cost in nested dissection<a class="headerlink" href="#cost-in-nested-dissection" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Cost is dominated by dense factorization of the largest supernode</p></li>
+<li><p>Its size comes from the vertex separator size</p></li>
+</ul>
+<section id="d-square">
+<h2>2D square<a class="headerlink" href="#d-square" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N = n^2\)</span> dofs</p></li>
+<li><p>Vertex separator of size <span class="math notranslate nohighlight">\(n\)</span></p></li>
+<li><p>Compute cost <span class="math notranslate nohighlight">\(v^3 = N^{3/2}\)</span></p></li>
+<li><p>Storage cost <span class="math notranslate nohighlight">\(N \log N\)</span></p></li>
+</ul>
+</section>
+<section id="d-cube">
+<h2>3D Cube<a class="headerlink" href="#d-cube" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N = n^3\)</span> dofs</p></li>
+<li><p>Vertex separator of size <span class="math notranslate nohighlight">\(v = n^2\)</span></p></li>
+<li><p>Compute cost <span class="math notranslate nohighlight">\(v^3 = n^6 = N^2\)</span></p></li>
+<li><p>Storage cost <span class="math notranslate nohighlight">\(v^2 = n^4 = N^{4/3}\)</span></p></li>
+</ul>
+</section>
+<section id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>How much does the cost change if we switch from Dirichlet to periodic boundary conditions in 2D?</p></li>
+<li><p>How much does the cost change if we move from 5-point stencil (<span class="math notranslate nohighlight">\(O(h^2)\)</span> accuracy) to 9-point “star” stencil (<span class="math notranslate nohighlight">\(O(h^4)\)</span> accuracy)?</p></li>
+<li><p>Would you rather solve a 3D problem on a <span class="math notranslate nohighlight">\(10\times 10\times 10000\)</span> grid or <span class="math notranslate nohighlight">\(100\times 100 \times 100\)</span>?</p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="test-our-intuition">
+<h1>Test our intuition<a class="headerlink" href="#test-our-intuition" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">laplacian_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}()</span><span class="w"></span>
+<span class="w">    </span><span class="n">wrap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wrap</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">stencil_diffuse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="o">^</span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">repeat</span><span class="p">([</span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)],</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="w"> </span><span class="n">idx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span><span class="w"></span>
+<span class="w">            </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">stencil_diffuse</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>laplacian_matrix (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="w"></span>
+<span class="n">A_dirichlet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">advdiff_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="n">perm</span><span class="p">,</span><span class="w"> </span><span class="n">iperm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Metis</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">A_dirichlet</span><span class="p">)</span><span class="w"></span>
+<span class="n">cholesky</span><span class="p">(</span><span class="n">A_dirichlet</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}(</span><span class="n">perm</span><span class="p">))</span><span class="w"></span>
+<span class="c">#cholesky(A_dirichlet)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuiteSparse.CHOLMOD.Factor{Float64}
+type:    LLt
+method:  simplicial
+maxnnz:  40203
+nnz:     40203
+success: true
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A_periodic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">laplacian_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1e-10</span><span class="o">*</span><span class="n">I</span><span class="w"></span>
+<span class="n">perm</span><span class="p">,</span><span class="w"> </span><span class="n">iperm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Metis</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">A_periodic</span><span class="p">)</span><span class="w"></span>
+<span class="n">cholesky</span><span class="p">(</span><span class="n">A_periodic</span><span class="p">,</span><span class="w"> </span><span class="n">perm</span><span class="o">=</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Int64</span><span class="p">}(</span><span class="n">perm</span><span class="p">))</span><span class="w"></span>
+<span class="c">#cholesky(A_periodic)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SuiteSparse.CHOLMOD.Factor{Float64}
+type:    LLt
+method:  supernodal
+maxnnz:  0
+nnz:     60083
+success: true
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="how-expensive-how-fast">
+<h1>How expensive how fast?<a class="headerlink" href="#how-expensive-how-fast" title="Permalink to this headline">#</a></h1>
+<p>Suppose we have a second order accurate method in 3D.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">:</span><span class="mi">13</span><span class="p">)</span><span class="w"></span>
+<span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">.^</span><span class="mi">3</span><span class="w"></span>
+<span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">50</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="n">seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="o">.^</span><span class="mi">2</span><span class="w"></span>
+<span class="n">hours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">3600</span><span class="w"></span>
+<span class="n">cloud_dollars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hours</span><span class="w"></span>
+<span class="n">kW_hours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hours</span><span class="w"></span>
+<span class="n">barrel_of_oil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kW_hours</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1700</span><span class="w"></span>
+<span class="n">kg_CO2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kW_hours</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.709</span><span class="w"></span>
+<span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">cost</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kg_CO2</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;cost&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span><span class="w"> </span><span class="n">yscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-10-07-linear-solvers_29_0.svg" src="../_images/2022-10-07-linear-solvers_29_0.svg" /></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Barrel_of_oil_equivalent">Barrel of oil equivalent</a></p></li>
+<li><p><a class="reference external" href="https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references">Electricity emission factor</a></p></li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="outlook-on-sparse-direct-solvers">
+<h1>Outlook on sparse direct solvers<a class="headerlink" href="#outlook-on-sparse-direct-solvers" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Sparse direct works well for 2D and almost-2D problems to medium large sizes</p>
+<ul>
+<li><p>High order FD methods make sparse direct cry</p></li>
+<li><p>High order finite element are okay, but <a class="reference external" href="https://doi.org/10.1016/j.cma.2011.11.002">not high-continuity splines</a></p></li>
+<li><p>Almost-2D includes a lot of industrial solid mechanics applications</p>
+<ul>
+<li><p>The body of a car, the frame of an airplane</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Sparse direct is rarely usable in “fully 3D” problems</p>
+<ul>
+<li><p>“thick” structures</p>
+<ul>
+<li><p>soil mechanics, hydrology, building foundations, bones, tires</p></li>
+</ul>
+</li>
+<li><p>fluid mechanics</p>
+<ul>
+<li><p>aerodynamics, heating/cooling systems, atmosphere/ocean</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Setup cost (factorization) is much more expensive than solve</p>
+<ul>
+<li><p>Amortize cost in time-dependent problems</p>
+<ul>
+<li><p>Rosenbrock methods: factorization reused across stages</p></li>
+<li><p>“lag” Jacobian in Newton (results in “modified Newton”)</p></li>
+<li><p>“lag” preconditioner with matrix-free iterative methods (Sundials, PETSc)</p></li>
+</ul>
+</li>
+<li><p>Factorization pays off if you have many right hand sides</p></li>
+</ul>
+</li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-10-05-factorization.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-10-05 Factorization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-10-10-iterative.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-10-10 Iterative Solvers</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
