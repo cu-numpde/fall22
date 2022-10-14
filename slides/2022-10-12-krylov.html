@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-10-14 Preconditioning" href="2022-10-14-preconditioning.html" />
     <link rel="prev" title="2022-10-10 Iterative Solvers" href="2022-10-10-iterative.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -234,6 +235,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-10-12 Krylov and preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-14-preconditioning.html">
+     2022-10-14 Preconditioning
     </a>
    </li>
   </ul>
@@ -583,60 +589,6 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#incomplete-factorization">
-   Incomplete factorization
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Experiments
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kershaw-1978-matrix">
-     Kershaw (1978) matrix
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#domain-decomposition">
-   Domain decomposition
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#alternating-schwarz-method">
-     Alternating Schwarz method
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additive-schwarz">
-   Additive Schwarz
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-algorithm">
-   The algorithm
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#theory">
-   Theory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-theory">
-   Convergence theory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#petsc-experiments">
-   PETSc experiments
-  </a>
- </li>
 </ul>
 
     </nav>
@@ -776,60 +728,6 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#incomplete-factorization">
-   Incomplete factorization
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Experiments
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kershaw-1978-matrix">
-     Kershaw (1978) matrix
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#domain-decomposition">
-   Domain decomposition
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#alternating-schwarz-method">
-     Alternating Schwarz method
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additive-schwarz">
-   Additive Schwarz
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-algorithm">
-   The algorithm
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#theory">
-   Theory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#convergence-theory">
-   Convergence theory
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#petsc-experiments">
-   PETSc experiments
-  </a>
  </li>
 </ul>
 
@@ -1059,218 +957,6 @@ The solution of this least squares problem is achieved by incrementally updating
 <p>Instead of minimizing the <span class="math notranslate nohighlight">\(A^T A\)</span> norm of the error, the Conjugate Gradient method minimizes the <span class="math notranslate nohighlight">\(A\)</span> norm of the error.  For <span class="math notranslate nohighlight">\(A\)</span> to induce a norm, it must be symmetric positive definite.  <a class="reference external" href="http://www.cs.cmu.edu/%7Equake-papers/painless-conjugate-gradient.pdf">Jeremy Shewchuck’s guide to CG</a> is an excellent resource.</p>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="incomplete-factorization">
-<h1>Incomplete factorization<a class="headerlink" href="#incomplete-factorization" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p>Start factoring like in a sparse direct solver</p>
-<ul>
-<li><p><strong>ILU(0)</strong> Discard fill outside the sparsity pattern of <span class="math notranslate nohighlight">\(A\)</span></p></li>
-<li><p><strong>ILU(<span class="math notranslate nohighlight">\(k\)</span>)</strong>: only allow <span class="math notranslate nohighlight">\(k\)</span> levels of fill</p></li>
-<li><p><strong>ILUT(<span class="math notranslate nohighlight">\(\epsilon\)</span>)</strong>: only keep fill values larger than <span class="math notranslate nohighlight">\(\epsilon\)</span></p></li>
-</ul>
-</li>
-</ul>
-<section id="id1">
-<h2>Experiments<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Try <code class="docutils literal notranslate"><span class="pre">-pc_factor_levels</span> <span class="pre">2</span></code></p></li>
-<li><p>Impact on cost (check <code class="docutils literal notranslate"><span class="pre">-log_view</span></code>)</p></li>
-<li><p>Impact on scalability (<code class="docutils literal notranslate"><span class="pre">-da_refine</span> <span class="pre">6</span></code>)</p></li>
-</ul>
-</section>
-<section id="kershaw-1978-matrix">
-<h2>Kershaw (1978) matrix<a class="headerlink" href="#kershaw-1978-matrix" title="Permalink to this headline">#</a></h2>
-<p>Incomplete Cholesky can break down for SPD matrices.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make <span class="nv">$PETSC_ARCH</span>/tests/ksp/pc/tutorials/ex1
-</pre></div>
-</div>
-<p>and try running.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"></span>
-<span class="n">eigvals</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4-element Vector{Float64}:
- 0.17157287525380904
- 0.17157287525381085
- 5.828427124746186
- 5.82842712474619
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="domain-decomposition">
-<h1>Domain decomposition<a class="headerlink" href="#domain-decomposition" title="Permalink to this headline">#</a></h1>
-<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Ddm_original_logo.png" /></p>
-<section id="alternating-schwarz-method">
-<h2>Alternating Schwarz method<a class="headerlink" href="#alternating-schwarz-method" title="Permalink to this headline">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bc_circ</span> <span class="o">=</span> <span class="n">guess</span><span class="p">()</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span>
-    <span class="n">u_circ</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">A_circ</span><span class="p">,</span> <span class="n">bc_circ</span><span class="p">)</span>
-    <span class="n">bc_rect</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">u_circ</span><span class="p">,</span> <span class="n">rect</span><span class="p">)</span>
-    <span class="n">u_rect</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">A_rect</span><span class="p">,</span> <span class="n">bc_rect</span><span class="p">)</span>
-    <span class="n">bc_circ</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">u_rect</span><span class="p">,</span> <span class="n">circ</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This method was proposed in 1870 by <a class="reference external" href="https://en.wikipedia.org/wiki/Hermann_Schwarz">Hermann Schwarz</a> as a theoretical tool, and is now called a <strong>multiplicative</strong> Schwarz method because the solves depend on each other.  We can see it as a generalization of Gauss-Seidel in which we solve on subdomains instead of at individual grid points.  As with Gauss-Seidel, it is difficult to expose parallelism.</p>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="additive-schwarz">
-<h1>Additive Schwarz<a class="headerlink" href="#additive-schwarz" title="Permalink to this headline">#</a></h1>
-<p>The additive Schwarz method is more comparable to Jacobi, with each domain solved in parallel.  Our fundamental operation will be an embedding of each subdomain <span class="math notranslate nohighlight">\(V_i\)</span> into the global domain <span class="math notranslate nohighlight">\(V\)</span>, which we call the <strong>prolongation</strong></p>
-<div class="math notranslate nohighlight">
-\[ P_i : V_i \to V \]</div>
-<p>The transpose of prolongation, <span class="math notranslate nohighlight">\(P_i^T\)</span>, will sometimes be called <strong>restriction</strong>.
-Let’s work an example.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">21</span><span class="w"></span>
-<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
-<span class="n">overlap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="n">domains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n÷3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">n÷3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">n÷3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n÷3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)]</span><span class="w"></span>
-<span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagm</span><span class="p">(</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w"></span>
-<span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">))</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">domains</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">push!</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Id</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="o">:</span><span class="n">right</span><span class="p">])</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">cos</span><span class="o">.</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="n">u_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
-<span class="n">scatter!</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u_2</span><span class="p">)</span><span class="w"></span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u_2</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-10-12-krylov_24_0.svg" src="../_images/2022-10-12-krylov_24_0.svg" /></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="the-algorithm">
-<h1>The algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this headline">#</a></h1>
-<p>Define the subdomain operator <div class="math notranslate nohighlight">
-\[A_i = P_i^T A P_i\]</div>
-
-The additive Schwarz preconditioner is
-<div class="math notranslate nohighlight">
-\[ M^{-1} = \sum_i P_i A_i^{-1} P_i^T \]</div>
-
-and it has error iteration matrix
-<div class="math notranslate nohighlight">
-\[ I - \sum_i  P_i A_i^{-1} P_i^T A \]</div>
-</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagm</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="w"></span>
-<span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="c"># initial guess</span><span class="w"></span>
-<span class="n">us</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"></span>
-<span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="w"></span>
-<span class="w">    </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="c"># residual</span><span class="w"></span>
-<span class="w">    </span><span class="n">u_next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">Pi</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">P</span><span class="w"></span>
-<span class="w">        </span><span class="n">Ai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pi</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Pi</span><span class="w"></span>
-<span class="w">        </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ai</span><span class="w"> </span><span class="o">\</span><span class="w"> </span><span class="p">(</span><span class="n">Pi</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">u_next</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">Pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ui</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_next</span><span class="p">;</span><span class="w"> </span><span class="n">push!</span><span class="p">(</span><span class="n">us</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
-<span class="k">end</span><span class="w"></span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">us</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="ss">:auto</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2022-10-12-krylov_27_0.svg" src="../_images/2022-10-12-krylov_27_0.svg" /></div>
-</div>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="theory">
-<h1>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">#</a></h1>
-<p>Given a linear operator <span class="math notranslate nohighlight">\(A : V \to V\)</span>, suppose we have a collection of prolongation operators <span class="math notranslate nohighlight">\(P_i : V_i \to V\)</span>.  The columns of <span class="math notranslate nohighlight">\(P_i\)</span> are “basis functions” for the subspace <span class="math notranslate nohighlight">\(V_i\)</span>.  The Galerkin operator <span class="math notranslate nohighlight">\(A_i = P_i^T A P_i\)</span> is the action of the original operator <span class="math notranslate nohighlight">\(A\)</span> in the subspace.</p>
-<p>Define the subspace projection</p>
-<div class="math notranslate nohighlight">
-\[ S_i = P_i A_i^{-1} P_i^T A . \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(S_i\)</span> is a projector: <span class="math notranslate nohighlight">\(S_i^2 = S_i\)</span></p></li>
-<li><p>If <span class="math notranslate nohighlight">\(A\)</span> is SPD, <span class="math notranslate nohighlight">\(S_i\)</span> is SPD with respect to the <span class="math notranslate nohighlight">\(A\)</span> inner product <span class="math notranslate nohighlight">\(x^T A y\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(I - S_i\)</span> is <span class="math notranslate nohighlight">\(A\)</span>-orthogonal to the range of <span class="math notranslate nohighlight">\(P_i\)</span></p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">A2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"></span>
-<span class="n">S2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">inv</span><span class="p">(</span><span class="n">A2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"></span>
-<span class="n">norm</span><span class="p">(</span><span class="n">S2</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">S2</span><span class="p">)</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2036131040197588e-15
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">norm</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">S2</span><span class="p">))</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1831170202396054e-15
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Note:</strong> The concept of <span class="math notranslate nohighlight">\(A\)</span>-orthogonality is meaningful only when <span class="math notranslate nohighlight">\(A\)</span> is SPD.
-Does the mathematical expression <span class="math notranslate nohighlight">\( P_i^T A (I - S_i) = 0 \)</span> hold even when <span class="math notranslate nohighlight">\(A\)</span> is nonsymmetric?</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="convergence-theory">
-<h1>Convergence theory<a class="headerlink" href="#convergence-theory" title="Permalink to this headline">#</a></h1>
-<p>The formal convergence is beyond the scope of this course, but the following estimates are useful.  We let <span class="math notranslate nohighlight">\(h\)</span> be the element diameter, <span class="math notranslate nohighlight">\(H\)</span> be the subdomain diameter, and <span class="math notranslate nohighlight">\(\delta\)</span> be the overlap, each normalized such that the global domain diameter is 1.  We express the convergence in terms of the condition number <span class="math notranslate nohighlight">\(\kappa\)</span> for the preconditioned operator.</p>
-<ul class="simple">
-<li><p>(Block) Jacobi: <span class="math notranslate nohighlight">\(\delta=0\)</span>, <span class="math notranslate nohighlight">\(\kappa \sim H^{-2} H/h = (Hh)^{-1}\)</span></p></li>
-<li><p>Overlapping Schwarz: <span class="math notranslate nohighlight">\(\kappa \sim H^{-2} H/\delta = (H \delta)^{-1}\)</span></p></li>
-<li><p>2-level overlapping Schwarz: <span class="math notranslate nohighlight">\(\kappa \sim H/\delta\)</span></p></li>
-</ul>
-<ul class="simple">
-<li><p>Additive <span class="math notranslate nohighlight">\( I - \sum_{i=0}^n S_i, \)</span></p></li>
-<li><p>Multiplicative <span class="math notranslate nohighlight">\( \prod_{i=0}^n (I - S_i), \)</span></p></li>
-<li><p>Hybrid <span class="math notranslate nohighlight">\( (I - S_0) (I - \sum_{i=1}^n S_i) . \)</span></p></li>
-</ul>
-<p>In each case above, the action is expressed in terms of the error iteration operator.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="petsc-experiments">
-<h1>PETSc experiments<a class="headerlink" href="#petsc-experiments" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p>Compare domain decomposition and multigrid preconditioning</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">asm</span></code> (Additive Schwarz)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-pc_asm_type</span> <span class="pre">basic</span></code> (symmetric, versus <code class="docutils literal notranslate"><span class="pre">restrict</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-pc_asm_overlap</span> <span class="pre">2</span></code> (increase overlap)</p></li>
-<li><p>Effect of direct subdomain solver: <code class="docutils literal notranslate"><span class="pre">-sub_pc_type</span> <span class="pre">lu</span></code></p></li>
-</ul>
-<ul class="simple">
-<li><p>Symmetric example: <code class="docutils literal notranslate"><span class="pre">src/snes/examples/tutorials/ex5.c</span></code></p></li>
-<li><p>Nonsymmetric example: <code class="docutils literal notranslate"><span class="pre">src/snes/examples/tutorials/ex19.c</span></code></p></li>
-<li><p>Compare preconditioned versus unpreconditioned norms.</p></li>
-<li><p>Compare BiCG versus GMRES</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">mg</span></code> (Geometric Multigrid)</p></li>
-<li><p>Use monitors:</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_monitor_true_residual</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_monitor_singular_value</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_converged_reason</span></code></p></li>
-<li><p>Explain methods: <code class="docutils literal notranslate"><span class="pre">-snes_view</span></code></p></li>
-<li><p>Performance info: <code class="docutils literal notranslate"><span class="pre">-log_view</span></code></p></li>
-</ul>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1305,6 +991,13 @@ Does the mathematical expression <span class="math notranslate nohighlight">\( P
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-10-10 Iterative Solvers</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-10-14-preconditioning.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-10-14 Preconditioning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
