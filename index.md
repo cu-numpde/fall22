@@ -40,4 +40,7 @@ Welcome to **CSCI-5636: Numerical Solution of Partial Differential Equations**
 * Papers
   * [Roache, *Code Verification by the Method of Manufactured Solutions*](https://doi.org/10.1115/1.1436090)
   * [Turk, *Scaling a code in the human dimension*](https://dl.acm.org/doi/10.1145/2484762.2484782) [arXiv](https://arxiv.org/pdf/1301.7064.pdf)
+  * Nachtigal, Reddy, Trefethen, {download}`How fast are nonsymmetric matrix iterations <downloads/NachtigalReddyTrefethen-HowFastAreNonsymmetricMatrixIterations-1992.pdf>`
+  * Greenbaum, Pták, Strakoš, {download}`Any nonincreasing convergence curve is possible for GMRES <downloads/GreenbaumPtakStrakos-AnyNonincreasingConvergenceCurvePossibleGMRES-1996.pdf>`
+  * Embree, {download}`The tortoise and the hare restart GMRES <downloads/Embree-TheTortoiseAndTheHareRestartGMRES-2003.pdf>`
 :::
