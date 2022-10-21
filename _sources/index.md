@@ -20,6 +20,14 @@ Welcome to **CSCI-5636: Numerical Solution of Partial Differential Equations**
   - Use GitHub classroom and observe two kinds of numerical error: rounding error and discretization (aka. truncation) error.
 * - [2022-09-19-blasius](https://classroom.github.com/a/RBCyaHyy)
   - Solve a nonlinear PDE using spectral methods. Learn libraries and assess accuracy.
+* - [Community project](https://classroom.github.com/a/3AzfU4zn)
+  - This has three parts: community presentation, contribution, and
+retrospective presentation about the contribution experience. The goal is to
+build a deeper understanding of how open source communities function, what
+metrics and implicit criteria are valued, and the design decisions and norms
+that went into making libraries and applications successful. In the first stage,
+you' ll survey the community, and in the second, you'll gain experience making a
+specific contribution of your choosing.
 :::
 ::::
 
