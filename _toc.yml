@@ -30,3 +30,6 @@ chapters:
   - file: slides/2022-10-12-krylov.ipynb
   - file: slides/2022-10-14-preconditioning.ipynb
   - file: slides/2022-10-17-multigrid.ipynb
+  - file: slides/2022-10-21-amg.ipynb
+  - file: slides/2022-10-24-galerkin.ipynb
+  - file: slides/2022-10-26-fem.ipynb
