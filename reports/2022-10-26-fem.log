@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 1256, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 87, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 694, in async_execute
+    await self.async_execute_cell(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 1012, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 906, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import NLsolve: nlsolve
+
+fe = FESpace(3, 3, 5)
+u0 = zero(fe.xn)
+sol = nlsolve(u -> fe_residual(u, fe, fq), u0; method=:newton)
+plot(fe.xn, sol.zero, marker=:auto)
+------------------
+
+DimensionMismatch: 
+
+Stacktrace:
+  [1] mul!(C::Vector{Float64}, A::SparseMatrixCSC{Float64, Int64}, B::Vector{Float64}, α::Bool, β::Bool)
+    @ SparseArrays /usr/share/julia/stdlib/v1.8/SparseArrays/src/linalg.jl:31
+  [2] *
+    @ /usr/share/julia/stdlib/v1.8/SparseArrays/src/linalg.jl:51 [inlined]
+  [3] fe_residual(u_in::Vector{Float64}, fe::FESpace, fq::typeof(fq); bci::Vector{Int64}, bcv::Vector{Float64})
+    @ Main ./In[16]:11
+  [4] fe_residual(u_in::Vector{Float64}, fe::FESpace, fq::Function)
+    @ Main ./In[16]:5
+  [5] (::var"#4#5")(u::Vector{Float64})
+    @ Main ./In[17]:5
+  [6] (::NLSolversBase.var"#ff!#1"{var"#4#5"})(F::Vector{Float64}, x::Vector{Float64})
+    @ NLSolversBase ~/.julia/packages/NLSolversBase/cfJrN/src/objective_types/inplace_factory.jl:11
+  [7] (::NLSolversBase.var"#fj_finitediff!#21"{NLSolversBase.var"#ff!#1"{var"#4#5"}, FiniteDiff.JacobianCache{Vector{Float64}, Vector{Float64}, Vector{Float64}, Vector{Float64}, UnitRange{Int64}, Nothing, Val{:central}(), Float64}})(F::Vector{Float64}, J::Matrix{Float64}, x::Vector{Float64})
+    @ NLSolversBase ~/.julia/packages/NLSolversBase/cfJrN/src/objective_types/oncedifferentiable.jl:138
+  [8] value_jacobian!!(obj::NLSolversBase.OnceDifferentiable{Vector{Float64}, Matrix{Float64}, Vector{Float64}}, F::Vector{Float64}, J::Matrix{Float64}, x::Vector{Float64})
+    @ NLSolversBase ~/.julia/packages/NLSolversBase/cfJrN/src/interface.jl:124
+  [9] value_jacobian!!
+    @ ~/.julia/packages/NLSolversBase/cfJrN/src/interface.jl:122 [inlined]
+ [10] newton_(df::NLSolversBase.OnceDifferentiable{Vector{Float64}, Matrix{Float64}, Vector{Float64}}, initial_x::Vector{Float64}, xtol::Float64, ftol::Float64, iterations::Int64, store_trace::Bool, show_trace::Bool, extended_trace::Bool, linesearch::LineSearches.Static, linsolve::NLsolve.var"#27#29", cache::NLsolve.NewtonCache{Vector{Float64}})
+    @ NLsolve ~/.julia/packages/NLsolve/gJL1I/src/solvers/newton.jl:48
+ [11] #newton#7
+    @ ~/.julia/packages/NLsolve/gJL1I/src/solvers/newton.jl:146 [inlined]
+ [12] nlsolve(df::NLSolversBase.OnceDifferentiable{Vector{Float64}, Matrix{Float64}, Vector{Float64}}, initial_x::Vector{Float64}; method::Symbol, xtol::Float64, ftol::Float64, iterations::Int64, store_trace::Bool, show_trace::Bool, extended_trace::Bool, linesearch::LineSearches.Static, linsolve::NLsolve.var"#27#29", factor::Float64, autoscale::Bool, m::Int64, beta::Int64, aa_start::Int64, droptol::Float64)
+    @ NLsolve ~/.julia/packages/NLsolve/gJL1I/src/nlsolve/nlsolve.jl:23
+ [13] nlsolve(f::Function, initial_x::Vector{Float64}; method::Symbol, autodiff::Symbol, inplace::Bool, kwargs::Base.Pairs{Symbol, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
+    @ NLsolve ~/.julia/packages/NLsolve/gJL1I/src/nlsolve/nlsolve.jl:52
+ [14] top-level scope
+    @ In[17]:5
+ [15] eval
+    @ ./boot.jl:368 [inlined]
+ [16] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
+    @ Base ./loading.jl:1428
+LoadError: DimensionMismatch: 
+
