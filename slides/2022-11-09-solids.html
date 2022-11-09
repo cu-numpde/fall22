@@ -1,0 +1,1254 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-11-09 Solid Mechanics &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-11-07 Applied Finite Elements" href="2022-11-07-applied-fe.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-10-03 2D Advection-diffusion and waves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-05-factorization.html">
+     2022-10-05 Factorization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-07-linear-solvers.html">
+     2022-10-07 Linear Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-10-iterative.html">
+     2022-10-10 Iterative Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-12-krylov.html">
+     2022-10-12 Krylov and preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-14-preconditioning.html">
+     2022-10-14 Preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-17-multigrid.html">
+     2022-10-17 Multigrid
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-21-amg.html">
+     2022-10-21 AMG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-24-galerkin.html">
+     2022-10-24 Galerkin methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-26-fem.html">
+     2022-10-26 Finite Element Theory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-28-fem.html">
+     2022-10-28 Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-07-applied-fe.html">
+     2022-11-07 Applied Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-11-09 Solid Mechanics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-11-09-solids.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-11-09-solids.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-11-09-solids.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-09 Solid Mechanics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supg-dispersion-diagram-consistent">
+   SUPG dispersion diagram (consistent)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supg-dispersion-diagram-lumped">
+   SUPG dispersion diagram (lumped)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-element-interfaces-deal-ii">
+   Finite element interfaces: Deal.II
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-element-interfaces-moose">
+   Finite element interfaces: MOOSE
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#materials">
+     Materials
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#composition-in-configuration-files">
+     Composition in configuration files
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graphical-interface-peacock">
+     Graphical interface: Peacock
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#periodic-table-of-finite-elements">
+   Periodic table of finite elements
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#careful-choice-of-mixed-elements-allows-exactly-satisfying-discrete-identities">
+     Careful choice of mixed elements allows exactly satisfying discrete identities
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#h-1-poisson">
+     <span class="math notranslate nohighlight">
+      \(H^1\)
+     </span>
+     Poisson
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mixed-poisson">
+     Mixed Poisson
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problems-with-constraints">
+     Problems with constraints
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stokes-slow-incompressible-flow">
+     Stokes: (slow) incompressible flow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inf-sup-stability">
+     Inf-sup stability
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solid-mechanics-ratel-theory-guide">
+   Solid mechanics: Ratel Theory Guide
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#material-coordinates">
+     Material coordinates
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservation">
+     Conservation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mass-by-definition-of-density">
+       Mass by definition of density
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#momentum-by-equations-we-solve">
+       Momentum by equations we solve
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#angular-momentum-by-symmetry-of-stress-and-strain-tensors">
+       Angular momentum by symmetry of stress and strain tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-balance-in-initial-configuration">
+   Momentum balance in initial configuration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#strain-measures">
+   Strain measures
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#neo-hookean-model">
+     Neo-Hookean model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stable-evaluation">
+   Stable evaluation
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#paper-on-efficient-methods">
+     Paper on Efficient Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-11-09 Solid Mechanics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-09 Solid Mechanics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supg-dispersion-diagram-consistent">
+   SUPG dispersion diagram (consistent)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supg-dispersion-diagram-lumped">
+   SUPG dispersion diagram (lumped)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-element-interfaces-deal-ii">
+   Finite element interfaces: Deal.II
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finite-element-interfaces-moose">
+   Finite element interfaces: MOOSE
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#materials">
+     Materials
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#composition-in-configuration-files">
+     Composition in configuration files
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#graphical-interface-peacock">
+     Graphical interface: Peacock
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#periodic-table-of-finite-elements">
+   Periodic table of finite elements
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#careful-choice-of-mixed-elements-allows-exactly-satisfying-discrete-identities">
+     Careful choice of mixed elements allows exactly satisfying discrete identities
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#h-1-poisson">
+     <span class="math notranslate nohighlight">
+      \(H^1\)
+     </span>
+     Poisson
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mixed-poisson">
+     Mixed Poisson
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problems-with-constraints">
+     Problems with constraints
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stokes-slow-incompressible-flow">
+     Stokes: (slow) incompressible flow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inf-sup-stability">
+     Inf-sup stability
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solid-mechanics-ratel-theory-guide">
+   Solid mechanics: Ratel Theory Guide
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#material-coordinates">
+     Material coordinates
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservation">
+     Conservation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mass-by-definition-of-density">
+       Mass by definition of density
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#momentum-by-equations-we-solve">
+       Momentum by equations we solve
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#angular-momentum-by-symmetry-of-stress-and-strain-tensors">
+       Angular momentum by symmetry of stress and strain tensors
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-balance-in-initial-configuration">
+   Momentum balance in initial configuration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#strain-measures">
+   Strain measures
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#neo-hookean-model">
+     Neo-Hookean model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stable-evaluation">
+   Stable evaluation
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#paper-on-efficient-methods">
+     Paper on Efficient Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="solid-mechanics">
+<h1>2022-11-09 Solid Mechanics<a class="headerlink" href="#solid-mechanics" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Stabilized methods for transport</p>
+<ul>
+<li><p>VMS and SUPG</p></li>
+</ul>
+</li>
+<li><p>FE interfaces</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Mixed finite elements</p></li>
+<li><p>Intro to solid mechanics, Ratel</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">FastGaussQuadrature</span><span class="w"></span>
+<span class="k">import</span><span class="w"> </span><span class="n">NLsolve</span><span class="o">:</span><span class="w"> </span><span class="n">nlsolve</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">my_spy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">cmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">vec</span><span class="p">(</span><span class="n">A</span><span class="p">),</span><span class="w"> </span><span class="nb">Inf</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="mi">120</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="n">spy</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="p">(</span><span class="ss">:square</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="ss">:diverging_rainbow_bgymr_45_85_c67_n256</span><span class="p">,</span><span class="w"> </span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">cmax</span><span class="p">,</span><span class="w"> </span><span class="n">cmax</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">vander_legendre_deriv</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="nb">nothing</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">isnothing</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="c"># Square by default</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">Q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">dQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">Q</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
+<span class="w">    </span><span class="n">dQ</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">k</span><span class="o">-</span><span class="mi">2</span><span class="w"></span>
+<span class="w">        </span><span class="n">Q</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">Q</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">dQ</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Q</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dQ</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">n</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">dQ</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">febasis</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">quadrature</span><span class="o">=</span><span class="n">gausslegendre</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gausslobatto</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">quadrature</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">Pk</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vander_legendre_deriv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">Bp</span><span class="p">,</span><span class="w"> </span><span class="n">Dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vander_legendre_deriv</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Bp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Pk</span><span class="w"></span>
+<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Pk</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">fe1_mesh</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">nelem</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nelem</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Int</span><span class="p">[]</span><span class="w"></span>
+<span class="w">    </span><span class="n">cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Int</span><span class="p">[]</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">nelem</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">P</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">*</span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">P</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">*</span><span class="p">(</span><span class="n">P</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sparse</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">nelem</span><span class="o">*</span><span class="n">P</span><span class="p">))</span><span class="o">&#39;</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">xnodal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">xn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Float64</span><span class="p">[]</span><span class="w"></span>
+<span class="w">    </span><span class="n">xref</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gausslobatto</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">xL</span><span class="p">,</span><span class="w"> </span><span class="n">xR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">xn</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">xL</span><span class="o">+</span><span class="n">xR</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">xR</span><span class="o">-</span><span class="n">xL</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">xref</span><span class="p">[</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span><span class="k">end</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">xn</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="kt">FESpace</span><span class="w"></span>
+<span class="w">    </span><span class="n">P</span><span class="o">::</span><span class="kt">Int</span><span class="w"></span>
+<span class="w">    </span><span class="n">Q</span><span class="o">::</span><span class="kt">Int</span><span class="w"></span>
+<span class="w">    </span><span class="n">nelem</span><span class="o">::</span><span class="kt">Int</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">xn</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">Et</span><span class="o">::</span><span class="kt">SparseMatrixCSC</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="kt">Int64</span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">w</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">B</span><span class="o">::</span><span class="kt">Matrix</span><span class="w"></span>
+<span class="w">    </span><span class="n">D</span><span class="o">::</span><span class="kt">Matrix</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">FESpace</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">nelem</span><span class="p">,</span><span class="w"> </span><span class="n">quadrature</span><span class="o">=</span><span class="n">gausslegendre</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe1_mesh</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">nelem</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">xn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xnodal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">febasis</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">quadrature</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">new</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">nelem</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">xn</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="c"># Extract out what we need for element e</span><span class="w"></span>
+<span class="k">function</span><span class="w"> </span><span class="n">fe_element</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">xL</span><span class="p">,</span><span class="w"> </span><span class="n">xR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="o">:</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">xL</span><span class="o">+</span><span class="n">xR</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">xR</span><span class="o">-</span><span class="n">xL</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">fe</span><span class="o">.</span><span class="n">q</span><span class="w"></span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">xR</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xL</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">w</span><span class="w"></span>
+<span class="w">    </span><span class="n">E</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">Et</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">fe</span><span class="o">.</span><span class="n">P</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="n">e</span><span class="o">*</span><span class="n">fe</span><span class="o">.</span><span class="n">P</span><span class="p">]</span><span class="o">&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="n">dXdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">fe</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">xR</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xL</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="p">,</span><span class="w"> </span><span class="n">dXdx</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">fe_residual</span><span class="p">(</span><span class="n">u_in</span><span class="p">,</span><span class="w"> </span><span class="n">fe</span><span class="p">,</span><span class="w"> </span><span class="n">fq</span><span class="p">;</span><span class="w"> </span><span class="n">bci</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">bcv</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u_in</span><span class="p">);</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="p">[</span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcv</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">fe</span><span class="o">.</span><span class="n">nelem</span><span class="w"></span>
+<span class="w">        </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="p">,</span><span class="w"> </span><span class="n">dXdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe_element</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">D</span><span class="w"></span>
+<span class="w">        </span><span class="n">ue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="w">        </span><span class="n">uq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ue</span><span class="w"></span>
+<span class="w">        </span><span class="n">Duq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dXdx</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ue</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">f0</span><span class="p">,</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">uq</span><span class="p">,</span><span class="w"> </span><span class="n">Duq</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">ve</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">f0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">D</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">dXdx</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">f1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">v</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">E</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ve</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="p">[</span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_in</span><span class="p">[</span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">bci</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="c">#println(&quot;residual&quot;)</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">fe_jacobian</span><span class="p">(</span><span class="n">u_in</span><span class="p">,</span><span class="w"> </span><span class="n">fe</span><span class="p">,</span><span class="w"> </span><span class="n">dfq</span><span class="p">;</span><span class="w"> </span><span class="n">bci</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">bcv</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span><span class="p">])</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u_in</span><span class="p">);</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bcv</span><span class="w"></span>
+<span class="w">    </span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Int</span><span class="p">[],</span><span class="w"> </span><span class="kt">Int</span><span class="p">[],</span><span class="w"> </span><span class="kt">Float64</span><span class="p">[]</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">fe</span><span class="o">.</span><span class="n">nelem</span><span class="w"></span>
+<span class="w">        </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="p">,</span><span class="w"> </span><span class="n">dXdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe_element</span><span class="p">(</span><span class="n">fe</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">fe</span><span class="o">.</span><span class="n">P</span><span class="w"></span>
+<span class="w">        </span><span class="n">ue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="w">        </span><span class="n">uq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ue</span><span class="p">;</span><span class="w"> </span><span class="n">Duq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dXdx</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ue</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">fe</span><span class="o">.</span><span class="n">P</span><span class="w"></span>
+<span class="w">            </span><span class="n">du</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">Ddu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dXdx</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">df0</span><span class="p">,</span><span class="w"> </span><span class="n">df1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfq</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">uq</span><span class="p">,</span><span class="w"> </span><span class="n">du</span><span class="p">,</span><span class="w"> </span><span class="n">Duq</span><span class="p">,</span><span class="w"> </span><span class="n">Ddu</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">K</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">df0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">D</span><span class="o">&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">dXdx</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">df1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">inds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowvals</span><span class="p">(</span><span class="n">E</span><span class="o">&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">kron</span><span class="p">(</span><span class="n">ones</span><span class="p">(</span><span class="n">P</span><span class="p">),</span><span class="w"> </span><span class="n">inds</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">kron</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span><span class="w"> </span><span class="n">ones</span><span class="p">(</span><span class="n">P</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="n">append!</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">K</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sparse</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="n">vals</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">bci</span><span class="p">,</span><span class="w"> </span><span class="o">:</span><span class="p">]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">bci</span><span class="p">,</span><span class="n">bci</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diagm</span><span class="p">(</span><span class="n">ones</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">bci</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fe_jacobian (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="supg-dispersion-diagram-consistent">
+<h1>SUPG dispersion diagram (consistent)<a class="headerlink" href="#supg-dispersion-diagram-consistent" title="Permalink to this headline">#</a></h1>
+<p><a class="reference external" href="https://github.com/jeremylt/LFAToolkit.jl/">LFAToolkit.jl</a></p>
+<p><img alt="" src="../_images/supg-dispersion.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="supg-dispersion-diagram-lumped">
+<h1>SUPG dispersion diagram (lumped)<a class="headerlink" href="#supg-dispersion-diagram-lumped" title="Permalink to this headline">#</a></h1>
+<p><img alt="" src="../_images/supg-dispersion-lumped.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="finite-element-interfaces-deal-ii">
+<h1>Finite element interfaces: <a class="reference external" href="https://dealii.org">Deal.II</a><a class="headerlink" href="#finite-element-interfaces-deal-ii" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{gather*}
+    v^T F(u) \sim \int_\Omega v \cdot \color{olive}{f_0(u, \nabla u)} + \nabla v \!:\! \color{olive}{f_1(u, \nabla u)} \quad
+    v^T J w \sim \int_\Omega \begin{bmatrix} v \\ \nabla v \end{bmatrix}^T \color{teal}{\begin{bmatrix} f_{0,0} &amp; f_{0,1} \\ f_{1,0} &amp; f_{1,1} \end{bmatrix}}
+    \begin{bmatrix} w \\ \nabla w \end{bmatrix} \\
+    J w = \sum_e \mathcal E_e^T \underbrace{\begin{bmatrix} B_I \\ B_{\nabla} \end{bmatrix}^T
+    \begin{bmatrix} I &amp; \\ &amp; \left( \frac{\partial X}{\partial x}\right)^T \end{bmatrix}}_{\texttt{fe\_values}} W_q \color{teal}{\begin{bmatrix} f_{0,0} &amp; f_{0,1} \\ f_{1,0} &amp; f_{1,1} \end{bmatrix}} \underbrace{\begin{bmatrix} I &amp; \\ &amp; \left( \frac{\partial X}{\partial x}\right) \end{bmatrix} \begin{bmatrix} B_I \\ B_{\nabla} \end{bmatrix}}_{\texttt{fe\_values}} \mathcal E_e w_L
+\end{gather*}\]</div>
+<ul class="simple">
+<li><p>Deal.II <a class="reference external" href="https://dealii.org/developer/doxygen/deal.II/step_7.html">step-7</a></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+    <span class="n">fe_values</span><span class="o">.</span><span class="n">reinit</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">q_points</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">test_functions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">trial_functions</span>
+                <span class="n">K_e</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="o">...</span>
+            <span class="n">f_e</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="o">...</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">faces</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">at_boundary</span><span class="p">():</span>
+            <span class="n">fe_face_values</span><span class="o">.</span><span class="n">reinit</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">q_points</span><span class="p">:</span>
+                <span class="o">...</span>
+</pre></div>
+</div>
+<p><img alt="" src="https://dealii.org/images/wiki/gallery/Single_layer.jpeg" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="finite-element-interfaces-moose">
+<h1>Finite element interfaces: <a class="reference external" href="https://mooseframework.org/">MOOSE</a><a class="headerlink" href="#finite-element-interfaces-moose" title="Permalink to this headline">#</a></h1>
+<section id="materials">
+<h2><a class="reference external" href="https://mooseframework.inl.gov/modules/index.html">Materials</a><a class="headerlink" href="#materials" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Can be written without knowledge of finite elements</p></li>
+<li><p>Registration allows libraries of materials (some in MOOSE, others packaged separatle)</p></li>
+<li><p>Example: <a class="reference external" href="https://mooseframework.inl.gov/source/materials/crystal_plasticity/ComputeMultipleCrystalPlasticityStress.html">crystal plasticity</a></p></li>
+<li><p>Code is C++, so can do dirty things</p>
+<ul>
+<li><p>table lookups, proprietary code</p></li>
+<li><p>implicit materials (Newton solve at each quadrature point)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="composition-in-configuration-files">
+<h2>Composition in configuration files<a class="headerlink" href="#composition-in-configuration-files" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Add fields and coupling</p></li>
+<li><p>Select materials from libraries</p></li>
+<li><p>Multiphysics composition</p></li>
+<li><p>Multiscale coupling</p></li>
+</ul>
+</section>
+<section id="graphical-interface-peacock">
+<h2>Graphical interface: <a class="reference external" href="https://mooseframework.inl.gov/application_usage/peacock.html">Peacock</a><a class="headerlink" href="#graphical-interface-peacock" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="periodic-table-of-finite-elements">
+<h1><a class="reference external" href="https://www-users.cse.umn.edu/~arnold/femtable/index.html">Periodic table of finite elements</a><a class="headerlink" href="#periodic-table-of-finite-elements" title="Permalink to this headline">#</a></h1>
+<section id="careful-choice-of-mixed-elements-allows-exactly-satisfying-discrete-identities">
+<h2>Careful choice of mixed elements allows exactly satisfying discrete identities<a class="headerlink" href="#careful-choice-of-mixed-elements-allows-exactly-satisfying-discrete-identities" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ \nabla\cdot\nabla\times u = 0\]</div>
+<div class="math notranslate nohighlight">
+\[ \nabla\times\nabla u = 0\]</div>
+<ul class="simple">
+<li><p>Generalized concept: Finite Element Exterior Calculus (FEEC)</p></li>
+<li><p>Improved stability or numerical properties</p></li>
+<li><p>Higher order of accuracy for quantity of interest despite non-smooth problem</p></li>
+</ul>
+</section>
+<section id="h-1-poisson">
+<h2><span class="math notranslate nohighlight">\(H^1\)</span> Poisson<a class="headerlink" href="#h-1-poisson" title="Permalink to this headline">#</a></h2>
+<p>Find <span class="math notranslate nohighlight">\(p\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[\int \nabla q \cdot \kappa \nabla p = \int q f, \quad \forall q\]</div>
+</section>
+<section id="mixed-poisson">
+<h2>Mixed Poisson<a class="headerlink" href="#mixed-poisson" title="Permalink to this headline">#</a></h2>
+<p>Find <span class="math notranslate nohighlight">\(\mathbf u, p\)</span> such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-04214ec6-2059-45bc-b8ca-19f088adfbd5">
+<span class="eqno">(56)<a class="headerlink" href="#equation-04214ec6-2059-45bc-b8ca-19f088adfbd5" title="Permalink to this equation">#</a></span>\[\begin{align}
+\int \mathbf v \cdot \kappa^{-1} \mathbf u - p \nabla\cdot \mathbf v &amp;= 0 &amp; \forall \mathbf v \\
+\int -q \nabla\cdot \mathbf u &amp;= -\int q f &amp; \forall q
+\end{align}\]</div>
+<p>Dirichlet (essential) and Neumann (natural) boundary conditions are swapped, and we get a “saddle point” linear problem
+$$\begin{pmatrix} M &amp; B^T \ B &amp; 0 \end{pmatrix} \begin{pmatrix} \mathbf u \ p \end{pmatrix} =</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a8227bb3-0d98-44c4-8e8e-5b2f7d6edd2a">
+<span class="eqno">(57)<a class="headerlink" href="#equation-a8227bb3-0d98-44c4-8e8e-5b2f7d6edd2a" title="Permalink to this equation">#</a></span>\[\begin{pmatrix} 0 \\ -f \end{pmatrix}\]</div>
+<p>$<span class="math notranslate nohighlight">\(
+With appropriate choice of spaces, \)</span>p,q<span class="math notranslate nohighlight">\( can live in a piecewise constant space while attaining second order accuracy in the fluxes \)</span>\mathbf u$.</p>
+</section>
+<section id="problems-with-constraints">
+<h2>Problems with constraints<a class="headerlink" href="#problems-with-constraints" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="stokes-slow-incompressible-flow">
+<h2>Stokes: (slow) incompressible flow<a class="headerlink" href="#stokes-slow-incompressible-flow" title="Permalink to this headline">#</a></h2>
+<p>Find velocity <span class="math notranslate nohighlight">\(\mathbf u\)</span> and pressure <span class="math notranslate nohighlight">\(p\)</span> such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-17c320ac-7bf0-4ab7-be97-287681700867">
+<span class="eqno">(58)<a class="headerlink" href="#equation-17c320ac-7bf0-4ab7-be97-287681700867" title="Permalink to this equation">#</a></span>\[\begin{align}
+-\nabla\cdot(\eta \nabla^s \mathbf u - pI) &amp;= 0 \\
+\nabla\cdot \mathbf u &amp;= 0
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nabla^s \mathbf u\)</span> is the symmetric part of the <span class="math notranslate nohighlight">\(3\times 3\)</span> gradient <span class="math notranslate nohighlight">\(\nabla \mathbf u\)</span>.</p>
+<p>Weak form: find <span class="math notranslate nohighlight">\((\mathbf u, p)\)</span> such that
+<div class="math notranslate nohighlight">
+\[ \int \nabla^s \mathbf v \!:\! \eta \!:\! \nabla^s \mathbf u - p \nabla\cdot \mathbf v - q \nabla\cdot \mathbf u = 0, \quad \forall (\mathbf v, q)\]</div>
+</p>
+</section>
+<section id="inf-sup-stability">
+<h2>Inf-sup stability<a class="headerlink" href="#inf-sup-stability" title="Permalink to this headline">#</a></h2>
+<p>For this problem to be well posed, it is necessary that the divergence of velocity spans the pressure space “nicely”. This is quantified by the “inf-sup constant” (aka. <a class="reference external" href="https://en.wikipedia.org/wiki/Ladyzhenskaya%E2%80%93Babu%C5%A1ka%E2%80%93Brezzi_condition">Ladyzhenskaya–Babuška–Brezzi</a> constant)</p>
+<div class="math notranslate nohighlight">
+\[\beta = \inf_{\lVert p \rVert =1} \sup_{\mathbf u \ne 0} \frac{\int p \nabla\cdot \mathbf u}{\int \nabla^s \mathbf u \!:\! \eta \!:\! \nabla^s \mathbf u}\]</div>
+<p>The method loses accuracy if <span class="math notranslate nohighlight">\(\beta\)</span> decays: you want it to stay of order 1 uniformly. Stability can be quantified numerically <a class="reference external" href="https://web.mit.edu/kjb/www/Publications_Prior_to_1998/The_Inf-Sup_Test.pdf">by solving an eigenvalue problem (1993)</a>. This short paper has many figures quantifying stable and unstable elements.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="solid-mechanics-ratel-theory-guide">
+<h1>Solid mechanics: <a class="reference external" href="https://ratel.micromorph.org/doc/modeling/continuum-mechanics/balance-laws/">Ratel Theory Guide</a><a class="headerlink" href="#solid-mechanics-ratel-theory-guide" title="Permalink to this headline">#</a></h1>
+<section id="material-coordinates">
+<h2>Material coordinates<a class="headerlink" href="#material-coordinates" title="Permalink to this headline">#</a></h2>
+<p>The current configuration <span class="math notranslate nohighlight">\(x\)</span> is a function of the initial configuration <span class="math notranslate nohighlight">\(X\)</span>. We typically solve for displacement <span class="math notranslate nohighlight">\(u = x - X\)</span>, and define the <strong>deformation gradient</strong>
+<div class="math notranslate nohighlight">
+\[ F = \frac{\partial x}{\partial X} = I + \underbrace{\frac{\partial u}{\partial 
+X}}_H\]</div>
+
+where <span class="math notranslate nohighlight">\(H\)</span> is known as <strong>displacement gradient</strong>.</p>
+</section>
+<section id="conservation">
+<h2>Conservation<a class="headerlink" href="#conservation" title="Permalink to this headline">#</a></h2>
+<section id="mass-by-definition-of-density">
+<h3>Mass by definition of density<a class="headerlink" href="#mass-by-definition-of-density" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="momentum-by-equations-we-solve">
+<h3>Momentum by equations we solve<a class="headerlink" href="#momentum-by-equations-we-solve" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="angular-momentum-by-symmetry-of-stress-and-strain-tensors">
+<h3>Angular momentum by symmetry of stress and strain tensors<a class="headerlink" href="#angular-momentum-by-symmetry-of-stress-and-strain-tensors" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="momentum-balance-in-initial-configuration">
+<h1>Momentum balance in initial configuration<a class="headerlink" href="#momentum-balance-in-initial-configuration" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[\nabla\cdot \mathbf F \mathbf S = 0\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf F = I + H\)</span> and <span class="math notranslate nohighlight">\(\mathbf S\)</span> is the symmetric stress tensor (Second Piola-Kirchhoff tensor).</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="strain-measures">
+<h1>Strain measures<a class="headerlink" href="#strain-measures" title="Permalink to this headline">#</a></h1>
+<p>Stress <span class="math notranslate nohighlight">\(\mathbf S\)</span> must be defined as a function of displacement. A common choice is to define the <strong>right Cauchy-Green tensor</strong></p>
+<div class="math notranslate nohighlight">
+\[ C = F^T F\]</div>
+<p>This has value <span class="math notranslate nohighlight">\(I\)</span> for zero strain. A better formulation uses</p>
+<div class="math notranslate nohighlight">
+\[ E = \frac 1 2 (C - I) = \underbrace{\frac 1 2 (H + H^T + H^T H)}_{\text{stable}}\]</div>
+<section id="neo-hookean-model">
+<h2><a class="reference external" href="https://ratel.micromorph.org/doc/modeling/models/neo-hookean/">Neo-Hookean model</a><a class="headerlink" href="#neo-hookean-model" title="Permalink to this headline">#</a></h2>
+<p>Strain energy density
+\begin{aligned}
+\psi \left(\mathbf{E} \right) &amp;= \frac{\lambda}{2} \left( \log J \right)^2 - \mu \log J + \frac \mu 2 \left( \operatorname{trace} \mathbf{C} - 3 \right) \
+&amp;= \frac{\lambda}{2} \left( \log J \right)^2 - \mu \log J + \mu \operatorname{trace} \mathbf{E},
+\end{aligned}</p>
+<div class="math notranslate nohighlight">
+\[\mathbf S = \frac{\partial \psi}{\partial \mathbf E}\]</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stable-evaluation">
+<h1>Stable evaluation<a class="headerlink" href="#stable-evaluation" title="Permalink to this headline">#</a></h1>
+<img src="img/nh-initial-stable.svg" width="70%" /><section id="paper-on-efficient-methods">
+<h2><a class="reference external" href="https://arxiv.org/abs/2204.01722">Paper on Efficient Methods</a><a class="headerlink" href="#paper-on-efficient-methods" title="Permalink to this headline">#</a></h2>
+<img src="img/op_schematic.svg" width="80%" /></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-11-07-applied-fe.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-11-07 Applied Finite Elements</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
