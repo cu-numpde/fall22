@@ -550,6 +550,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#quasi-newton-methods-bfgs">
    Quasi-Newton methods (BFGS)
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton">
+     Newton
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quasi-newton">
+     Quasi-Newton
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#solids-efficient-matrix-free-jacobians">
@@ -637,6 +649,18 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#quasi-newton-methods-bfgs">
    Quasi-Newton methods (BFGS)
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton">
+     Newton
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quasi-newton">
+     Quasi-Newton
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#solids-efficient-matrix-free-jacobians">
@@ -747,8 +771,6 @@ title="Print to PDF"
 \[J_{k+1}^{-1} = \left(I - \frac{s_k z_k^T}{s_k^T z_k}\right)                                                                                                           J_k^{-1} \left(I - \frac{s_k z_k^T}{s_k^T z_k}\right) + \frac{s_k s_k^T}{s_k^T z_k}\]</div>
 </p></li>
 <li><p>BFGS is equivalent to conjugate gradients for a linear problem.</p></li>
-</ul>
-<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-snes_type</span> <span class="pre">qn</span> <span class="pre">-snes_qn_scale_type</span> <span class="pre">jacobian</span></code></p>
 <ul>
 <li><p>This uses an iterative solve for <span class="math notranslate nohighlight">\(J_0\)</span></p></li>
@@ -756,6 +778,21 @@ title="Print to PDF"
 </li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">-ksp_type</span> <span class="pre">preonly</span></code> (skip the iterative solve)</p></li>
 </ul>
+<section id="newton">
+<h2>Newton<a class="headerlink" href="#newton" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Good diagnostics because we can tighten linear solve independent from nonlinear.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ksp_converged_reason</span> <span class="pre">-ksp_view_singularvalues</span></code></p></li>
+<li><p>Are we “over-solving”; see <code class="docutils literal notranslate"><span class="pre">-snes_ksp_ew</span></code> to automatically adjust during convergence</p></li>
+</ul>
+</section>
+<section id="quasi-newton">
+<h2>Quasi-Newton<a class="headerlink" href="#quasi-newton" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fewer Jacobian assemblies and preconditioner setups</p></li>
+<li><p>Maybe fewer linear solve iterations (automatically avoids over-solving)</p></li>
+</ul>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="solids-efficient-matrix-free-jacobians">
 <h1>Solids: efficient matrix-free Jacobians<a class="headerlink" href="#solids-efficient-matrix-free-jacobians" title="Permalink to this headline">#</a></h1>
@@ -767,7 +804,7 @@ title="Print to PDF"
 <section class="tex2jax_ignore mathjax_ignore" id="suggestions-use-ts-view-and-log-view">
 <h1>Suggestions (use <code class="docutils literal notranslate"><span class="pre">-ts_view</span></code> and <code class="docutils literal notranslate"><span class="pre">-log_view</span></code>)<a class="headerlink" href="#suggestions-use-ts-view-and-log-view" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>Change from initial to current configuration</p></li>
+<li><p>Change from <code class="docutils literal notranslate"><span class="pre">initial</span></code> to <code class="docutils literal notranslate"><span class="pre">current</span></code> configuration</p></li>
 </ul>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git grep model: examples/*.yml
 </pre></div>
@@ -776,15 +813,22 @@ title="Print to PDF"
 <li><p>Try assembling and using AMG directly (instead of p-MG first): <code class="docutils literal notranslate"><span class="pre">-multigrid</span> <span class="pre">amg_only</span></code></p>
 <ul>
 <li><p>And try a direct solve: <code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">cholesky</span></code></p></li>
+<li><p>Try using one-level domain decomposition <code class="docutils literal notranslate"><span class="pre">-pc_type</span> <span class="pre">bjacobi</span></code> or <code class="docutils literal notranslate"><span class="pre">asm</span></code></p></li>
+<li><p>What is the marginal cost of p-refinement (<code class="docutils literal notranslate"><span class="pre">-order</span></code>) versus h-refinement (see <code class="docutils literal notranslate"><span class="pre">tps</span></code> <code class="docutils literal notranslate"><span class="pre">refine</span></code> and <code class="docutils literal notranslate"><span class="pre">layers</span></code>)?</p></li>
+<li><p>Relative benefit of quasi-Newton?</p></li>
 </ul>
 </li>
-<li><p>How does thickness affect solve cost? Edit the input file or override from command line.</p></li>
+<li><p>How does thickness affect solve cost? What about Poisson ratio <code class="docutils literal notranslate"><span class="pre">nu</span></code>? (Edit the input file or override from command line.)</p></li>
 </ul>
 <ul class="simple">
 <li><p>Visualization (if you have Paraview)</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">-ts_monitor_solution</span> <span class="pre">cgns:sol.cgns</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-view_diagnostic_quantities</span> <span class="pre">vtk:diagnostic.vtu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ts_monitor_solution</span> <span class="pre">cgns:sol.cgns</span></code> (just stores displacement at each time step)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-ts_monitor_diagnostic_quantities</span> <span class="pre">cgns:diag.cgns</span></code> (lots of diagnostic fields)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-view_diagnostic_quantities</span> <span class="pre">vtk:diagnostic.vtu</span></code> (only at the final time)</p></li>
+<li><p>For CGNS: load <code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">Arrays</span></code> (lower left sidebar) and <code class="docutils literal notranslate"><span class="pre">Apply</span></code> after opening file.</p></li>
+<li><p>“Warp by Vector” (Control-Space to search by name, or use <code class="docutils literal notranslate"><span class="pre">Filters-&gt;Common</span></code> menu)</p></li>
+<li><p><em>von Mises stress</em> is an indicator for plastic yield (elasticity no longer valid)</p></li>
 </ul>
 </li>
 </ul>
