@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-11-11 Ratel for Solid Mechanics" href="2022-11-11-ratel.html" />
     <link rel="prev" title="2022-11-07 Applied Finite Elements" href="2022-11-07-applied-fe.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -274,6 +275,16 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-11-09 Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-11-ratel.html">
+     2022-11-11 Ratel for Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-14-solvers.html">
+     2022-11-14 Ratel Hands-on
     </a>
    </li>
   </ul>
@@ -1099,15 +1110,15 @@ title="Print to PDF"
 <section id="mixed-poisson">
 <h2>Mixed Poisson<a class="headerlink" href="#mixed-poisson" title="Permalink to this headline">#</a></h2>
 <p>Find <span class="math notranslate nohighlight">\(\mathbf u, p\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-04214ec6-2059-45bc-b8ca-19f088adfbd5">
-<span class="eqno">(56)<a class="headerlink" href="#equation-04214ec6-2059-45bc-b8ca-19f088adfbd5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb3ac0bf-8c5d-4c03-b46c-d743000ba283">
+<span class="eqno">(56)<a class="headerlink" href="#equation-fb3ac0bf-8c5d-4c03-b46c-d743000ba283" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int \mathbf v \cdot \kappa^{-1} \mathbf u - p \nabla\cdot \mathbf v &amp;= 0 &amp; \forall \mathbf v \\
 \int -q \nabla\cdot \mathbf u &amp;= -\int q f &amp; \forall q
 \end{align}\]</div>
 <p>Dirichlet (essential) and Neumann (natural) boundary conditions are swapped, and we get a “saddle point” linear problem
 $$\begin{pmatrix} M &amp; B^T \ B &amp; 0 \end{pmatrix} \begin{pmatrix} \mathbf u \ p \end{pmatrix} =</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8227bb3-0d98-44c4-8e8e-5b2f7d6edd2a">
-<span class="eqno">(57)<a class="headerlink" href="#equation-a8227bb3-0d98-44c4-8e8e-5b2f7d6edd2a" title="Permalink to this equation">#</a></span>\[\begin{pmatrix} 0 \\ -f \end{pmatrix}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-b66a9a8e-ad76-400a-9efe-f015142521a1">
+<span class="eqno">(57)<a class="headerlink" href="#equation-b66a9a8e-ad76-400a-9efe-f015142521a1" title="Permalink to this equation">#</a></span>\[\begin{pmatrix} 0 \\ -f \end{pmatrix}\]</div>
 <p>$<span class="math notranslate nohighlight">\(
 With appropriate choice of spaces, \)</span>p,q<span class="math notranslate nohighlight">\( can live in a piecewise constant space while attaining second order accuracy in the fluxes \)</span>\mathbf u$.</p>
 </section>
@@ -1117,8 +1128,8 @@ With appropriate choice of spaces, \)</span>p,q<span class="math notranslate noh
 <section id="stokes-slow-incompressible-flow">
 <h2>Stokes: (slow) incompressible flow<a class="headerlink" href="#stokes-slow-incompressible-flow" title="Permalink to this headline">#</a></h2>
 <p>Find velocity <span class="math notranslate nohighlight">\(\mathbf u\)</span> and pressure <span class="math notranslate nohighlight">\(p\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17c320ac-7bf0-4ab7-be97-287681700867">
-<span class="eqno">(58)<a class="headerlink" href="#equation-17c320ac-7bf0-4ab7-be97-287681700867" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bede0dc1-21c3-4656-a40b-6c72adf1298c">
+<span class="eqno">(58)<a class="headerlink" href="#equation-bede0dc1-21c3-4656-a40b-6c72adf1298c" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\nabla\cdot(\eta \nabla^s \mathbf u - pI) &amp;= 0 \\
 \nabla\cdot \mathbf u &amp;= 0
 \end{align}\]</div>
@@ -1225,6 +1236,13 @@ where <span class="math notranslate nohighlight">\(H\)</span> is known as <stron
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-11-07 Applied Finite Elements</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-11-11-ratel.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-11-11 Ratel for Solid Mechanics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
