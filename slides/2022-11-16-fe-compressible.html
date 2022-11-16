@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-11-16 FE for Compressible flow &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-11-14 Ratel Hands-on" href="2022-11-14-solvers.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-10-03 2D Advection-diffusion and waves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-05-factorization.html">
+     2022-10-05 Factorization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-07-linear-solvers.html">
+     2022-10-07 Linear Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-10-iterative.html">
+     2022-10-10 Iterative Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-12-krylov.html">
+     2022-10-12 Krylov and preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-14-preconditioning.html">
+     2022-10-14 Preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-17-multigrid.html">
+     2022-10-17 Multigrid
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-21-amg.html">
+     2022-10-21 AMG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-24-galerkin.html">
+     2022-10-24 Galerkin methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-26-fem.html">
+     2022-10-26 Finite Element Theory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-28-fem.html">
+     2022-10-28 Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-07-applied-fe.html">
+     2022-11-07 Applied Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-09-solids.html">
+     2022-11-09 Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-11-ratel.html">
+     2022-11-11 Ratel for Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-14-solvers.html">
+     2022-11-14 Ratel Hands-on
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-11-16 FE for Compressible flow
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-11-16-fe-compressible.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-11-16-fe-compressible.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-11-16-fe-compressible.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-16 FE for Compressible flow
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-of-mass-momentum-and-energy">
+   Conservation of mass, momentum, and energy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choice-of-variables">
+   Choice of variables
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acoustic-wave-speed">
+     Acoustic wave speed
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mach-number">
+     Mach number
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#primitive-variables">
+     Primitive variables
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#blasius-profile-thanks-leila-ghaffari">
+     Blasius profile (thanks, Leila Ghaffari)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stabilization">
+   Stabilization
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-integration">
+   Time integration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-on-alpine">
+   Running on Alpine
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-in-docker">
+     Running in Docker
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-11-16 FE for Compressible flow</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-16 FE for Compressible flow
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-of-mass-momentum-and-energy">
+   Conservation of mass, momentum, and energy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#choice-of-variables">
+   Choice of variables
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acoustic-wave-speed">
+     Acoustic wave speed
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mach-number">
+     Mach number
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#primitive-variables">
+     Primitive variables
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#blasius-profile-thanks-leila-ghaffari">
+     Blasius profile (thanks, Leila Ghaffari)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stabilization">
+   Stabilization
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-integration">
+   Time integration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-on-alpine">
+   Running on Alpine
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-in-docker">
+     Running in Docker
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="fe-for-compressible-flow">
+<h1>2022-11-16 FE for Compressible flow<a class="headerlink" href="#fe-for-compressible-flow" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Solver diagnostics</p></li>
+<li><p>Reading profiles</p></li>
+<li><p>Amortizing costs</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Equations</p>
+<ul>
+<li><p>Conservation</p></li>
+<li><p>Choice of variables</p></li>
+</ul>
+</li>
+<li><p>SUPG stabilization</p></li>
+<li><p>Solvers</p></li>
+<li><p>Boundary conditions</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">SparseArrays</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="conservation-of-mass-momentum-and-energy">
+<h1>Conservation of mass, momentum, and energy<a class="headerlink" href="#conservation-of-mass-momentum-and-energy" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \bm{q}}{\partial t} + \nabla \cdot \bm{F}(\bm{q}) -S(\bm{q}) = 0\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bm{q} =        \begin{pmatrix}            \rho \\             \rho \bm{ u }\\            E \equiv \rho e        \end{pmatrix}        \begin{array}{l}            \leftarrow\textrm{ volume mass density}\\            \leftarrow\textrm{ momentum density}\\            \leftarrow\textrm{ energy density}        \end{array}\end{split}\]</div>
+<ul class="simple">
+<li><p>Equation of state</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-c22c2847-2904-42ab-8cc5-f3e1f83539cc">
+<span class="eqno">(59)<a class="headerlink" href="#equation-c22c2847-2904-42ab-8cc5-f3e1f83539cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+P &amp;= \Big(\underbrace{\frac{c_p}{c_v}}_{\gamma} - 1\Big)\underbrace{\left(E - \frac\rho 2 \bm u \cdot \bm u - \rho g z \right)}_{\rho e_{\text{internal}}} \\
+T &amp;= e_{\text{internal}} / c_v
+\end{align}\]</div>
+<p>\begin{aligned}
+\bm{F}(\bm{q}) &amp;=
+\underbrace{\begin{pmatrix}
+\rho\bm{u}\
+{\rho \bm{u} \otimes \bm{u}} + P \bm{I}<em>3 \
+{(E + P)\bm{u}}
+\end{pmatrix}}</em>{\bm F_{\text{adv}}} +
+\underbrace{\begin{pmatrix}
+0 \</p>
+<ul>
+<li><p>\bm{\sigma} \</p></li>
+<li><p>\bm{u}  \cdot \bm{\sigma} - k \nabla T
+\end{pmatrix}}<em>{\bm F</em>{\text{diff}}},\
+S(\bm{q}) &amp;=</p></li>
+<li><div class="amsmath math notranslate nohighlight" id="equation-93fbf1f0-ae13-4a54-8bba-1a7c816d427d">
+<span class="eqno">(60)<a class="headerlink" href="#equation-93fbf1f0-ae13-4a54-8bba-1a7c816d427d" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
+    0\\
+    \rho g \bm{\hat{k}}\\
+    0
+\end{pmatrix}\]</div>
+</li>
+</ul>
+<p>\end{aligned}</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="choice-of-variables">
+<h1>Choice of variables<a class="headerlink" href="#choice-of-variables" title="Permalink to this headline">#</a></h1>
+<section id="acoustic-wave-speed">
+<h2>Acoustic wave speed<a class="headerlink" href="#acoustic-wave-speed" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[a = \sqrt{c_p(\gamma - 1) T}\]</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>material</p></th>
+<th class="head"><p>speed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>air</p></td>
+<td><p>340 m/s</p></td>
+</tr>
+<tr class="row-odd"><td><p>water</p></td>
+<td><p>1500 m/s</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mach-number">
+<h2>Mach number<a class="headerlink" href="#mach-number" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\mathrm{Ma} = \frac{a}{\lVert \bm u \rVert}\]</div>
+</section>
+<section id="primitive-variables">
+<h2>Primitive variables<a class="headerlink" href="#primitive-variables" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}\bm y = \begin{pmatrix} P \\ \bm u \\ T \end{pmatrix}\end{split}\]</div>
+<p>Using the equation of state, we can write
+<span class="math notranslate nohighlight">\(\bm y(\bm q)\)</span> or <span class="math notranslate nohighlight">\(\bm q(\bm y)\)</span>. But these transformations are <strong>ill conditioned for <span class="math notranslate nohighlight">\(\mathrm{Ma} \ll 1\)</span></strong>.</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial \bm q}{\partial t} = \frac{\partial \bm q}{\partial \bm y} \frac{\partial \bm y}{\partial t}\]</div>
+</section>
+<section id="blasius-profile-thanks-leila-ghaffari">
+<h2>Blasius profile (thanks, Leila Ghaffari)<a class="headerlink" href="#blasius-profile-thanks-leila-ghaffari" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Take an analytic Blasius profile.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Primitive</span></code>: Write <span class="math notranslate nohighlight">\(\bm y\)</span> in a piecewise linear space with nodally exact values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Conservative</span></code>: Write <span class="math notranslate nohighlight">\(\bm q\)</span> in a piecewise linear space with nodally exact values.</p></li>
+</ul>
+<img src="../img/Temperature_p1.png" /><img src="../img/Temperature_p2.png" /></section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="stabilization">
+<h1>Stabilization<a class="headerlink" href="#stabilization" title="Permalink to this headline">#</a></h1>
+<div class="amsmath math notranslate nohighlight" id="equation-75d5a5fa-7dbc-4a7c-bec5-606ef097b139">
+<span class="eqno">(61)<a class="headerlink" href="#equation-75d5a5fa-7dbc-4a7c-bec5-606ef097b139" title="Permalink to this equation">#</a></span>\[\begin{align}
+  \int_{\Omega} \bm v \cdot \left( \frac{\partial \bm{q}}{\partial t} - \bm{S}(\bm{y}) \right)  \,dV
+  - \int_{\Omega} \nabla \bm v \!:\! \bm{F}(\bm{y})\,dV &amp; \\
+  + \int_{\partial \Omega} \bm v \cdot \bm{F}(\bm{y}) \cdot \widehat{\bm{n}} \,dS &amp; \\
+  + \int_{\Omega} \nabla \bm v : \frac{\partial \bm F_{\text{adv}}}{\partial \bm q} \bm \tau \left( \frac{\partial \bm{q}}{\partial t} \, + \,
+  \nabla \cdot \bm{F} \, (\bm{y}) - \bm{S}(\bm{y}) \right) \,dV &amp;= 0
+\end{align}\]</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="time-integration">
+<h1>Time integration<a class="headerlink" href="#time-integration" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Fully implicit <span class="math notranslate nohighlight">\(G(t, \bm y, \dot{\bm y}) = 0\)</span> with generalized alpha.</p></li>
+<li><p>Newton method, usually about 3 iterations per time step.</p></li>
+<li><p>Krylov method</p>
+<ul>
+<li><p>GMRES when using a strong preconditioner</p>
+<ul>
+<li><p>Block Jacobi/incomplete LU</p></li>
+</ul>
+</li>
+<li><p>BCGS(<span class="math notranslate nohighlight">\(\ell\)</span>) with a weak preconditioner</p>
+<ul>
+<li><p>Point-block Jacobi</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="running-on-alpine">
+<h1>Running on Alpine<a class="headerlink" href="#running-on-alpine" title="Permalink to this headline">#</a></h1>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh login.rc.colorado.edu
+<span class="go">rc$ module load slurm/alpine</span>
+<span class="go">rc$ acompile</span>
+<span class="go">acompile$ . /projects/jeka2967/activate.bash</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git clone <span class="se">\</span>
+    https://github.com/CEED/libCEED
+<span class="gp">$ </span><span class="nb">cd</span> libCEED/examples/fluids
+<span class="gp">$ </span>make
+<span class="gp">$ </span>mpiexec -n <span class="m">1</span> ./navierstokes <span class="se">\</span>
+    -options_file FILE.yaml
+</pre></div>
+</div>
+<section id="running-in-docker">
+<h2>Running in Docker<a class="headerlink" href="#running-in-docker" title="Permalink to this headline">#</a></h2>
+<p>Clone the <code class="docutils literal notranslate"><span class="pre">libCEED</span></code> repository and <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">libCEED/examples/fluids</span></code></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">host$ docker run -it --rm -v $(pwd):/work registry.gitlab.com/micromorph/ratel</span>
+<span class="gp">$ </span>make
+<span class="gp">$ </span>mpiexec -n <span class="m">2</span> ./navierstokes -options_file FILE.yaml
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-11-14-solvers.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-11-14 Ratel Hands-on</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
