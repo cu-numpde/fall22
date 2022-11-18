@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2022-11-16 FE for Compressible flow &#8212; Numerical Solution of Partial Differential Equations</title>
+    <title>2022-11-18 CEED Fluids &#8212; Numerical Solution of Partial Differential Equations</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,8 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2022-11-18 FE for Compressible flow" href="2022-11-18-ceed-fluids.html" />
-    <link rel="prev" title="2022-11-14 Ratel Hands-on" href="2022-11-14-solvers.html" />
+    <link rel="prev" title="2022-11-16 FE for Compressible flow" href="2022-11-16-fe-compressible.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -287,14 +286,14 @@ const thebe_selector_output = ".output, .cell_output"
      2022-11-14 Ratel Hands-on
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-16-fe-compressible.html">
      2022-11-16 FE for Compressible flow
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="2022-11-18-ceed-fluids.html">
-     2022-11-18 FE for Compressible flow
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-11-18 CEED Fluids
     </a>
    </li>
   </ul>
@@ -358,7 +357,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-11-16-fe-compressible.ipynb"
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-11-18-ceed-fluids.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -436,7 +435,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-11-16-fe-compressible.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-11-18-ceed-fluids.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -464,7 +463,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/slides/2022-11-16-fe-compressible.ipynb"
+        <a href="../_sources/slides/2022-11-18-ceed-fluids.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -525,7 +524,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-11-16 FE for Compressible flow
+   2022-11-18 CEED Fluids
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -580,6 +579,80 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-integration">
    Time integration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-conditions-ref-mengaldo-et-al-2014">
+   Boundary conditions (ref: Mengaldo et al (2014))
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-conditions">
+   Boundary conditions
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#symmetry-free-slip">
+     Symmetry (free slip)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#wall-no-slip">
+     Wall (no-slip)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#freestream-boundaries">
+     Freestream boundaries
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viscous-inflow">
+     Viscous inflow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viscous-outflow">
+     Viscous outflow
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence-to-steady-state-from-mengaldo">
+   Convergence to steady state (from Mengaldo)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#freestream-wave-test-problem">
+   Freestream wave test problem
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hll">
+     HLL
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hllc">
+     HLLC
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#open-problem">
+   Open Problem:
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turbulent-viscous-inflow-and-outflow-with-non-reflecting-boundary-conditions">
+   Turbulent viscous inflow and outflow with non-reflecting boundary conditions.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-layers-for-turbulent-flow">
+   Boundary layers for turbulent flow
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -603,7 +676,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>2022-11-16 FE for Compressible flow</h1>
+                <h1>2022-11-18 CEED Fluids</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -615,7 +688,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   2022-11-16 FE for Compressible flow
+   2022-11-18 CEED Fluids
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -670,6 +743,80 @@ title="Print to PDF"
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-integration">
    Time integration
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-conditions-ref-mengaldo-et-al-2014">
+   Boundary conditions (ref: Mengaldo et al (2014))
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-conditions">
+   Boundary conditions
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#symmetry-free-slip">
+     Symmetry (free slip)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#wall-no-slip">
+     Wall (no-slip)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#freestream-boundaries">
+     Freestream boundaries
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viscous-inflow">
+     Viscous inflow
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viscous-outflow">
+     Viscous outflow
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence-to-steady-state-from-mengaldo">
+   Convergence to steady state (from Mengaldo)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#freestream-wave-test-problem">
+   Freestream wave test problem
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hll">
+     HLL
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hllc">
+     HLLC
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#open-problem">
+   Open Problem:
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turbulent-viscous-inflow-and-outflow-with-non-reflecting-boundary-conditions">
+   Turbulent viscous inflow and outflow with non-reflecting boundary conditions.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boundary-layers-for-turbulent-flow">
+   Boundary layers for turbulent flow
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -694,18 +841,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="fe-for-compressible-flow">
-<h1>2022-11-16 FE for Compressible flow<a class="headerlink" href="#fe-for-compressible-flow" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="ceed-fluids">
+<h1>2022-11-18 CEED Fluids<a class="headerlink" href="#ceed-fluids" title="Permalink to this headline">#</a></h1>
 <section id="last-time">
 <h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Solver diagnostics</p></li>
-<li><p>Reading profiles</p></li>
-<li><p>Amortizing costs</p></li>
-</ul>
-</section>
-<section id="today">
-<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Equations</p>
 <ul>
@@ -714,6 +853,11 @@ title="Print to PDF"
 </ul>
 </li>
 <li><p>SUPG stabilization</p></li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
 <li><p>Solvers</p></li>
 <li><p>Boundary conditions</p></li>
 </ul>
@@ -732,14 +876,14 @@ title="Print to PDF"
 <section class="tex2jax_ignore mathjax_ignore" id="conservation-of-mass-momentum-and-energy">
 <h1>Conservation of mass, momentum, and energy<a class="headerlink" href="#conservation-of-mass-momentum-and-energy" title="Permalink to this headline">#</a></h1>
 <div class="math notranslate nohighlight">
-\[\frac{\partial \bm{q}}{\partial t} + \nabla \cdot \bm{F}(\bm{q}) -S(\bm{q}) = 0\]</div>
+\[\newcommand{\bm}{\mathbf} \frac{\partial \bm{q}}{\partial t} + \nabla \cdot \bm{F}(\bm{q}) -S(\bm{q}) = 0\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\bm{q} =        \begin{pmatrix}            \rho \\             \rho \bm{ u }\\            E \equiv \rho e        \end{pmatrix}        \begin{array}{l}            \leftarrow\textrm{ volume mass density}\\            \leftarrow\textrm{ momentum density}\\            \leftarrow\textrm{ energy density}        \end{array}\end{split}\]</div>
 <ul class="simple">
 <li><p>Equation of state</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-c8015e55-ccd9-4f49-9494-fad3b59fadaa">
-<span class="eqno">(59)<a class="headerlink" href="#equation-c8015e55-ccd9-4f49-9494-fad3b59fadaa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4c5b696-7627-4c1e-bcb5-09a50b1747d8">
+<span class="eqno">(62)<a class="headerlink" href="#equation-e4c5b696-7627-4c1e-bcb5-09a50b1747d8" title="Permalink to this equation">#</a></span>\[\begin{align}
 P &amp;= \Big(\underbrace{\frac{c_p}{c_v}}_{\gamma} - 1\Big)\underbrace{\left(E - \frac\rho 2 \bm u \cdot \bm u - \rho g z \right)}_{\rho e_{\text{internal}}} \\
 T &amp;= e_{\text{internal}} / c_v
 \end{align}\]</div>
@@ -757,8 +901,8 @@ T &amp;= e_{\text{internal}} / c_v
 <li><p>\bm{u}  \cdot \bm{\sigma} - k \nabla T
 \end{pmatrix}}<em>{\bm F</em>{\text{diff}}},\
 S(\bm{q}) &amp;=</p></li>
-<li><div class="amsmath math notranslate nohighlight" id="equation-c4a62102-6384-4e77-ab60-6300e04c6f3f">
-<span class="eqno">(60)<a class="headerlink" href="#equation-c4a62102-6384-4e77-ab60-6300e04c6f3f" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
+<li><div class="amsmath math notranslate nohighlight" id="equation-f3bc8cb4-40b1-4d3b-9d5c-666052c0ca6f">
+<span class="eqno">(63)<a class="headerlink" href="#equation-f3bc8cb4-40b1-4d3b-9d5c-666052c0ca6f" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
     0\\
     \rho g \bm{\hat{k}}\\
     0
@@ -814,14 +958,23 @@ S(\bm{q}) &amp;=</p></li>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="stabilization">
 <h1>Stabilization<a class="headerlink" href="#stabilization" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-0e35ab49-b205-4060-a124-1776e2e25228">
-<span class="eqno">(61)<a class="headerlink" href="#equation-0e35ab49-b205-4060-a124-1776e2e25228" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-964ae894-7679-400d-8893-3cc26ef594b1">
+<span class="eqno">(64)<a class="headerlink" href="#equation-964ae894-7679-400d-8893-3cc26ef594b1" title="Permalink to this equation">#</a></span>\[\begin{align}
   \int_{\Omega} \bm v \cdot \left( \frac{\partial \bm{q}}{\partial t} - \bm{S}(\bm{y}) \right)  \,dV
   - \int_{\Omega} \nabla \bm v \!:\! \bm{F}(\bm{y})\,dV &amp; \\
   + \int_{\partial \Omega} \bm v \cdot \bm{F}(\bm{y}) \cdot \widehat{\bm{n}} \,dS &amp; \\
   + \int_{\Omega} \nabla \bm v : \frac{\partial \bm F_{\text{adv}}}{\partial \bm q} \bm \tau \left( \frac{\partial \bm{q}}{\partial t} \, + \,
   \nabla \cdot \bm{F} \, (\bm{y}) - \bm{S}(\bm{y}) \right) \,dV &amp;= 0
 \end{align}\]</div>
+<ul class="simple">
+<li><p>Boundary term needs to be replaced with actual boundary conditions</p></li>
+<li><p>The strong form term <span class="math notranslate nohighlight">\(\nabla\cdot \bm F(\bm y)\)</span></p>
+<ul>
+<li><p>is ill-defined at shocks or discontinuous materials</p></li>
+<li><p>involves the second derivative of velocity and temperature; many ignore for linear elements, but <a class="reference external" href="https://doi.org/10.1016/S0045-7825(98)00284-9">it’s better</a> to use a (lumped) projection.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="time-integration">
 <h1>Time integration<a class="headerlink" href="#time-integration" title="Permalink to this headline">#</a></h1>
@@ -842,6 +995,84 @@ S(\bm{q}) &amp;=</p></li>
 </li>
 </ul>
 </li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="boundary-conditions-ref-mengaldo-et-al-2014">
+<h1>Boundary conditions (ref: <a class="reference external" href="https://doi.org/10.2514/6.2014-2923">Mengaldo et al (2014)</a>)<a class="headerlink" href="#boundary-conditions-ref-mengaldo-et-al-2014" title="Permalink to this headline">#</a></h1>
+<img src="../img/Mengaldo-Fig6.png" /></section>
+<section class="tex2jax_ignore mathjax_ignore" id="boundary-conditions">
+<h1>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Unlike solid mechanics, the “natural” boundary condition is not physical (it’s like a free surface). So we need boundary conditions all around.</p></li>
+</ul>
+<section id="symmetry-free-slip">
+<h2>Symmetry (free slip)<a class="headerlink" href="#symmetry-free-slip" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Normal velocity = 0, no boundary integral</p></li>
+</ul>
+</section>
+<section id="wall-no-slip">
+<h2>Wall (no-slip)<a class="headerlink" href="#wall-no-slip" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Total velocity = 0</p></li>
+<li><p>Can prescribe temperature (heat sink) or leave it insulated (more complicated for conservative variables)</p></li>
+</ul>
+</section>
+<section id="freestream-boundaries">
+<h2>Freestream boundaries<a class="headerlink" href="#freestream-boundaries" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Unified way to handle inflow and outflow (sometimes both).</p></li>
+<li><p>Requires solving a “Riemann problem”</p></li>
+</ul>
+</section>
+<section id="viscous-inflow">
+<h2>Viscous inflow<a class="headerlink" href="#viscous-inflow" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Prescribe velocity and temperature, compute boundary integral for energy flux.</p></li>
+</ul>
+</section>
+<section id="viscous-outflow">
+<h2>Viscous outflow<a class="headerlink" href="#viscous-outflow" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Prescribe pressure, compute flux with modified ghost pressure <span class="math notranslate nohighlight">\(2 P_{\text{ext}} - P_{\text{int}}\)</span></p></li>
+<li><p>Compute viscous flux based on interior values</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="convergence-to-steady-state-from-mengaldo">
+<h1>Convergence to steady state (from Mengaldo)<a class="headerlink" href="#convergence-to-steady-state-from-mengaldo" title="Permalink to this headline">#</a></h1>
+<img src="../img/Mengaldo-Fig7.png" /></section>
+<section class="tex2jax_ignore mathjax_ignore" id="freestream-wave-test-problem">
+<h1>Freestream wave test problem<a class="headerlink" href="#freestream-wave-test-problem" title="Permalink to this headline">#</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpiexec -n 6 build/fluids-navierstokes -options_file examples/fluids/newtonianwave.yaml
+</pre></div>
+</div>
+<section id="hll">
+<h2>HLL<a class="headerlink" href="#hll" title="Permalink to this headline">#</a></h2>
+<video src="../img/nwave-hll.webm" loop controls /></section>
+<section id="hllc">
+<h2>HLLC<a class="headerlink" href="#hllc" title="Permalink to this headline">#</a></h2>
+<video src="../img/nwave-hllc.webm" loop controls /></section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="open-problem">
+<h1>Open Problem:<a class="headerlink" href="#open-problem" title="Permalink to this headline">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="turbulent-viscous-inflow-and-outflow-with-non-reflecting-boundary-conditions">
+<h1>Turbulent viscous inflow and outflow with non-reflecting boundary conditions.<a class="headerlink" href="#turbulent-viscous-inflow-and-outflow-with-non-reflecting-boundary-conditions" title="Permalink to this headline">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="boundary-layers-for-turbulent-flow">
+<h1>Boundary layers for turbulent flow<a class="headerlink" href="#boundary-layers-for-turbulent-flow" title="Permalink to this headline">#</a></h1>
+<p><img alt="image.png" src="slides/attachment:image.png" /></p>
+<ul class="simple">
+<li><p>Geometric spacing near the wall</p>
+<ul>
+<li><p>Aspect ratio <span class="math notranslate nohighlight">\(10\)</span> to <span class="math notranslate nohighlight">\(10^5\)</span></p></li>
+<li><p>Wall-resolved or wall-modeled</p></li>
+</ul>
+</li>
+<li><p>Turbulent boundary layer</p></li>
+<li><p>Far field</p></li>
+<li><p>In unstructured CFD, most elements are close to a wall.</p></li>
 </ul>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="running-on-alpine">
@@ -898,19 +1129,12 @@ S(\bm{q}) &amp;=</p></li>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="2022-11-14-solvers.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="2022-11-16-fe-compressible.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">2022-11-14 Ratel Hands-on</p>
+            <p class="prev-next-title">2022-11-16 FE for Compressible flow</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="2022-11-18-ceed-fluids.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">2022-11-18 FE for Compressible flow</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
