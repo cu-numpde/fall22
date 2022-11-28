@@ -55,6 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2022-11-28 Finite Volume" href="2022-11-28-finite-volume.html" />
     <link rel="prev" title="2022-11-16 FE for Compressible flow" href="2022-11-16-fe-compressible.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -294,6 +295,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2022-11-18 CEED Fluids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-28-finite-volume.html">
+     2022-11-28 Finite Volume
     </a>
    </li>
   </ul>
@@ -882,8 +888,8 @@ title="Print to PDF"
 <ul class="simple">
 <li><p>Equation of state</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e4c5b696-7627-4c1e-bcb5-09a50b1747d8">
-<span class="eqno">(62)<a class="headerlink" href="#equation-e4c5b696-7627-4c1e-bcb5-09a50b1747d8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-45f85eec-ed3a-4079-9fef-1ef563c073a4">
+<span class="eqno">(62)<a class="headerlink" href="#equation-45f85eec-ed3a-4079-9fef-1ef563c073a4" title="Permalink to this equation">#</a></span>\[\begin{align}
 P &amp;= \Big(\underbrace{\frac{c_p}{c_v}}_{\gamma} - 1\Big)\underbrace{\left(E - \frac\rho 2 \bm u \cdot \bm u - \rho g z \right)}_{\rho e_{\text{internal}}} \\
 T &amp;= e_{\text{internal}} / c_v
 \end{align}\]</div>
@@ -901,8 +907,8 @@ T &amp;= e_{\text{internal}} / c_v
 <li><p>\bm{u}  \cdot \bm{\sigma} - k \nabla T
 \end{pmatrix}}<em>{\bm F</em>{\text{diff}}},\
 S(\bm{q}) &amp;=</p></li>
-<li><div class="amsmath math notranslate nohighlight" id="equation-f3bc8cb4-40b1-4d3b-9d5c-666052c0ca6f">
-<span class="eqno">(63)<a class="headerlink" href="#equation-f3bc8cb4-40b1-4d3b-9d5c-666052c0ca6f" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
+<li><div class="amsmath math notranslate nohighlight" id="equation-f0268274-5735-4e28-a2fe-ef804175aae0">
+<span class="eqno">(63)<a class="headerlink" href="#equation-f0268274-5735-4e28-a2fe-ef804175aae0" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
     0\\
     \rho g \bm{\hat{k}}\\
     0
@@ -958,8 +964,8 @@ S(\bm{q}) &amp;=</p></li>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="stabilization">
 <h1>Stabilization<a class="headerlink" href="#stabilization" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-964ae894-7679-400d-8893-3cc26ef594b1">
-<span class="eqno">(64)<a class="headerlink" href="#equation-964ae894-7679-400d-8893-3cc26ef594b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6ac10225-7f55-4767-8482-587168fef2ab">
+<span class="eqno">(64)<a class="headerlink" href="#equation-6ac10225-7f55-4767-8482-587168fef2ab" title="Permalink to this equation">#</a></span>\[\begin{align}
   \int_{\Omega} \bm v \cdot \left( \frac{\partial \bm{q}}{\partial t} - \bm{S}(\bm{y}) \right)  \,dV
   - \int_{\Omega} \nabla \bm v \!:\! \bm{F}(\bm{y})\,dV &amp; \\
   + \int_{\partial \Omega} \bm v \cdot \bm{F}(\bm{y}) \cdot \widehat{\bm{n}} \,dS &amp; \\
@@ -1135,6 +1141,13 @@ S(\bm{q}) &amp;=</p></li>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">2022-11-16 FE for Compressible flow</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="2022-11-28-finite-volume.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2022-11-28 Finite Volume</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
