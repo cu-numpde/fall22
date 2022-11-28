@@ -40,3 +40,4 @@ chapters:
   - file: slides/2022-11-14-solvers.ipynb
   - file: slides/2022-11-16-fe-compressible.ipynb
   - file: slides/2022-11-18-ceed-fluids.ipynb
+  - file: slides/2022-11-28-finite-volume.ipynb
