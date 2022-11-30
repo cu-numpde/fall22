@@ -302,6 +302,11 @@ const thebe_selector_output = ".output, .cell_output"
      2022-11-28 Finite Volume
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-30-reconstruction.html">
+     2022-11-30 Reconstruction
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -888,8 +893,8 @@ title="Print to PDF"
 <ul class="simple">
 <li><p>Equation of state</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-45f85eec-ed3a-4079-9fef-1ef563c073a4">
-<span class="eqno">(62)<a class="headerlink" href="#equation-45f85eec-ed3a-4079-9fef-1ef563c073a4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-37244ded-3781-4d18-854c-e41068340585">
+<span class="eqno">(62)<a class="headerlink" href="#equation-37244ded-3781-4d18-854c-e41068340585" title="Permalink to this equation">#</a></span>\[\begin{align}
 P &amp;= \Big(\underbrace{\frac{c_p}{c_v}}_{\gamma} - 1\Big)\underbrace{\left(E - \frac\rho 2 \bm u \cdot \bm u - \rho g z \right)}_{\rho e_{\text{internal}}} \\
 T &amp;= e_{\text{internal}} / c_v
 \end{align}\]</div>
@@ -907,8 +912,8 @@ T &amp;= e_{\text{internal}} / c_v
 <li><p>\bm{u}  \cdot \bm{\sigma} - k \nabla T
 \end{pmatrix}}<em>{\bm F</em>{\text{diff}}},\
 S(\bm{q}) &amp;=</p></li>
-<li><div class="amsmath math notranslate nohighlight" id="equation-f0268274-5735-4e28-a2fe-ef804175aae0">
-<span class="eqno">(63)<a class="headerlink" href="#equation-f0268274-5735-4e28-a2fe-ef804175aae0" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
+<li><div class="amsmath math notranslate nohighlight" id="equation-a9fbbcda-01fd-4f3f-be72-af7fc9693f12">
+<span class="eqno">(63)<a class="headerlink" href="#equation-a9fbbcda-01fd-4f3f-be72-af7fc9693f12" title="Permalink to this equation">#</a></span>\[\begin{pmatrix}
     0\\
     \rho g \bm{\hat{k}}\\
     0
@@ -964,8 +969,8 @@ S(\bm{q}) &amp;=</p></li>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="stabilization">
 <h1>Stabilization<a class="headerlink" href="#stabilization" title="Permalink to this headline">#</a></h1>
-<div class="amsmath math notranslate nohighlight" id="equation-6ac10225-7f55-4767-8482-587168fef2ab">
-<span class="eqno">(64)<a class="headerlink" href="#equation-6ac10225-7f55-4767-8482-587168fef2ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c59de6ce-9b4f-4b13-89aa-fb7fe82e9941">
+<span class="eqno">(64)<a class="headerlink" href="#equation-c59de6ce-9b4f-4b13-89aa-fb7fe82e9941" title="Permalink to this equation">#</a></span>\[\begin{align}
   \int_{\Omega} \bm v \cdot \left( \frac{\partial \bm{q}}{\partial t} - \bm{S}(\bm{y}) \right)  \,dV
   - \int_{\Omega} \nabla \bm v \!:\! \bm{F}(\bm{y})\,dV &amp; \\
   + \int_{\partial \Omega} \bm v \cdot \bm{F}(\bm{y}) \cdot \widehat{\bm{n}} \,dS &amp; \\

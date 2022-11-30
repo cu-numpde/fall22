@@ -1,0 +1,1736 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2022-11-30 Reconstruction &#8212; Numerical Solution of Partial Differential Equations</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../_static/cu-numpde-square.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2022-11-28 Finite Volume" href="2022-11-28-finite-volume.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/cu-numpde.svg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Numerical Solution of Partial Differential Equations</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../slides.html">
+   Slides
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-22-first-day.html">
+     2022-08-22 First Day
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-24-finite-differences.html">
+     2022-08-24 Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-26-fd-solutions.html">
+     2022-08-26 FD Solutions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-29-fd-verification.html">
+     2022-08-29 FD Verification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-08-31-fourier.html">
+     2022-08-31 Fourier and conditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-02-chebyshev.html">
+     2022-09-02 Chebyshev collocation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-07-coefficients.html">
+     2022-09-07 Variable coefficients
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-09-advection.html">
+     2022-09-09 Advection
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-12-sparsity.html">
+     2022-09-12 Sparsity and solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-14-nonlinear.html">
+     2022-09-14 Nonlinear solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-16-differentiation.html">
+     2022-09-16 Differentiation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-19-blasius.html">
+     2022-09-19 Blasius
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-21-transient.html">
+     2022-09-21 Transient Intro
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-23-transient.html">
+     2022-09-23 Transient
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-26-stiffness.html">
+     2022-09-26 Stiffness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-09-28-runge-kutta.html">
+     2022-09-28 Runge-Kutta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-03-2d.html">
+     2022-10-03 2D Advection-diffusion and waves
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-05-factorization.html">
+     2022-10-05 Factorization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-07-linear-solvers.html">
+     2022-10-07 Linear Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-10-iterative.html">
+     2022-10-10 Iterative Solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-12-krylov.html">
+     2022-10-12 Krylov and preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-14-preconditioning.html">
+     2022-10-14 Preconditioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-17-multigrid.html">
+     2022-10-17 Multigrid
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-21-amg.html">
+     2022-10-21 AMG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-24-galerkin.html">
+     2022-10-24 Galerkin methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-26-fem.html">
+     2022-10-26 Finite Element Theory
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-10-28-fem.html">
+     2022-10-28 Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-07-applied-fe.html">
+     2022-11-07 Applied Finite Elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-09-solids.html">
+     2022-11-09 Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-11-ratel.html">
+     2022-11-11 Ratel for Solid Mechanics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-14-solvers.html">
+     2022-11-14 Ratel Hands-on
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-16-fe-compressible.html">
+     2022-11-16 FE for Compressible flow
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-18-ceed-fluids.html">
+     2022-11-18 CEED Fluids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2022-11-28-finite-volume.html">
+     2022-11-28 Finite Volume
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2022-11-30 Reconstruction
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/cu-numpde/fall22/main?urlpath=tree/slides/2022-11-30-reconstruction.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/cu-numpde/fall22"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/cu-numpde/fall22/issues/new?title=Issue%20on%20page%20%2Fslides/2022-11-30-reconstruction.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/slides/2022-11-30-reconstruction.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-30 Reconstruction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#godunov-methods-first-order-accurate">
+   Godunov methods (first order accurate)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#burgers">
+     Burgers
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#traffic">
+     Traffic
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#godunov-s-theorem-1954">
+   Godunov’s Theorem (1954)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discontinuities">
+     Discontinuities
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#slope-reconstruction">
+   Slope Reconstruction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#question">
+     Question
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#slope-limiting">
+   Slope limiting
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#common-limiters">
+   Common limiters
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-slope-limited-solver">
+   A slope-limited solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperbolic-systems">
+   Hyperbolic systems
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#isentropic-gas-dynamics">
+     Isentropic gas dynamics
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smooth-wave-structure">
+     Smooth wave structure
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#riemann-problem-for-systems-shocks">
+   Riemann problem for systems: shocks
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-moving-wave">
+     Left-moving wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#admissible-shocks">
+   Admissible shocks
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-moving-wave">
+     Right-moving wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rarefactions">
+   Rarefactions
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-riemann-invariants">
+     Generalized Riemann invariants
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#isothermal-gas-dynamics">
+       Isothermal gas dynamics
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-algorithm">
+   Basic algorithm
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#first-a-miracle-happens">
+     First a miracle happens
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exact-riemann-solver-for-isothermal-gas-dynamics">
+   Exact Riemann solver for isothermal gas dynamics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resolving-waves-for-isothermal-gas-dynamics">
+   Resolving waves for isothermal gas dynamics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solver">
+   Solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#approximate-riemann-solvers">
+   Approximate Riemann solvers
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hll-harten-lax-and-van-leer">
+     HLL (Harten, Lax, and van Leer)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Isothermal gas dynamics
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rusanov-method">
+       Rusanov method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations-on-hll-solvers">
+   Observations on HLL solvers
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>2022-11-30 Reconstruction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   2022-11-30 Reconstruction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#last-time">
+     Last time
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#today">
+     Today
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#godunov-methods-first-order-accurate">
+   Godunov methods (first order accurate)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#burgers">
+     Burgers
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#traffic">
+     Traffic
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#godunov-s-theorem-1954">
+   Godunov’s Theorem (1954)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discontinuities">
+     Discontinuities
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#slope-reconstruction">
+   Slope Reconstruction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#question">
+     Question
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#slope-limiting">
+   Slope limiting
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#common-limiters">
+   Common limiters
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-slope-limited-solver">
+   A slope-limited solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperbolic-systems">
+   Hyperbolic systems
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#isentropic-gas-dynamics">
+     Isentropic gas dynamics
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#smooth-wave-structure">
+     Smooth wave structure
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#riemann-problem-for-systems-shocks">
+   Riemann problem for systems: shocks
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-moving-wave">
+     Left-moving wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#admissible-shocks">
+   Admissible shocks
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-moving-wave">
+     Right-moving wave
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rarefactions">
+   Rarefactions
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-riemann-invariants">
+     Generalized Riemann invariants
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#isothermal-gas-dynamics">
+       Isothermal gas dynamics
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-algorithm">
+   Basic algorithm
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#first-a-miracle-happens">
+     First a miracle happens
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exact-riemann-solver-for-isothermal-gas-dynamics">
+   Exact Riemann solver for isothermal gas dynamics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resolving-waves-for-isothermal-gas-dynamics">
+   Resolving waves for isothermal gas dynamics
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solver">
+   Solver
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#approximate-riemann-solvers">
+   Approximate Riemann solvers
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hll-harten-lax-and-van-leer">
+     HLL (Harten, Lax, and van Leer)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Isothermal gas dynamics
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rusanov-method">
+       Rusanov method
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations-on-hll-solvers">
+   Observations on HLL solvers
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="reconstruction">
+<h1>2022-11-30 Reconstruction<a class="headerlink" href="#reconstruction" title="Permalink to this headline">#</a></h1>
+<section id="last-time">
+<h2>Last time<a class="headerlink" href="#last-time" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Notes on unstructured meshing workflow</p></li>
+<li><p>Finite volume methods for hyperbolic conservation laws</p></li>
+<li><p>Riemann solvers for scalar equations</p>
+<ul>
+<li><p>Shocks and the Rankine-Hugoniot condition</p></li>
+<li><p>Rarefactions and entropy solutions</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="today">
+<h2>Today<a class="headerlink" href="#today" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Godunov’s Theorem</p></li>
+<li><p>Slope reconstruction and limiting</p></li>
+<li><p>Hyperbolic systems</p>
+<ul>
+<li><p>Rankine-Hugoniot and Riemann Invariants</p></li>
+<li><p>Exact Riemann solvers</p></li>
+<li><p>Approximate Riemann solvers</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">default</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="kt">RKTable</span><span class="w"></span>
+<span class="w">    </span><span class="n">A</span><span class="o">::</span><span class="kt">Matrix</span><span class="w"></span>
+<span class="w">    </span><span class="n">b</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">c</span><span class="o">::</span><span class="kt">Vector</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">RKTable</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">new</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">rk4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RKTable</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">u0</span><span class="p">;</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">table</span><span class="o">=</span><span class="n">rk4</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="w">    </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">u</span><span class="p">),</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">fY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tfinal</span><span class="w"></span>
+<span class="w">        </span><span class="n">tnext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">s</span><span class="w"></span>
+<span class="w">            </span><span class="n">ti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="n">Yi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">fY</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">fY</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">ti</span><span class="p">,</span><span class="w"> </span><span class="n">Yi</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">u</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="o">.</span><span class="n">b</span><span class="w"></span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tnext</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">uhist</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">uhist</span><span class="o">...</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">testfunc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">.&lt;</span><span class="w"> </span><span class="mf">.2</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">abs</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">.&lt;</span><span class="w"> </span><span class="mf">.5</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cospi</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span><span class="o">.^</span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">flux_advection</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"></span>
+<span class="n">flux_burgers</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="w"></span>
+<span class="n">flux_traffic</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">riemann_advection</span><span class="p">(</span><span class="n">uL</span><span class="p">,</span><span class="w"> </span><span class="n">uR</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">*</span><span class="n">uL</span><span class="w"> </span><span class="c"># velocity is +1</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">fv_solve1</span><span class="p">(</span><span class="n">riemann</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c"># cell midpoints (centroids)</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">riemann</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">],</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">riemann</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">idxR</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="n">fluxL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fluxR</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">riemann_burgers</span><span class="p">(</span><span class="n">uL</span><span class="p">,</span><span class="w"> </span><span class="n">uR</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">flux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">uL</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flux_burgers</span><span class="p">(</span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">fR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flux_burgers</span><span class="p">(</span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">flux</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="c"># shock</span><span class="w"></span>
+<span class="w">            </span><span class="n">max</span><span class="p">(</span><span class="n">fL</span><span class="p">,</span><span class="w"> </span><span class="n">fR</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c"># rarefaction all to the right</span><span class="w"></span>
+<span class="w">            </span><span class="n">fL</span><span class="w"></span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="c"># rarefaction all to the left</span><span class="w"></span>
+<span class="w">            </span><span class="n">fR</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">flux</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">riemann_traffic</span><span class="p">(</span><span class="n">uL</span><span class="p">,</span><span class="w"> </span><span class="n">uR</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">flux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zero</span><span class="p">(</span><span class="n">uL</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">flux</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flux_traffic</span><span class="p">(</span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">fR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flux_traffic</span><span class="p">(</span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"></span>
+<span class="w">        </span><span class="n">flux</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="c"># shock</span><span class="w"></span>
+<span class="w">            </span><span class="n">min</span><span class="p">(</span><span class="n">fL</span><span class="p">,</span><span class="w"> </span><span class="n">fR</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="n">uL</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="c"># rarefaction all to the right</span><span class="w"></span>
+<span class="w">            </span><span class="n">fL</span><span class="w"></span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="n">uR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="c"># rarefaction all to the left</span><span class="w"></span>
+<span class="w">            </span><span class="n">fR</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">            </span><span class="n">flux_traffic</span><span class="p">(</span><span class="mf">.5</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">flux</span><span class="w"> </span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>riemann_traffic (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="godunov-methods-first-order-accurate">
+<h1>Godunov methods (first order accurate)<a class="headerlink" href="#godunov-methods-first-order-accurate" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testfunc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fv_solve1</span><span class="p">(</span><span class="n">riemann_traffic</span><span class="p">,</span><span class="w"> </span><span class="n">init_func</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:none</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-11-30-reconstruction_4_0.svg" src="../_images/2022-11-30-reconstruction_4_0.svg" /></div>
+</div>
+<section id="burgers">
+<h2>Burgers<a class="headerlink" href="#burgers" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>flux <span class="math notranslate nohighlight">\(u^2/2\)</span> has speed <span class="math notranslate nohighlight">\(u\)</span></p></li>
+<li><p>negative values make sense</p></li>
+<li><p>satisfies a maximum principle</p></li>
+</ul>
+</section>
+<section id="traffic">
+<h2>Traffic<a class="headerlink" href="#traffic" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>flux <span class="math notranslate nohighlight">\(u - u^2\)</span> has speed <span class="math notranslate nohighlight">\(1 - 2u\)</span></p></li>
+<li><p>state must satisfy <span class="math notranslate nohighlight">\(u \in [0, 1]\)</span></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="godunov-s-theorem-1954">
+<h1>Godunov’s Theorem (1954)<a class="headerlink" href="#godunov-s-theorem-1954" title="Permalink to this headline">#</a></h1>
+<p>Linear numerical methods
+<div class="math notranslate nohighlight">
+\[ \dot u_i = \sum_j a_{ij} u_j \]</div>
+
+for solving time-dependent PDE can be at most first order accurate if they are monotone.</p>
+<p>For our purposes, monotonicity is equivalent to positivity preservation,
+<div class="math notranslate nohighlight">
+\[ \min_x u(0, x) \ge 0 \quad \Longrightarrow \quad \min_x u(t, 0) \ge 0 .\]</div>
+</p>
+<section id="discontinuities">
+<h2>Discontinuities<a class="headerlink" href="#discontinuities" title="Permalink to this headline">#</a></h2>
+<p>A numerical method for representing a discontinuous function on a stationary grid can be no better than first order accurate in the <span class="math notranslate nohighlight">\(L^1\)</span> norm,
+<div class="math notranslate nohighlight">
+\[ \lVert u - u^* \rVert_{L^1} = \int \lvert u - u^* \rvert . \]</div>
+
+If we merely sample a discontinuous function, say
+<div class="math notranslate nohighlight">
+\[\begin{split} u(x) = \begin{cases} 0, &amp; x \le a \\ 1, &amp; x &gt; a \end{cases} \end{split}\]</div>
+
+onto a grid with element size <span class="math notranslate nohighlight">\(\Delta x\)</span> then we will have errors of order 1 on an interval proportional to <span class="math notranslate nohighlight">\(\Delta x\)</span>.</p>
+<p>In light of these two observations, we may still ask for numerical methods that are more than first order accurate for smooth solutions, but those methods must be nonlinear.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="slope-reconstruction">
+<h1>Slope Reconstruction<a class="headerlink" href="#slope-reconstruction" title="Permalink to this headline">#</a></h1>
+<p>One method for constructing higher order methods is to use the state in neighboring elements to perform a conservative reconstruction of a piecewise polynomial, then compute numerical fluxes by solving Riemann problems at the interfaces.  If <span class="math notranslate nohighlight">\(x_i\)</span> is the center of cell <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(g_i\)</span> is the reconstructed gradient inside cell <span class="math notranslate nohighlight">\(i\)</span>, our reconstructed solution is
+<div class="math notranslate nohighlight">
+\[ \tilde u_i(x) = u_i + g_i \cdot (x - x_i) . \]</div>
+
+We would like this reconstruction to be monotone in the sense that
+<div class="math notranslate nohighlight">
+\[ \Big(\tilde u_i(x) - \tilde u_j(x) \Big) \Big( u_i - u_j \Big) \ge 0 \]</div>
+
+for any <span class="math notranslate nohighlight">\(x\)</span> on the interface between element <span class="math notranslate nohighlight">\(i\)</span> and element <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<section id="question">
+<h2>Question<a class="headerlink" href="#question" title="Permalink to this headline">#</a></h2>
+<p>Is the symmetric slope
+<div class="math notranslate nohighlight">
+\[ \hat g_i = \frac{u_{i+1} - u_{i-1}}{2 \Delta x} \]</div>
+
+monotone?</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="slope-limiting">
+<h1>Slope limiting<a class="headerlink" href="#slope-limiting" title="Permalink to this headline">#</a></h1>
+<p>We will determine gradients by “limiting” the above slope using a nonlinear function that reduces to 1 when the solution is smooth.  There are many ways to express limiters and our discussion here roughly follows <a class="reference external" href="https://www.nas.nasa.gov/assets/pdf/techreports/2005/nas-05-007.pdf">Berger, Aftosmis, and Murman (2005)</a>.</p>
+<p><img alt="Berger et al, figure 3b, Cell averages" src="../_images/Berger2005-3b-CellAverages.png" /></p>
+<p>We will express a slope limiter in terms of the ratio
+<div class="math notranslate nohighlight">
+\[ r_i = \frac{u_i - u_{i-1}}{u_{i+1} - u_{i-1}} \]</div>
+
+and use as a gradient,
+<div class="math notranslate nohighlight">
+\[ g_i = \phi(r_i) \frac{u_{i+1} - u_{i-1}}{2 \Delta x} . \]</div>
+
+Our functions <span class="math notranslate nohighlight">\(\phi\)</span> will be zero unless <span class="math notranslate nohighlight">\(0 &lt; r &lt; 1\)</span> and <span class="math notranslate nohighlight">\(\phi(1/2) = 1\)</span>.
+<img alt="Berger et al, figure 3a, Symmetric form of slope limiters" src="../_images/Berger2005-3a-SymSlope.png" />
+All of these limiters are second order accurate and TVD; those that fall below minmod are not second order accurate and those that are above Barth-Jesperson are not second order accurate, not TVD, or produce artifacts.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="common-limiters">
+<h1>Common limiters<a class="headerlink" href="#common-limiters" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">limit_zero</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="n">limit_none</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">limit_minmod</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">min</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">)),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="n">limit_sin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sinpi</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"></span>
+<span class="n">limit_vl</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="n">limit_bj</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">)))</span><span class="w"></span>
+<span class="n">limiters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">limit_zero</span><span class="w"> </span><span class="n">limit_none</span><span class="w"> </span><span class="n">limit_minmod</span><span class="w"> </span><span class="n">limit_sin</span><span class="w"> </span><span class="n">limit_vl</span><span class="w"> </span><span class="n">limit_bj</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">limiters</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">limiters</span><span class="p">,</span><span class="w"> </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">.1</span><span class="p">,</span><span class="w"> </span><span class="mf">1.1</span><span class="p">))</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-11-30-reconstruction_18_0.svg" src="../_images/2022-11-30-reconstruction_18_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="a-slope-limited-solver">
+<h1>A slope-limited solver<a class="headerlink" href="#a-slope-limited-solver" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">fv_solve2</span><span class="p">(</span><span class="n">riemann</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">limit</span><span class="o">=</span><span class="n">limit_sin</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c"># cell midpoints (centroids)</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">jump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">idxR</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">])</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">jump</span><span class="w"></span>
+<span class="w">        </span><span class="n">r</span><span class="p">[</span><span class="n">isnan</span><span class="o">.</span><span class="p">(</span><span class="n">r</span><span class="p">)]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limit</span><span class="o">.</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">jump</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="n">h</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">riemann</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">idxL</span><span class="p">]</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">g</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fluxL</span><span class="p">[</span><span class="n">idxR</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="n">fluxL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fluxR</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fv_solve2 (generic function with 3 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fv_solve2</span><span class="p">(</span><span class="n">riemann_advection</span><span class="p">,</span><span class="w"> </span><span class="n">testfunc</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">.5</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">limit_sin</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="o">:</span><span class="mi">10</span><span class="o">:</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="ss">:none</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-11-30-reconstruction_21_0.svg" src="../_images/2022-11-30-reconstruction_21_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="hyperbolic-systems">
+<h1>Hyperbolic systems<a class="headerlink" href="#hyperbolic-systems" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ U_t + f(U)_x = 0 \]</div>
+<section id="isentropic-gas-dynamics">
+<h2>Isentropic gas dynamics<a class="headerlink" href="#isentropic-gas-dynamics" title="Permalink to this headline">#</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-e87aa98a-9d82-4c7a-9f4e-3986ed590dbb">
+<span class="eqno">(65)<a class="headerlink" href="#equation-e87aa98a-9d82-4c7a-9f4e-3986ed590dbb" title="Permalink to this equation">#</a></span>\[\begin{align} U &amp;= \begin{bmatrix} \rho \\ \rho u \end{bmatrix} &amp; f(U) &amp;= \begin{bmatrix} \rho u \\ \rho u^2 + p \end{bmatrix} \end{align}\]</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td><p>density</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(u\)</span></p></td>
+<td><p>velocity</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho u\)</span></p></td>
+<td><p>momentum</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(p\)</span></p></td>
+<td><p>pressure</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>Equation of state <span class="math notranslate nohighlight">\(p(\rho) = C \rho^\gamma\)</span> with <span class="math notranslate nohighlight">\(\gamma = 1.4\)</span> (typical air).</p></li>
+<li><p>“isothermal” gas dynamics: <span class="math notranslate nohighlight">\(p(\rho) = c^2 \rho\)</span>, wave speed <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p>Compute as <span class="math notranslate nohighlight">\( \rho u^2 = \frac{(\rho u)^2}{\rho} .\)</span></p></li>
+</ul>
+</section>
+<section id="smooth-wave-structure">
+<h2>Smooth wave structure<a class="headerlink" href="#smooth-wave-structure" title="Permalink to this headline">#</a></h2>
+<p>For perturbations of a constant state, systems of equations produce multiple waves with speeds equal to the eigenvalues of the flux Jacobian,
+<div class="math notranslate nohighlight">
+\[\begin{split} f'(U) = \begin{bmatrix} 0 &amp; 1 \\ -u^2 + c^2 &amp; 2 u \end{bmatrix}. \end{split}\]</div>
+
+We can compute the eigenvalues and eigenvectors,
+<div class="math notranslate nohighlight">
+\[ f'(U) = W \Lambda W^{-1} \]</div>
+
+as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5130c010-7d68-4485-b53e-75ea2d93691b">
+<span class="eqno">(66)<a class="headerlink" href="#equation-5130c010-7d68-4485-b53e-75ea2d93691b" title="Permalink to this equation">#</a></span>\[\begin{align} 
+W &amp;= \begin{bmatrix} 1 &amp; 1 \\ u-c &amp; u+c \end{bmatrix} &amp;
+\Lambda &amp;= \begin{bmatrix} u-c &amp;  \\ &amp; u+c \end{bmatrix} .
+\end{align}\]</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="riemann-problem-for-systems-shocks">
+<h1>Riemann problem for systems: shocks<a class="headerlink" href="#riemann-problem-for-systems-shocks" title="Permalink to this headline">#</a></h1>
+<p>Given states <span class="math notranslate nohighlight">\(U_L\)</span> and <span class="math notranslate nohighlight">\(U_R\)</span>, we will see two waves with some state <span class="math notranslate nohighlight">\(U^*\)</span> in between.  There could be two shocks, two rarefactions, or one of each.
+The type of wave will determine the condition that must be satisfied to connect <span class="math notranslate nohighlight">\(U_L\)</span> to <span class="math notranslate nohighlight">\(U_*\)</span> and <span class="math notranslate nohighlight">\(U_*\)</span> to <span class="math notranslate nohighlight">\(U_R\)</span>.</p>
+<section id="left-moving-wave">
+<h2>Left-moving wave<a class="headerlink" href="#left-moving-wave" title="Permalink to this headline">#</a></h2>
+<p>If there is a shock between <span class="math notranslate nohighlight">\(U_L\)</span> and <span class="math notranslate nohighlight">\(U_*\)</span>, the Rankine-Hugoniot condition
+<div class="math notranslate nohighlight">
+\[ s \Delta U = \Delta f \]</div>
+
+will be satisfied along with the entropy condition
+<div class="math notranslate nohighlight">
+\[ \lambda_i(U_L) \ge s \ge \lambda_i(U_*) \]</div>
+
+where <span class="math notranslate nohighlight">\(\lambda_i(U)\)</span> is the corresponding eigenvalue of the flux Jacobian <span class="math notranslate nohighlight">\(f'(U)\)</span>.
+The inequality in the entropy condition is strict if the wave is genuinely nonlinear.
+For isothermal gas dynamics, the Rankine-Hugoniot condition is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9e2b6f80-eba9-4382-bce5-f1b658f0d9ae">
+<span class="eqno">(67)<a class="headerlink" href="#equation-9e2b6f80-eba9-4382-bce5-f1b658f0d9ae" title="Permalink to this equation">#</a></span>\[\begin{align}
+ (\rho_* - \rho_L) s &amp;= \rho_* u_* - \rho_L u_L \\
+ (\rho_* u_* - \rho_L u_L) s &amp;= \Big(\rho_* u_*^2 + c^2 \rho_* \Big) - \Big( \rho_L u_L^2 + c^2 \rho_L \Big)
+\end{align}\]</div>
+<p>Solving the first equation for <span class="math notranslate nohighlight">\(s\)</span> and substituting into the second, we compute
+\begin{split} \frac{(\rho_* u_* - \rho_L u_L)^2}{\rho_* - \rho_L} &amp;= \rho_* u_<em>^2 - \rho_L u_L^2 + c^2 (\rho_</em> - \rho_L) \
+\rho_<em>^2 u_</em>^2 - 2 \rho_* \rho_L u_* u_L + \rho_L^2 u_L^2 &amp;= \rho_* (\rho_* - \rho_L) u_<em>^2 - \rho_L (\rho_</em> - \rho_L) u_L^2 + c^2 (\rho_* - \rho_L)^2 \
+\rho_* \rho_L \Big( u_<em>^2 - 2  u_</em> u_L + u_L^2 \Big) &amp;= c^2 (\rho_* - \rho_L)^2 \
+(u_* - u_L)^2 &amp;= c^2 \frac{(\rho_* - \rho_L)^2}{\rho_* \rho_L} \
+u_* - u_L &amp;= \pm c \frac{\rho_* - \rho_L}{\sqrt{\rho_* \rho_L}}
+\end{split}
+and will need to use the entropy condition to learn which sign to take.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="admissible-shocks">
+<h1>Admissible shocks<a class="headerlink" href="#admissible-shocks" title="Permalink to this headline">#</a></h1>
+<p>We need to choose the sign
+<div class="math notranslate nohighlight">
+\[u_* - u_L = \pm c \frac{\rho_* - \rho_L}{\sqrt{\rho_*\rho_L}}\]</div>
+</p>
+<p>The entropy condition requires that
+<div class="math notranslate nohighlight">
+\[ \lambda(U_L) = u_L - c \ge s \ge u_* - c = \lambda(U_*) . \]</div>
+
+Meanwhile, the first Rankine-Hugoniot condition and <span class="math notranslate nohighlight">\(\rho &gt; 0\)</span> provides
+<div class="math notranslate nohighlight">
+\[  \rho_L c \le \rho_L (u_L - s) = \rho_* (u_* - s) \le \rho_* c \]</div>
+
+which is to say that <span class="math notranslate nohighlight">\(\rho_* \ge \rho_L\)</span> and consequently we take the negative sign,
+<div class="math notranslate nohighlight">
+\[ u_* - u_L = - c\frac{\rho_* - \rho_L}{\sqrt{\rho_* \rho_L}} .\]</div>
+</p>
+<section id="right-moving-wave">
+<h2>Right-moving wave<a class="headerlink" href="#right-moving-wave" title="Permalink to this headline">#</a></h2>
+<p>The same process for the right wave <span class="math notranslate nohighlight">\(\lambda(U) = u + c\)</span> yields a shock when <span class="math notranslate nohighlight">\(\rho_* \ge \rho_R\)</span>, in which case the velocity jump is
+<div class="math notranslate nohighlight">
+\[ u_R - u_* = - c \frac{\rho_* - \rho_R}{\sqrt{\rho_* \rho_R}} . \]</div>
+</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="rarefactions">
+<h1>Rarefactions<a class="headerlink" href="#rarefactions" title="Permalink to this headline">#</a></h1>
+<p>A rarefaction occurs when
+<div class="math notranslate nohighlight">
+\[ \lambda_i(U_L) &lt; \lambda_i(U_R) \]</div>
+</p>
+<section id="generalized-riemann-invariants">
+<h2>Generalized Riemann invariants<a class="headerlink" href="#generalized-riemann-invariants" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[ \frac{d U^1}{W_i^1} = \frac{d U^2}{W_i^2} = \dotsb \]</div>
+<p>(Derivation of this condition is beyond the scope of this class.)</p>
+<section id="isothermal-gas-dynamics">
+<h3>Isothermal gas dynamics<a class="headerlink" href="#isothermal-gas-dynamics" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ \frac{d \rho}{1} = \frac{d (\rho u)}{u - c} \]</div>
+<p>across the wave <span class="math notranslate nohighlight">\(\lambda = u-c\)</span>.
+We can rearrange to
+<div class="math notranslate nohighlight">
+\[ (u-c) d \rho = \rho d u + u d \rho \]</div>
+
+or
+<div class="math notranslate nohighlight">
+\[ d u + \frac{c}{\rho} d \rho = 0 . \]</div>
+</p>
+<p>Integration yields
+<div class="math notranslate nohighlight">
+\[ u + \int \frac{c}{\rho} d \rho = u + c \log \rho = \text{constant} . \]</div>
+
+So if we have a rarefaction between <span class="math notranslate nohighlight">\(U_L\)</span> and <span class="math notranslate nohighlight">\(U_*\)</span> then
+<div class="math notranslate nohighlight">
+\[ u_L + c \log \rho_L = u_* + c \log \rho_* . \]</div>
+
+Similarly, for the wave <span class="math notranslate nohighlight">\(\lambda = u + c\)</span>, a rarefaction between <span class="math notranslate nohighlight">\(U_*\)</span> and <span class="math notranslate nohighlight">\(U_R\)</span> results in
+<div class="math notranslate nohighlight">
+\[ u_* - c \log \rho_* = u_R - c \log \rho_R . \]</div>
+
+If the rarefaction is sonic, we have <span class="math notranslate nohighlight">\(u_0 - c = 0\)</span> for a left rarefaction (or <span class="math notranslate nohighlight">\(u_0 + c =0\)</span> for the right) and can compute <span class="math notranslate nohighlight">\(\rho_0\)</span> from
+<div class="math notranslate nohighlight">
+\[ u_* -c \log \rho_* = u_0 - c \log \rho_0,\]</div>
+
+via
+<div class="math notranslate nohighlight">
+\[ \rho_0 = \exp\big[(u_0 - u_*)/c + \log \rho_* \big].\]</div>
+</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="basic-algorithm">
+<h1>Basic algorithm<a class="headerlink" href="#basic-algorithm" title="Permalink to this headline">#</a></h1>
+<ol class="simple">
+<li><p>Find <span class="math notranslate nohighlight">\(\rho_*\)</span></p></li>
+<li><p>Use entropy condition (for shock speeds)</p></li>
+</ol>
+<ul class="simple">
+<li><p>If it’s a shock: find <span class="math notranslate nohighlight">\(u_*\)</span> using Rankine-Hugoniot</p></li>
+<li><p>If it’s a rarefaction: use       generalized Riemann invariant</p></li>
+</ul>
+<p><img alt="" src="../_images/Toro-ShockOrRarefaction-2.19.png" /></p>
+<section id="first-a-miracle-happens">
+<h2>First a miracle happens<a class="headerlink" href="#first-a-miracle-happens" title="Permalink to this headline">#</a></h2>
+<p>In general we will need to use a Newton method to solve for the state in the star region.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exact-riemann-solver-for-isothermal-gas-dynamics">
+<h1>Exact Riemann solver for isothermal gas dynamics<a class="headerlink" href="#exact-riemann-solver-for-isothermal-gas-dynamics" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">flux_isogas</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rho</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">U</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">rho</span><span class="p">]</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">ujump_isogas</span><span class="p">(</span><span class="n">rho_L</span><span class="p">,</span><span class="w"> </span><span class="n">rho_R</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">rho_R</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">rho_L</span><span class="w"> </span><span class="c"># shock</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="n">rho_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rho_R</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">rho_L</span><span class="o">*</span><span class="n">rho_R</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="c"># rarefaction</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">rho_L</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">rho_R</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">dujump_isogas</span><span class="p">(</span><span class="n">rho_L</span><span class="p">,</span><span class="w"> </span><span class="n">drho_L</span><span class="p">,</span><span class="w"> </span><span class="n">rho_R</span><span class="p">,</span><span class="w"> </span><span class="n">drho_R</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">rho_R</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">rho_L</span><span class="w"> </span><span class="c"># shock</span><span class="w"></span>
+<span class="w">        </span><span class="p">((</span><span class="n">drho_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">drho_R</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="n">rho_L</span><span class="o">*</span><span class="n">rho_R</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="mf">.5</span><span class="o">*</span><span class="p">(</span><span class="n">rho_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rho_R</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">rho_L</span><span class="o">*</span><span class="n">rho_R</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">drho_L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho_R</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rho_L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">drho_R</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">drho_L</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rho_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">drho_R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rho_R</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dujump_isogas (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">riemann_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">,</span><span class="w"> </span><span class="n">UR</span><span class="p">,</span><span class="w"> </span><span class="n">maxit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho_L</span><span class="p">,</span><span class="w"> </span><span class="n">u_L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho_R</span><span class="p">,</span><span class="w"> </span><span class="n">u_R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">rho_L</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rho_R</span><span class="p">)</span><span class="w"> </span><span class="c"># initial guess</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">maxit</span><span class="w"></span>
+<span class="w">        </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ujump_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">rho</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">ujump_isogas</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">UR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">resid</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1e-10</span><span class="w"></span>
+<span class="w">            </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_L</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ujump_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">rho</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">J</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">dujump_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">dujump_isogas</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">uR</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="n">delta_rho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">J</span><span class="w"></span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="n">min</span><span class="p">(</span><span class="n">rho</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">delta_rho</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">delta_rho</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="c"># line search to prevent negative rho</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">U0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resolve_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">,</span><span class="w"> </span><span class="n">UR</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">flux_isogas</span><span class="p">(</span><span class="n">U0</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>riemann_isogas (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="resolving-waves-for-isothermal-gas-dynamics">
+<h1>Resolving waves for isothermal gas dynamics<a class="headerlink" href="#resolving-waves-for-isothermal-gas-dynamics" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">resolve_isogas</span><span class="p">(</span><span class="n">UL</span><span class="p">,</span><span class="w"> </span><span class="n">UR</span><span class="p">,</span><span class="w"> </span><span class="n">U_star</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho_L</span><span class="p">,</span><span class="w"> </span><span class="n">u_L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UL</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho_R</span><span class="p">,</span><span class="w"> </span><span class="n">u_R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">UR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U_star</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">U_star</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">U_star</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">u_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">u_R</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">        </span><span class="c"># inside left (right) sonic rarefaction</span><span class="w"></span>
+<span class="w">        </span><span class="n">u0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sign</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
+<span class="w">        </span><span class="n">rho0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="p">((</span><span class="n">u0</span><span class="o">-</span><span class="n">u</span><span class="p">)</span><span class="o">/</span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">rho</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">rho0</span><span class="p">,</span><span class="w"> </span><span class="n">rho0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">u0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">elseif</span><span class="w"> </span><span class="p">((</span><span class="n">rho_L</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">u_L</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">            </span><span class="p">(</span><span class="n">rho_L</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rho</span><span class="o">*</span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">UL</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">UL</span><span class="w"></span>
+<span class="w">    </span><span class="k">elseif</span><span class="w"> </span><span class="p">((</span><span class="n">rho_R</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">u_R</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">            </span><span class="p">(</span><span class="n">rho_R</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">UR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rho</span><span class="o">*</span><span class="n">u</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">UR</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="o">*</span><span class="n">u</span><span class="p">]</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>resolve_isogas (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">initial_isogas</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="n">x</span><span class="w"> </span><span class="o">.^</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">0</span><span class="o">*</span><span class="n">x</span><span class="p">]</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"></span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initial_isogas</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2022-11-30-reconstruction_43_0.svg" src="../_images/2022-11-30-reconstruction_43_0.svg" /></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="solver">
+<h1>Solver<a class="headerlink" href="#solver" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">fv_solve2system</span><span class="p">(</span><span class="n">riemann</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">limit</span><span class="o">=</span><span class="n">limit_sin</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">LinRange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="c"># cell midpoints (centroids)</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">idxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">.%</span><span class="w"> </span><span class="n">n</span><span class="w"></span>
+<span class="w">    </span><span class="n">U0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u_init</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">U0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="nd">@show</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">U0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="n">rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">jump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">idxR</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">idxL</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">])</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">jump</span><span class="w"></span>
+<span class="w">        </span><span class="n">r</span><span class="p">[</span><span class="n">isnan</span><span class="o">.</span><span class="p">(</span><span class="n">r</span><span class="p">)]</span><span class="w"> </span><span class="o">.=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limit</span><span class="o">.</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">jump</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="n">h</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">riemann</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">idxL</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">idxL</span><span class="p">]</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">g</span><span class="o">*</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">fluxR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fluxL</span><span class="p">[</span><span class="n">idxR</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="n">fluxL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fluxR</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ode_rk_explicit</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">rhs</span><span class="p">,</span><span class="w"> </span><span class="n">u_init</span><span class="o">.</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">tfinal</span><span class="o">=</span><span class="n">tfinal</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">thist</span><span class="p">,</span><span class="w"> </span><span class="n">uhist</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fv_solve2system (generic function with 3 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">t_hist</span><span class="p">,</span><span class="w"> </span><span class="n">U_hist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fv_solve2system</span><span class="p">(</span><span class="n">riemann_isogas</span><span class="p">,</span><span class="w"> </span><span class="n">initial_isogas</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"></span>
+<span class="n">size</span><span class="p">(</span><span class="n">U_hist</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>size(U0) = (100, 2)
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">MethodError</span>: no method matching +(::Matrix{Float64}, ::Float64)
+<span class="n">For</span> <span class="n">element</span><span class="o">-</span><span class="n">wise</span> <span class="n">addition</span><span class="p">,</span> <span class="n">use</span> <span class="n">broadcasting</span> <span class="k">with</span> <span class="n">dot</span> <span class="n">syntax</span><span class="p">:</span> <span class="n">array</span> <span class="o">.+</span> <span class="n">scalar</span>
+<span class="n">Closest</span> <span class="n">candidates</span> <span class="n">are</span><span class="p">:</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="p">,</span> <span class="p">::</span><span class="n">Any</span><span class="o">...</span><span class="p">)</span> <span class="n">at</span> <span class="n">operators</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">591</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">T</span><span class="p">,</span> <span class="p">::</span><span class="n">T</span><span class="p">)</span> <span class="n">where</span> <span class="n">T</span><span class="o">&lt;</span><span class="p">:</span><span class="n">Union</span><span class="p">{</span><span class="n">Float16</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">Float64</span><span class="p">}</span> <span class="n">at</span> <span class="nb">float</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">383</span>
+  <span class="o">+</span><span class="p">(::</span><span class="n">AbstractArray</span><span class="p">,</span> <span class="p">::</span><span class="n">StaticArraysCore</span><span class="o">.</span><span class="n">StaticArray</span><span class="p">)</span> <span class="n">at</span> <span class="o">~/.</span><span class="n">julia</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">StaticArrays</span><span class="o">/</span><span class="mi">6</span><span class="n">QFsp</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">linalg</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">13</span>
+  <span class="o">...</span>
+
+<span class="ne">Stacktrace</span>:
+  <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">_broadcast_getindex_evalf</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">670</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">_broadcast_getindex</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">643</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">getindex</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">597</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="n">copy</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">899</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">materialize</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">860</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="n">broadcast_preserving_zero_d</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">broadcast</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">849</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+  <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">+</span><span class="p">(</span><span class="n">A</span><span class="p">::</span><span class="n">Vector</span><span class="p">{</span><span class="n">Matrix</span><span class="p">{</span><span class="n">Float64</span><span class="p">}},</span> <span class="n">Bs</span><span class="p">::</span><span class="n">Vector</span><span class="p">{</span><span class="n">Float64</span><span class="p">})</span>
+    <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">arraymath</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">16</span>
+  <span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="n">ode_rk_explicit</span><span class="p">(</span><span class="n">f</span><span class="p">::</span><span class="n">var</span><span class="s2">&quot;#rhs#4&quot;</span><span class="p">{</span><span class="n">typeof</span><span class="p">(</span><span class="n">riemann_isogas</span><span class="p">),</span> <span class="n">Int64</span><span class="p">,</span> <span class="n">typeof</span><span class="p">(</span><span class="n">limit_sin</span><span class="p">),</span> <span class="n">Int64</span><span class="p">,</span> <span class="n">Vector</span><span class="p">{</span><span class="n">Int64</span><span class="p">},</span> <span class="n">Vector</span><span class="p">{</span><span class="n">Int64</span><span class="p">},</span> <span class="n">Float64</span><span class="p">},</span> <span class="n">u0</span><span class="p">::</span><span class="n">Vector</span><span class="p">{</span><span class="n">Matrix</span><span class="p">{</span><span class="n">Float64</span><span class="p">}};</span> <span class="n">tfinal</span><span class="p">::</span><span class="n">Float64</span><span class="p">,</span> <span class="n">h</span><span class="p">::</span><span class="n">Float64</span><span class="p">,</span> <span class="n">table</span><span class="p">::</span><span class="n">RKTable</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Main</span> <span class="o">./</span><span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="mi">31</span>
+  <span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="n">fv_solve2system</span><span class="p">(</span><span class="n">riemann</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">riemann_isogas</span><span class="p">),</span> <span class="n">u_init</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">initial_isogas</span><span class="p">),</span> <span class="n">n</span><span class="p">::</span><span class="n">Int64</span><span class="p">,</span> <span class="n">tfinal</span><span class="p">::</span><span class="n">Float64</span><span class="p">,</span> <span class="n">limit</span><span class="p">::</span><span class="n">Function</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Main</span> <span class="o">./</span><span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">]:</span><span class="mi">19</span>
+ <span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="n">fv_solve2system</span><span class="p">(</span><span class="n">riemann</span><span class="p">::</span><span class="n">Function</span><span class="p">,</span> <span class="n">u_init</span><span class="p">::</span><span class="n">Function</span><span class="p">,</span> <span class="n">n</span><span class="p">::</span><span class="n">Int64</span><span class="p">,</span> <span class="n">tfinal</span><span class="p">::</span><span class="n">Float64</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Main</span> <span class="o">./</span><span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">]:</span><span class="mi">2</span>
+ <span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="n">top</span><span class="o">-</span><span class="n">level</span> <span class="n">scope</span>
+    <span class="o">@</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">]:</span><span class="mi">1</span>
+ <span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="nb">eval</span>
+    <span class="o">@</span> <span class="o">./</span><span class="n">boot</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">368</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="n">include_string</span><span class="p">(</span><span class="n">mapexpr</span><span class="p">::</span><span class="n">typeof</span><span class="p">(</span><span class="n">REPL</span><span class="o">.</span><span class="n">softscope</span><span class="p">),</span> <span class="n">mod</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">code</span><span class="p">::</span><span class="n">String</span><span class="p">,</span> <span class="n">filename</span><span class="p">::</span><span class="n">String</span><span class="p">)</span>
+    <span class="o">@</span> <span class="n">Base</span> <span class="o">./</span><span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1428</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="approximate-riemann-solvers">
+<h1>Approximate Riemann solvers<a class="headerlink" href="#approximate-riemann-solvers" title="Permalink to this headline">#</a></h1>
+<p>Exact Riemann solvers are</p>
+<ul class="simple">
+<li><p>complicated to implement</p></li>
+<li><p>fragile in the sense that small changes to the physics, such as in the equation of state <span class="math notranslate nohighlight">\(p(\rho)\)</span>, can require changing many conditionals</p></li>
+<li><p>the need to solve for <span class="math notranslate nohighlight">\(\rho^*\)</span> using a Newton method and then evaluate each case of the wave structure can be expensive.</p></li>
+<li><p>An exact Riemann solver has never been implemented for some equations.</p></li>
+</ul>
+<section id="hll-harten-lax-and-van-leer">
+<h2>HLL (Harten, Lax, and van Leer)<a class="headerlink" href="#hll-harten-lax-and-van-leer" title="Permalink to this headline">#</a></h2>
+<p>Assume two shocks with speeds <span class="math notranslate nohighlight">\(s_L\)</span> and <span class="math notranslate nohighlight">\(s_R\)</span>.  These speeds will be estimated and must be at least as fast as the fastest left- and right-traveling waves.  If the wave speeds <span class="math notranslate nohighlight">\(s_L\)</span> and <span class="math notranslate nohighlight">\(s_R\)</span> are given, we have the Rankine-Hugoniot conditions across both shocks,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b24f7087-e5b6-4816-8e4c-58fa84a40711">
+<span class="eqno">(68)<a class="headerlink" href="#equation-b24f7087-e5b6-4816-8e4c-58fa84a40711" title="Permalink to this equation">#</a></span>\[\begin{align}
+  s_L (U_* - U_L) &amp;= f(U_*) - f(U_L) \\
+  s_R (U_R - U_*) &amp;= f(U_R) - f(U_*) .
+\end{align}\]</div>
+<p>Adding these together gives
+<div class="math notranslate nohighlight">
+\[s_R U_R - (s_R - s_L) U_* - s_L U_L = f(U_R) - f(U_L)\]</div>
+
+which can be solved for <span class="math notranslate nohighlight">\(U_*\)</span> as
+<div class="math notranslate nohighlight">
+\[ U_* = \frac{f(U_L) - f(U_R) - s_L U_L + s_R U_R}{s_R - s_L} . \]</div>
+
+We can save an extra evaluation of the flux by using the Rankine-Hugoniot conditions
+<div class="math notranslate nohighlight">
+\[ f(U_*) = \frac{s_R f(U_L) - s_L f(U_R) + s_L s_R (U_R - U_L)}{s_R - s_L} . \]</div>
+</p>
+<section id="id1">
+<h3>Isothermal gas dynamics<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="amsmath math notranslate nohighlight" id="equation-5ca71272-54b3-4c8b-86b1-4acc0ba7e174">
+<span class="eqno">(69)<a class="headerlink" href="#equation-5ca71272-54b3-4c8b-86b1-4acc0ba7e174" title="Permalink to this equation">#</a></span>\[\begin{align} s_L &amp;= \min( u_L - c, u_R - c ) \\
+s_R &amp;= \max(u_L + c, u_R + c)
+\end{align}\]</div>
+</section>
+<section id="rusanov-method">
+<h3>Rusanov method<a class="headerlink" href="#rusanov-method" title="Permalink to this headline">#</a></h3>
+<p>Special case <span class="math notranslate nohighlight">\(s_L = - s_R\)</span>, in which case the wave structure is always subsonic and the flux is simply
+<div class="math notranslate nohighlight">
+\[f(U_*) = \frac 1 2 \Big( f(U_L) + f(U_R) \Big) - \frac s 2 \Big( U_R - U_L \Big) . \]</div>
+</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="observations-on-hll-solvers">
+<h1>Observations on HLL solvers<a class="headerlink" href="#observations-on-hll-solvers" title="Permalink to this headline">#</a></h1>
+<div class="math notranslate nohighlight">
+\[ f(U_*) = \frac{s_R f(U_L) - s_L f(U_R) + s_L s_R (U_R - U_L)}{s_R - s_L} . \]</div>
+<ul class="simple">
+<li><p>The term involving <span class="math notranslate nohighlight">\(U_R-U_L\)</span> represents diffusion and will cause entropy to decay (physical entropy is produced).</p></li>
+<li><p>If our Riemann problem produces shocks and we have correctly calculated the wave speeds, the HLL solver is exact and produces the minimum diffusion necessary for conservation.</p></li>
+<li><p>If the wave speed estimates are slower than reality, the method will be unstable due to CFL.</p></li>
+<li><p>If the wave speed estimates are faster than reality, the method will be more diffusive than an exact Riemann solver.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cu-numpde/fall22",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.7"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.7",
+            path: "./slides"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.7'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="2022-11-28-finite-volume.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">2022-11-28 Finite Volume</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jed Brown<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

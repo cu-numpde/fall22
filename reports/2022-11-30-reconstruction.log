@@ -1,0 +1,66 @@
+Traceback (most recent call last):
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/jed/cu/numpde/VENV/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+x, t_hist, U_hist = fv_solve2system(riemann_isogas, initial_isogas, 100, 0.1)
+size(U_hist)
+------------------
+
+MethodError: no method matching +(::Matrix{Float64}, ::Float64)
+For element-wise addition, use broadcasting with dot syntax: array .+ scalar
+[0mClosest candidates are:
+[0m  +(::Any, ::Any, [91m::Any[39m, [91m::Any...[39m) at operators.jl:591
+[0m  +([91m::T[39m, ::T) where T<:Union{Float16, Float32, Float64} at float.jl:383
+[0m  +(::AbstractArray, [91m::StaticArraysCore.StaticArray[39m) at ~/.julia/packages/StaticArrays/6QFsp/src/linalg.jl:13
+[0m  ...
+
+Stacktrace:
+  [1] _broadcast_getindex_evalf
+    @ ./broadcast.jl:670 [inlined]
+  [2] _broadcast_getindex
+    @ ./broadcast.jl:643 [inlined]
+  [3] getindex
+    @ ./broadcast.jl:597 [inlined]
+  [4] copy
+    @ ./broadcast.jl:899 [inlined]
+  [5] materialize
+    @ ./broadcast.jl:860 [inlined]
+  [6] broadcast_preserving_zero_d
+    @ ./broadcast.jl:849 [inlined]
+  [7] +(A::Vector{Matrix{Float64}}, Bs::Vector{Float64})
+    @ Base ./arraymath.jl:16
+  [8] ode_rk_explicit(f::var"#rhs#4"{typeof(riemann_isogas), Int64, typeof(limit_sin), Int64, Vector{Int64}, Vector{Int64}, Float64}, u0::Vector{Matrix{Float64}}; tfinal::Float64, h::Float64, table::RKTable)
+    @ Main ./In[1]:31
+  [9] fv_solve2system(riemann::typeof(riemann_isogas), u_init::typeof(initial_isogas), n::Int64, tfinal::Float64, limit::Function)
+    @ Main ./In[11]:19
+ [10] fv_solve2system(riemann::Function, u_init::Function, n::Int64, tfinal::Float64)
+    @ Main ./In[11]:2
+ [11] top-level scope
+    @ In[12]:1
+ [12] eval
+    @ ./boot.jl:368 [inlined]
+ [13] include_string(mapexpr::typeof(REPL.softscope), mod::Module, code::String, filename::String)
+    @ Base ./loading.jl:1428
+LoadError: MethodError: no method matching +(::Matrix{Float64}, ::Float64)
+For element-wise addition, use broadcasting with dot syntax: array .+ scalar
+[0mClosest candidates are:
+[0m  +(::Any, ::Any, [91m::Any[39m, [91m::Any...[39m) at operators.jl:591
+[0m  +([91m::T[39m, ::T) where T<:Union{Float16, Float32, Float64} at float.jl:383
+[0m  +(::AbstractArray, [91m::StaticArraysCore.StaticArray[39m) at ~/.julia/packages/StaticArrays/6QFsp/src/linalg.jl:13
+[0m  ...
+
